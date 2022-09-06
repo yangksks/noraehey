@@ -1,57 +1,34 @@
 {
-  "extends": ["airbnb", "plugin:prettier/recommended"],
-  "plugins": ["prettier"],
   "env": {
     "node": true,
     "browser": true,
-    "es2021": true,
-    "jest": true
+    "es2021": true
   },
-  "ignorePatterns": ["node_modules/"],
+  "extends": [
+    "airbnb",
+    "airbnb-typescript",
+    "plugin:react/recommended",
+    "plugin:import/typescript",
+    "plugin:prettier/recommended",
+    "plugin:@typescript-eslint/recommended"
+  ],
+  "overrides": [],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": "latest",
+    "sourceType": "module"
+  },
   "settings": {
     "import/resolver": {
       "node": {
-        "paths": ["src"]
-      }
+        "extensions": [".js", ".jsx", ".ts", ".tsx"]
+      },
+      "typescript": {}
     }
   },
-  "rules": {
-    "react/jsx-filename-extension": ["warn", { "extensions": [".js", ".jsx"] }],
-    "prettier/prettier": [
-      "error",
-      {
-        "endOfLine": "auto"
-      }
-    ],
-    "no-param-reassign": ["off", { "props": false }],
-    "react/state-in-constructor": "off",
-    "react/react-in-jsx-scope": "off",
-    "react/prop-types": "off",
-    "no-use-before-define": "off",
-    "react/button-has-type": "off",
-    "react/jsx-boolean-value": "off",
-    "arrow-body-style": "off",
-    "no-unused-vars": "off",
-    "no-undef": "warn",
-    "react/function-component-definition": [
-      1,
-      {
-        "namedComponents": [
-          "function-declaration",
-          "function-expression",
-          "arrow-function"
-        ],
-        "unnamedComponents": ["function-expression", "arrow-function"]
-      }
-    ],
-    "import/no-extraneous-dependencies": [
-      "error",
-      {
-        "devDependencies": true,
-        "optionalDependencies": false,
-        "peerDependencies": false
-      }
-    ]
-  }
+  "plugins": ["react", "@typescript-eslint", "prettier", "import"],
+  "rules": {}
 }
-
