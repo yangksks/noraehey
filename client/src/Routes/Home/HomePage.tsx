@@ -1,4 +1,6 @@
 import styled from 'styled-components';
+import { MenuBar } from '../Common/MenuBar';
+import { NavBar } from '../Common/NavBar';
 
 const Box = styled.div<{ bgColor: string }>`
   display: flex;
@@ -7,15 +9,9 @@ const Box = styled.div<{ bgColor: string }>`
   align-items: center;
   width: 100%;
   height: 100%;
+  padding-top: calc(var(--vh, 1vh) * 15);
+  padding-bottom: calc(var(--vh, 1vh) * 15);
   min-height: calc(var(--vh, 1vh) * 80);
-  background-color: ${(props) => props.bgColor};
-`;
-
-const Box2 = styled.div<{ bgColor: string }>`
-  position: fixed;
-  width: 100%;
-  bottom: 0;
-  height: calc(var(--vh, 1vh) * 20);
   background-color: ${(props) => props.bgColor};
 `;
 
@@ -31,7 +27,7 @@ const Container = styled.div`
   height: 100%;
 `;
 
-const Home = () => {
+const HomePage = () => {
   const setScreenSize = () => {
     const vh = window.innerHeight * 0.01;
 
@@ -43,7 +39,14 @@ const Home = () => {
   window.addEventListener('resize', () => setScreenSize());
   return (
     <Container>
+      <NavBar />
       <Box bgColor={'#cf6a87'}>
+        <Box3>희진아 안녕</Box3>
+        <Box3>혜성아 안녕</Box3>
+        <Box3>민서야 안녕</Box3>
+        <Box3>경섭아 안녕</Box3>
+        <Box3>민호야 안녕</Box3>
+        <Box3>3팀화이팅</Box3>
         <Box3>1</Box3>
         <Box3>1</Box3>
         <Box3>1</Box3>
@@ -52,10 +55,14 @@ const Home = () => {
         <Box3>1</Box3>
         <Box3>1</Box3>
         <Box3>1</Box3>
+        <Box3>1</Box3>
+        <Box3>1</Box3>
+        <Box3>1</Box3>
+
       </Box>
-      <Box2 bgColor={'#6c6acf'}>메뉴</Box2>
+      <MenuBar />
     </Container>
   );
 };
 
-export default Home;
+export default HomePage;
