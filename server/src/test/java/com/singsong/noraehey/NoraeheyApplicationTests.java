@@ -1,10 +1,10 @@
-package com.singsong.norehey;
+package com.singsong.noraehey;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class NoreheyApplicationTests {
+class NoraeheyApplicationTests {
 
     @Test
     void contextLoads() {
