@@ -114,7 +114,7 @@ public class JwtTokenUtil {
     }
 
     public Boolean reGenerateRefreshToken(Member member) throws Exception {
-        RefreshToken refreshToken = refreshTokenRepository.findByMemberId(member.getMemberId()).orElse(null);
+        RefreshToken refreshToken = refreshTokenRepository.findByMemberMemberId(member.getMemberId()).orElse(null);
         if (refreshToken == null) {
             log.info("[reGenerateRefreshToken] refreshToken 정보가 존재하지 않습니다.");
             return false;
