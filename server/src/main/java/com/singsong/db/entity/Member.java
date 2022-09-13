@@ -29,4 +29,5 @@ public class Member {
     @Column(length = 500)
     String memberTag;
     int memberHighPitch;
+    int memberRole;
 }
