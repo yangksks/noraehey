@@ -1,18 +1,16 @@
 import styled from 'styled-components';
-import { MenuBar } from '../Common/MenuBar';
-import { NavBar } from '../Common/NavBar';
+import MenuBar from '../Common/MenuBar';
+import NavBar from '../Common/NavBar';
 
-const Box = styled.div<{ bgColor: string }>`
+const Box = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   width: 100%;
   height: 100%;
-  padding-top: calc(var(--vh, 1vh) * 15);
   padding-bottom: calc(var(--vh, 1vh) * 15);
   min-height: calc(var(--vh, 1vh) * 80);
-  background-color: ${(props) => props.bgColor};
 `;
 
 const Box3 = styled.div`
@@ -40,7 +38,7 @@ const HomePage = () => {
   return (
     <Container>
       <NavBar />
-      <Box bgColor={'#cf6a87'}>
+      <Box>
         <Box3>희진아 안녕</Box3>
         <Box3>혜성아 안녕</Box3>
         <Box3>민서야 안녕</Box3>
@@ -58,7 +56,6 @@ const HomePage = () => {
         <Box3>1</Box3>
         <Box3>1</Box3>
         <Box3>1</Box3>
-
       </Box>
       <MenuBar />
     </Container>
