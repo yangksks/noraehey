@@ -1,17 +1,17 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import AdminPage from './Routes/Admin/AdminPage';
-import MagazineCreatePage from './Routes/Admin/MagazineCreatePage';
-import MagazineUpdatePage from './Routes/Admin/MagazineUpdatePage';
-import LandingPage from './Routes/Landing/LandingPage';
-import TagPage from './Routes/Common/TagPage';
-import VoicePage from './Routes/Common/VoicePage';
-import HomePage from './Routes/Home/HomePage';
-import ProfilePage from './Routes/Profile/ProfilePage';
-import MagazineDetailPage from './Routes/Magazine/MagazineDetailPage';
-import ShortsDetailPage from './Routes/Shorts/ShortsDetailPage';
-import SongsDetailPage from './Routes/Songs/SongsDetailPage';
-import SearchPage from './Routes/Search/SearchPage';
-import SettingPage from './Routes/Profile/SettingPage';
+import AdminPage from './routes/Admin/AdminPage';
+import MagazineCreatePage from './routes/Admin/MagazineCreatePage';
+import MagazineUpdatePage from './routes/Admin/MagazineUpdatePage';
+import LandingPage from './routes/Landing/LandingPage';
+import TagPage from './routes/Common/TagPage';
+import VoicePage from './routes/Common/VoicePage';
+import HomePage from './routes/Home/HomePage';
+import ProfilePage from './routes/Profile/ProfilePage';
+import MagazineDetailPage from './routes/Magazine/MagazineDetailPage';
+import ShortsDetailPage from './routes/Shorts/ShortsDetailPage';
+import SongsDetailPage from './routes/Songs/SongsDetailPage';
+import SearchPage from './routes/Search/SearchPage';
+import SettingPage from './routes/Profile/SettingPage';
 
 const Router = () => {
   const userId = '0000';
