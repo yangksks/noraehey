@@ -1,33 +1,98 @@
 import styled from 'styled-components';
+import { CgProfile } from 'react-icons/cg';
+import { useState } from 'react';
 
 const Nav = styled.div`
-  position: fixed;
   width: 100%;
-  top: 0;
-  background: #a793ff;
+  background: white;
 `;
 
-const NavTop = styled.div`
+const TopBox = styled.div`
   width: 100%;
-  border-radius: 0 0 0 40px;
-  height: calc(var(--vh, 1vh) * 10);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+const BottomBox = styled.div`
+  width: 100%;
+`;
+
+const NavTop = styled.div<{ infoBar: boolean }>`
+  width: 100%;
+  height: ${({ infoBar }) => (infoBar ? '200px' : '70px')};
+  border-radius: 0 0 30px 0;
   background: #a793ff;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  font-family: 'omni035';
+  padding: 2vh;
+  font-size: 24px;
+  box-sizing: border-box;
+  transition: all 0.5s ease;
 `;
 
 const NavBottom = styled.div`
+  position: absolute;
   width: 100%;
-  border-radius: 40px 0 0 0;
-  height: calc(var(--vh, 1vh) * 5);
-  background: #ffffff;
+  border-radius: 30px 0 0 0;
+  height: 5vh;
+  background: white;
+  z-index: 2;
 `;
 
-export const NavBar = () => {
+const NavBottom2 = styled.div`
+  position: relative;
+  width: 100%;
+  height: 5vh;
+  background: #a793ff;
+  z-index: 1;
+`;
+
+const Logo = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding-top: 5px;
+  font-size: 20px;
+  text-shadow: 0px 0px 5px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+`;
+
+const ProfileImg = styled(CgProfile)`
+  width: 40px;
+  height: 40px;
+  color: #ffffff;
+  border-radius: 50px;
+`;
+
+const NavBarSmall = () => {
+  const [infoBar, setInfoBar] = useState(false);
   return (
-    <div>
-      <Nav>
-        <NavTop />
+    <Nav>
+      <NavTop infoBar={infoBar === true}>
+        <TopBox>
+          <Logo>
+            <p style={{ color: '#FFC34E' }}>NORAE</p>
+            <p style={{ color: 'white' }}>HEY</p>
+          </Logo>
+          <ProfileImg
+            onClick={() => {
+              setInfoBar(!infoBar);
+            }}
+          />
+        </TopBox>
+      </NavTop>
+      <BottomBox>
         <NavBottom />
-      </Nav>
-    </div>
+        <NavBottom2 />
+      </BottomBox>
+    </Nav>
   );
 };
+
+export default NavBarSmall;
