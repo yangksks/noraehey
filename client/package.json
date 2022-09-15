@@ -19,7 +19,7 @@
     "react-scripts": "^5.0.1",
     "recoil": "^0.7.5",
     "styled-components": "^5.3.5",
-    "styled-reset": "^4.4.2",
+    "swiper": "^8.4.0",
     "vite": "^3.0.7"
   },
   "devDependencies": {

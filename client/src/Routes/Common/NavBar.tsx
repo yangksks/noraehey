@@ -21,7 +21,7 @@ const BottomBox = styled.div`
 
 const NavTop = styled.div<{ infoBar: boolean }>`
   width: 100%;
-  height: ${({ infoBar }) => (infoBar ? '200px' : '70px')};
+  height: ${({ infoBar }) => (infoBar ? '220px' : '80px')};
   border-radius: 0 0 30px 0;
   background: #a793ff;
   display: flex;
@@ -29,17 +29,17 @@ const NavTop = styled.div<{ infoBar: boolean }>`
   justify-content: start;
   align-items: center;
   font-family: 'omni035';
-  padding: 2vh;
+  padding: 20px;
   font-size: 24px;
   box-sizing: border-box;
-  transition: all 0.5s ease;
+  transition: all 0.25s ease;
 `;
 
 const NavBottom = styled.div`
   position: absolute;
   width: 100%;
   border-radius: 30px 0 0 0;
-  height: 5vh;
+  height: 50px;
   background: white;
   z-index: 2;
 `;
@@ -47,7 +47,7 @@ const NavBottom = styled.div`
 const NavBottom2 = styled.div`
   position: relative;
   width: 100%;
-  height: 5vh;
+  height: 50px;
   background: #a793ff;
   z-index: 1;
 `;
