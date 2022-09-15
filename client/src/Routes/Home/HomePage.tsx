@@ -1,28 +1,37 @@
 import styled from 'styled-components';
 import MenuBar from '../Common/MenuBar';
 import NavBar from '../Common/NavBar';
+import MusicListCard from './MusicListCard';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
+import 'swiper/css/pagination';
+import './HomePage.css';
 
-const Box = styled.div`
+const ContentBox = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: start;
   align-items: center;
   width: 100%;
-  height: 100%;
+  height: 100vh;
+  box-sizing: border-box;
   padding-bottom: calc(var(--vh, 1vh) * 15);
-  min-height: calc(var(--vh, 1vh) * 80);
-`;
-
-const Box3 = styled.div`
-  width: 100px;
-  height: 100px;
-  background-color: tomato;
-  border: black solid 1px;
 `;
 
 const Container = styled.div`
   width: 100%;
   height: 100%;
+`;
+
+const Container2 = styled.div`
+  width: 100%;
+  height: 460px;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  box-sizing: border-box;
+  box-sizing: border-box;
 `;
 
 const HomePage = () => {
@@ -31,32 +40,40 @@ const HomePage = () => {
 
     document.documentElement.style.setProperty('--vh', `${vh}px`);
   };
-
   setScreenSize();
-
   window.addEventListener('resize', () => setScreenSize());
+
   return (
     <Container>
       <NavBar />
-      <Box>
-        <Box3>희진아 안녕</Box3>
-        <Box3>혜성아 안녕</Box3>
-        <Box3>민서야 안녕</Box3>
-        <Box3>경섭아 안녕</Box3>
-        <Box3>민호야 안녕</Box3>
-        <Box3>3팀화이팅</Box3>
-        <Box3>1</Box3>
-        <Box3>1</Box3>
-        <Box3>1</Box3>
-        <Box3>1</Box3>
-        <Box3>1</Box3>
-        <Box3>1</Box3>
-        <Box3>1</Box3>
-        <Box3>1</Box3>
-        <Box3>1</Box3>
-        <Box3>1</Box3>
-        <Box3>1</Box3>
-      </Box>
+      <ContentBox>
+        <Container2>
+          <Swiper
+            slidesPerView={1.3}
+            centeredSlides={true}
+            spaceBetween={30}
+            className="mySwiper">
+            <SwiperSlide>
+              <MusicListCard />
+            </SwiperSlide>
+            <SwiperSlide>
+              <MusicListCard />
+            </SwiperSlide>
+            <SwiperSlide>
+              <MusicListCard />
+            </SwiperSlide>
+            <SwiperSlide>
+              <MusicListCard />
+            </SwiperSlide>
+            <SwiperSlide>
+              <MusicListCard />
+            </SwiperSlide>
+            <SwiperSlide>
+              <MusicListCard />
+            </SwiperSlide>
+          </Swiper>
+        </Container2>
+      </ContentBox>
       <MenuBar />
     </Container>
   );
