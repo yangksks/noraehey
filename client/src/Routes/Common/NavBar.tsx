@@ -4,7 +4,9 @@ import { useState } from 'react';
 
 const Nav = styled.div`
   width: 100%;
+  position: relative;
   background: white;
+  z-index: 0;
 `;
 
 const TopBox = styled.div`
@@ -21,33 +23,33 @@ const BottomBox = styled.div`
 
 const NavTop = styled.div<{ infoBar: boolean }>`
   width: 100%;
+  padding: 20px;
   height: ${({ infoBar }) => (infoBar ? '220px' : '80px')};
-  border-radius: 0 0 30px 0;
-  background: #a793ff;
   display: flex;
   flex-direction: column;
   justify-content: start;
   align-items: center;
+  border-radius: 0 0 30px 0;
+  background: #a793ff;
   font-family: 'omni035';
-  padding: 20px;
   font-size: 24px;
   box-sizing: border-box;
   transition: all 0.25s ease;
 `;
 
 const NavBottom = styled.div`
-  position: absolute;
   width: 100%;
+  height: 30px;
+  position: absolute;
   border-radius: 30px 0 0 0;
-  height: 50px;
   background: white;
   z-index: 2;
 `;
 
 const NavBottom2 = styled.div`
-  position: relative;
   width: 100%;
-  height: 50px;
+  height: 30px;
+  position: relative;
   background: #a793ff;
   z-index: 1;
 `;
