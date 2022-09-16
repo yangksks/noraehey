@@ -14,11 +14,6 @@ import SearchPage from './routes/Search/SearchPage';
 import SettingPage from './routes/Profile/SettingPage';
 
 const Router = () => {
-  const userId = '0000';
-  const songId = '0000';
-  const shortsId = '0000';
-  const magazineId = '0000';
-
   return (
     <BrowserRouter>
       <Routes>
