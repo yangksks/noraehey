@@ -32,7 +32,6 @@ public class MemberServiceImpl implements MemberService{
                 .memberNickname("노래쟁이 #" + kakaoMemberInfo.getId())
                 // TODO: S3에 저장된 기본 프로필 이미지
                 .memberProfileUrl(null)
-                .memberGender(0)
                 .memberTag(null)
                 .memberHighPitch(0)
                 .memberRole(1)

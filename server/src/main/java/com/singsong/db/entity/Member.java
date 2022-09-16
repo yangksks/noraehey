@@ -24,8 +24,6 @@ public class Member {
     String memberNickname;
     @Column(length = 500)
     String memberProfileUrl;
-    @Column(columnDefinition = "TINYINT", length=1)
-    int memberGender;
     @Column(length = 500)
     String memberTag;
     int memberHighPitch;
