@@ -1,78 +1,38 @@
 import styled from 'styled-components';
 import MenuBar from '../Common/MenuBar';
 import NavBar from '../Common/NavBar';
-import MusicListCard from './MusicListCard';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import 'swiper/css';
-import 'swiper/css/pagination';
-import './HomePage.css';
-
-const ContentBox = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: start;
-  align-items: center;
-  width: 100%;
-  height: 100vh;
-  box-sizing: border-box;
-  padding-bottom: calc(var(--vh, 1vh) * 15);
-`;
+import MusicCardSwiper from './MusicCardSwiper';
 
 const Container = styled.div`
   width: 100%;
   height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
 `;
 
-const Container2 = styled.div`
+const ContentBox = styled.div`
   width: 100%;
-  height: 460px;
+  height: 100%;
+  max-width: 420px;
+  padding-bottom: 100px;
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: start;
   align-items: center;
   box-sizing: border-box;
-  box-sizing: border-box;
+  z-index: 100;
+  background-color: tomato;
 `;
 
 const HomePage = () => {
-  const setScreenSize = () => {
-    const vh = window.innerHeight * 0.01;
-
-    document.documentElement.style.setProperty('--vh', `${vh}px`);
-  };
-  setScreenSize();
-  window.addEventListener('resize', () => setScreenSize());
-
   return (
     <Container>
       <NavBar />
       <ContentBox>
-        <Container2>
-          <Swiper
-            slidesPerView={1.3}
-            centeredSlides={true}
-            spaceBetween={30}
-            className="mySwiper">
-            <SwiperSlide>
-              <MusicListCard />
-            </SwiperSlide>
-            <SwiperSlide>
-              <MusicListCard />
-            </SwiperSlide>
-            <SwiperSlide>
-              <MusicListCard />
-            </SwiperSlide>
-            <SwiperSlide>
-              <MusicListCard />
-            </SwiperSlide>
-            <SwiperSlide>
-              <MusicListCard />
-            </SwiperSlide>
-            <SwiperSlide>
-              <MusicListCard />
-            </SwiperSlide>
-          </Swiper>
-        </Container2>
+        <MusicCardSwiper />
       </ContentBox>
       <MenuBar />
     </Container>
