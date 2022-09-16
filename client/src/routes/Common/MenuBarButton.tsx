@@ -1,8 +1,28 @@
-import { useState } from 'react';
 import styled from 'styled-components';
 import { AiOutlineHome } from 'react-icons/ai';
 import { BiBookHeart, BiSearch } from 'react-icons/bi';
 import { BsCollectionPlay } from 'react-icons/bs';
+
+export type ButtonType = {
+  urlNow: boolean;
+  name: string;
+  change: Function;
+};
+
+const MenuBarButton = (props: ButtonType) => {
+  return (
+    <MenuButton urlNow={props.urlNow} onClick={() => props.change()}>
+      {
+        {
+          home: <AiOutlineHome />,
+          song: <BiBookHeart />,
+          shorts: <BiSearch />,
+          search: <BsCollectionPlay />,
+        }[props.name]
+      }
+    </MenuButton>
+  );
+};
 
 const MenuButton = styled.div<{ urlNow: boolean }>`
   height: 100%;
@@ -47,26 +67,5 @@ const MenuButton = styled.div<{ urlNow: boolean }>`
     z-index: -100;
   }
 `;
-
-export type ButtonType = {
-  urlNow: boolean;
-  name: string;
-  change: Function;
-};
-
-const MenuBarButton = (props: ButtonType) => {
-  return (
-    <MenuButton urlNow={props.urlNow} onClick={() => props.change()}>
-      {
-        {
-          home: <AiOutlineHome />,
-          song: <BiBookHeart />,
-          shorts: <BiSearch />,
-          search: <BsCollectionPlay />,
-        }[props.name]
-      }
-    </MenuButton>
-  );
-};
 
 export default MenuBarButton;

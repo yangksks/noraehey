@@ -1,5 +1,9 @@
 import styled from 'styled-components';
 
+const MusicListCard = () => {
+  return <MusicBox>음악 추천 리스트</MusicBox>;
+};
+
 const MusicBox = styled.div`
   width: 100%;
   height: 90%;
@@ -12,9 +16,5 @@ const MusicBox = styled.div`
   box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.15);
   transition: 0.6s;
 `;
-
-const MusicListCard = () => {
-  return <MusicBox>MusicListCard</MusicBox>;
-};
 
 export default MusicListCard;
