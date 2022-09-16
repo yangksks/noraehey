@@ -2,6 +2,31 @@ import styled from 'styled-components';
 import { CgProfile } from 'react-icons/cg';
 import { useState } from 'react';
 
+const NavBar = () => {
+  const [infoBar, setInfoBar] = useState(false);
+  return (
+    <Nav>
+      <NavTop infoBar={infoBar === true}>
+        <TopBox>
+          <Logo>
+            <p style={{ color: '#FFC34E' }}>NORAE</p>
+            <p style={{ color: 'white' }}>HEY</p>
+          </Logo>
+          <ProfileImg
+            onClick={() => {
+              setInfoBar(!infoBar);
+            }}
+          />
+        </TopBox>
+      </NavTop>
+      <BottomBox>
+        <NavBottom />
+        <NavBottom2 />
+      </BottomBox>
+    </Nav>
+  );
+};
+
 const Nav = styled.div`
   width: 100%;
   position: relative;
@@ -72,29 +97,4 @@ const ProfileImg = styled(CgProfile)`
   border-radius: 50px;
 `;
 
-const NavBarSmall = () => {
-  const [infoBar, setInfoBar] = useState(false);
-  return (
-    <Nav>
-      <NavTop infoBar={infoBar === true}>
-        <TopBox>
-          <Logo>
-            <p style={{ color: '#FFC34E' }}>NORAE</p>
-            <p style={{ color: 'white' }}>HEY</p>
-          </Logo>
-          <ProfileImg
-            onClick={() => {
-              setInfoBar(!infoBar);
-            }}
-          />
-        </TopBox>
-      </NavTop>
-      <BottomBox>
-        <NavBottom />
-        <NavBottom2 />
-      </BottomBox>
-    </Nav>
-  );
-};
-
-export default NavBarSmall;
+export default NavBar;

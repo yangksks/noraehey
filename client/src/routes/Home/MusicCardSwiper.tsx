@@ -2,7 +2,31 @@ import styled from 'styled-components';
 import MusicListCard from './MusicListCard';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
-import 'swiper/css/pagination';
+
+const MusicCardSwiper = () => {
+  return (
+    <CardContainer>
+      <Swiper
+        slidesPerView={1.3}
+        centeredSlides={true}
+        spaceBetween={30}
+        className="mySwiper">
+        <SwiperSlide>
+          <MusicListCard />
+        </SwiperSlide>
+        <SwiperSlide>
+          <MusicListCard />
+        </SwiperSlide>
+        <SwiperSlide>
+          <MusicListCard />
+        </SwiperSlide>
+        <SwiperSlide>
+          <MusicListCard />
+        </SwiperSlide>
+      </Swiper>
+    </CardContainer>
+  );
+};
 
 const CardContainer = styled.div`
   position: relative;
@@ -50,23 +74,5 @@ const CardContainer = styled.div`
     background-color: hsla(0, 0%, 44%, 0.104);
     transition: 0.6s;
   }
-
 `;
-
-const MusicCardSwiper = () => {
-  return (
-    <CardContainer>
-      <Swiper
-        slidesPerView={1.3}
-        centeredSlides={true}
-        spaceBetween={30}
-        className="mySwiper">
-        <SwiperSlide>
-          <MusicListCard />
-        </SwiperSlide>
-      </Swiper>
-    </CardContainer>
-  );
-};
-
 export default MusicCardSwiper;
