@@ -1,6 +1,9 @@
 package com.singsong.db.entity;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
@@ -11,20 +14,15 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Builder
 @DynamicUpdate // 변경된 컬럼만 업데이트(patch)
-public class RefreshToken {
-
+public class Magazine {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long refreshTokenId;
-
+    Long megazineId;
+    @Column(length = 100)
+    String magazineTitle;
+    @Column(length = 1000)
+    String magazineContent;
     @Column(length = 500)
-    String refreshToken;
+    String magazineImageUrl;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id")
-    private Member member;
-
-    public void updateRefreshToken(String refreshToken) {
-        this.refreshToken = refreshToken;
-    }
 }
