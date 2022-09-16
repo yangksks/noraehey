@@ -1,5 +1,6 @@
 package com.singsong.db.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -7,6 +8,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Getter
@@ -17,15 +19,17 @@ import javax.persistence.*;
 public class Member {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long memberId;
+    private Long memberId;
     @Column(length = 100)
-    String memberEmail;
+    private String memberEmail;
     @Column(length = 20)
-    String memberNickname;
+    private String memberNickname;
     @Column(length = 500)
-    String memberProfileUrl;
-    @Column(length = 500)
-    String memberTag;
+    private String memberProfileUrl;
+    @OneToMany(mappedBy = "member")
+    @JsonManagedReference // 순환참조 문제해결
+    private List<MemberTag> memberTag;
+
     int memberHighPitch;
     int memberRole;
 }
