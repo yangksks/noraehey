@@ -1,8 +1,8 @@
 package com.singsong.config;
 
 import com.singsong.api.service.MemberService;
-import com.singsong.common.auth.JwtAuthenticationFilter;
-import com.singsong.common.auth.MemberDetailService;
+import com.singsong.common.util.auth.JwtAuthenticationFilter;
+import com.singsong.common.util.auth.MemberDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -1,4 +1,4 @@
-package com.singsong.common.auth;
+package com.singsong.common.util.auth;
 
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
