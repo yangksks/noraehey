@@ -9,6 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.io.IOException;
+
 @Slf4j
 @RestControllerAdvice
 public class GlobalControllerAdvice {
@@ -28,6 +30,15 @@ public class GlobalControllerAdvice {
         ErrorResponse response = new ErrorResponse(e.getErrorCode());
         return new ResponseEntity<>(response, HttpStatus.valueOf(e.getErrorCode().getStatus()));
     }
+
+    // Kakao IOException
+    @ExceptionHandler(IOException.class)
+    public ResponseEntity<ErrorResponse> handleKakaoIoException(IOException e){
+        log.error("handleKakaoIoException",e);
+        ErrorResponse response = new ErrorResponse(ErrorCode.KAKAO_IO_EXCEPTION);
+        return new ResponseEntity<>(response, HttpStatus.CONFLICT);
+    }
+
 
 //    @ExceptionHandler(NicknameDuplicateException.class)
 //    public ResponseEntity<ErrorResponse> handleNicknameDuplicateException(NicknameDuplicateException e){
