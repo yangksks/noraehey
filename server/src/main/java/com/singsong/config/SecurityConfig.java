@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -66,9 +67,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) // 토큰 기반 인증이므로 세션 사용 하지않음
                 .and()
-                .addFilter(new JwtAuthenticationFilter(authenticationManager(),memberService)) //HTTP 요청에 JWT 토큰 인증 필터를 거치도록 필터를 추가
+                .addFilter(new JwtAuthenticationFilter(authenticationManager(), memberService)) //HTTP 요청에 JWT 토큰 인증 필터를 거치도록 필터를 추가
                 .authorizeRequests()
-//                .antMatchers(HttpMethod.GET, "/api/member/info").authenticated()
+                .antMatchers(HttpMethod.POST, "/api/shorts").authenticated()
+//                .antMatchers(HttpMethod.PATCH, "/api/member").authenticated()
 //                .antMatchers(HttpMethod.PATCH, "/api/member/img").authenticated()
 //                .antMatchers(HttpMethod.PATCH, "/api/member/password").authenticated()
 //                .antMatchers(HttpMethod.DELETE, "/api/member").authenticated()
