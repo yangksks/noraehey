@@ -1,5 +1,9 @@
 import React, { useState } from 'react'
-import { Container } from "../style/style"
+import { Helmet } from 'react-helmet-async';
+import styled from 'styled-components';
+import Container from "../../style/style"
+import SubTitle from '../Common/SubTitle';
+import AlbumImage from './AlbumImage';
 
 export type SongType =  {
   songId: number,
@@ -18,11 +22,24 @@ const SongsDetailPage = () => {
     songLevel: 2,
   });
   
-  return (
-    <div>SongsDetailPage</div>
+  return (<>
+    <Helmet>
+      <title>노래 상세 | 노래Hey</title>
+    </Helmet>
+    <SubTitle title="노래 상세" link='/'/>
+    <Container>
+      <AlbumImage url={songData.songImageUrl}></AlbumImage>
+      {/* <SongLylics></SongLylics>
+      <SongInfo></SongInfo>
+      <SongBtn></SongBtn>
+      <SongShorts></SongShorts> */}
+    </Container>
+    </>
   )
 }
 
-
+const Title=styled.div`
+  
+`
 
 export default SongsDetailPage

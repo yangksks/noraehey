@@ -51,6 +51,9 @@ const GlobalStyle = createGlobalStyle`
   html, body {
     scroll-behavior: smooth;
   }
+  body {
+    font-family: omni035, -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
+  }
   a {
     text-decoration:none;
     color: inherit;
