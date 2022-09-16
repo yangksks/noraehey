@@ -1,4 +1,4 @@
-package com.singsong.common.auth;
+package com.singsong.common.util.auth;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
