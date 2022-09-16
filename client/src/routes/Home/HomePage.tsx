@@ -1,7 +1,15 @@
 import styled from 'styled-components';
-import MenuBar from '../Common/MenuBar';
-import NavBar from '../Common/NavBar';
 import MusicCardSwiper from './MusicCardSwiper';
+
+const HomePage = () => {
+  return (
+    <Container>
+      <ContentBox>
+        <MusicCardSwiper />
+      </ContentBox>
+    </Container>
+  );
+};
 
 const Container = styled.div`
   width: 100%;
@@ -24,19 +32,6 @@ const ContentBox = styled.div`
   align-items: center;
   box-sizing: border-box;
   z-index: 100;
-  background-color: tomato;
 `;
-
-const HomePage = () => {
-  return (
-    <Container>
-      <NavBar />
-      <ContentBox>
-        <MusicCardSwiper />
-      </ContentBox>
-      <MenuBar />
-    </Container>
-  );
-};
 
 export default HomePage;

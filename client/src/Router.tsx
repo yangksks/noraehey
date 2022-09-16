@@ -12,10 +12,13 @@ import ShortsDetailPage from './routes/Shorts/ShortsDetailPage';
 import SongsDetailPage from './routes/Songs/SongsDetailPage';
 import SearchPage from './routes/Search/SearchPage';
 import SettingPage from './routes/Profile/SettingPage';
+import MenuBar from './routes/Common/MenuBar';
+import NavBar from './routes/Common/NavBar';
 
 const Router = () => {
   return (
     <BrowserRouter>
+      <NavBar />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/intro" element={<LandingPage />} />
@@ -37,6 +40,7 @@ const Router = () => {
           />
         </Route>
       </Routes>
+      <MenuBar />
     </BrowserRouter>
   );
 };
