@@ -12,15 +12,13 @@ import ShortsDetailPage from './routes/Shorts/ShortsDetailPage';
 import SongsDetailPage from './routes/Songs/SongsDetailPage';
 import SearchPage from './routes/Search/SearchPage';
 import SettingPage from './routes/Profile/SettingPage';
+import MenuBar from './routes/Common/MenuBar';
+import NavBar from './routes/Common/NavBar';
 
 const Router = () => {
-  const userId = '0000';
-  const songId = '0000';
-  const shortsId = '0000';
-  const magazineId = '0000';
-
   return (
     <BrowserRouter>
+      <NavBar />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/intro" element={<LandingPage />} />
@@ -42,6 +40,7 @@ const Router = () => {
           />
         </Route>
       </Routes>
+      <MenuBar />
     </BrowserRouter>
   );
 };
