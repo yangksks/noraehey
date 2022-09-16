@@ -20,59 +20,55 @@ public class KakaoServiceImpl implements KakaoService {
     String kakaoRestKey;
 
     @Override
-    public String getKakaoAccessToken(String code) {
+    public String getKakaoAccessToken(String code) throws IOException {
         String accessToken = "";
         String refreshToken = "";
         String reqURL = "https://kauth.kakao.com/oauth/token";
 
-        try {
-            URL url = new URL(reqURL);
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        URL url = new URL(reqURL);
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
-            conn.setRequestMethod("POST");
-            conn.setDoOutput(true);
+        conn.setRequestMethod("POST");
+        conn.setDoOutput(true);
 
-            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
-            StringBuffer sb = new StringBuffer();
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
+        StringBuffer sb = new StringBuffer();
 
-            sb.append("grant_type=authorization_code");
-            sb.append("&client_id=" + kakaoRestKey);
-            sb.append("&redirect_uri=http://localhost:8081/api/kakao/callback"); // TODO 인가코드 받은 redirect_uri 입력
-            sb.append("&code=" + code);
-            bw.write(sb.toString());
-            bw.flush();
+        sb.append("grant_type=authorization_code");
+        sb.append("&client_id=" + kakaoRestKey);
+        sb.append("&redirect_uri=http://localhost:8081/api/kakao/callback"); // TODO 인가코드 받은 redirect_uri 입력
+        sb.append("&code=" + code);
+        bw.write(sb.toString());
+        bw.flush();
 
-            // 성공 시 200, 실패 시 400
-            // TODO: 실패 시 예외처리
-            int responseCode = conn.getResponseCode();
-            System.out.println("responseCode : " + responseCode);
+        // 성공 시 200, 실패 시 400
+        // TODO: 실패 시 예외처리
+        int responseCode = conn.getResponseCode();
+        System.out.println("responseCode : " + responseCode);
 
-            BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-            String line = "";
-            String result = "";
+        BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+        String line = "";
+        String result = "";
 
-            while ((line = br.readLine()) != null) {
-                result += line;
-            }
-            System.out.println("response body : " + result);
-
-            //Gson 라이브러리에 포함된 클래스로 JSON파싱 객체 생성
-            JsonParser parser = new JsonParser();
-            JsonElement element = parser.parse(result);
-
-            accessToken = element.getAsJsonObject().get("access_token").getAsString();
-            refreshToken = element.getAsJsonObject().get("refresh_token").getAsString();
-
-            System.out.println("accessToken : " + accessToken);
-            System.out.println("refreshToken : " + refreshToken);
-
-            br.close();
-            bw.close();
-
-
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        while ((line = br.readLine()) != null) {
+            result += line;
         }
+        System.out.println("response body : " + result);
+
+        //Gson 라이브러리에 포함된 클래스로 JSON파싱 객체 생성
+        JsonParser parser = new JsonParser();
+        JsonElement element = parser.parse(result);
+
+        accessToken = element.getAsJsonObject().get("access_token").getAsString();
+        refreshToken = element.getAsJsonObject().get("refresh_token").getAsString();
+
+        System.out.println("accessToken : " + accessToken);
+        System.out.println("refreshToken : " + refreshToken);
+
+        br.close();
+        bw.close();
+
+
         return accessToken;
     }
 
@@ -116,6 +112,8 @@ public class KakaoServiceImpl implements KakaoService {
 
         br.close();
 
+        // TODO: 사용자 정보 받아온 후 카카오 로그아웃 할지 말지 정하기
+        
         // 1. 이메일이 DB에 있는지 없는지 검색
         // 2-1. 이미 존재하는 이메일 (이미 가입된 회원) -> accessToken, refreshToken 생성 후 전달
         // 2-2. 없는 이메일 -> 회원 가입 후 accessToken, refreshToken 생성 후 전달
@@ -125,7 +123,5 @@ public class KakaoServiceImpl implements KakaoService {
                 .build();
 
         return kakaoMemberInfo;
-
-
     }
 }

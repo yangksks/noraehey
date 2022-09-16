@@ -13,7 +13,11 @@ public enum ErrorCode {
     MEMBER_NOT_FOUND(404, "MEMBER_ERR_404", "MEMBER NOT FOUND"),
     NICKNAME_DUPLICATION(409, "MEMBER_ERR_409", "이미 존재하는 닉네임입니다."),
     EMAIL_DUPLICATION(409, "MEMBER_ERR_409", "이미 존재하는 이메일입니다."),
+
+    // 카카오
+    KAKAO_IO_EXCEPTION(409, "KAKAO_ERR_409", "KAKAO IO EXCEPTION")
     ;
+
 
     private int status;
     private String errorCode;

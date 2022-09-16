@@ -4,7 +4,9 @@ import com.singsong.common.exception.code.ErrorCode;
 import com.singsong.common.exception.member.MemberNotFoundException;
 import com.singsong.common.model.response.KakaoMemberInfo;
 import com.singsong.db.entity.Member;
+import com.singsong.db.entity.RefreshToken;
 import com.singsong.db.repository.MemberRepository;
+import com.singsong.db.repository.RefreshTokenRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,13 +15,11 @@ public class MemberServiceImpl implements MemberService{
 
     @Autowired
     MemberRepository memberRepository;
-
+    @Autowired
+    RefreshTokenRepository refreshTokenRepository;
     @Override
     public Member getMemberByMemberEmail(String memberEmail) {
         Member member = memberRepository.findByMemberEmail(memberEmail);
-        if(member == null){
-            throw new MemberNotFoundException("해당 이메일 주소를 가진 회원 정보가 존재하지 않습니다.", ErrorCode.MEMBER_NOT_FOUND);
-        }
         return member;
     }
 
@@ -40,5 +40,19 @@ public class MemberServiceImpl implements MemberService{
 
         memberRepository.save(member);
         return member;
+    }
+
+    @Override
+    public void saveRefreshToken(Member member, String token) {
+        RefreshToken refreshToken = refreshTokenRepository.findByMemberMemberId(member.getMemberId()).orElse(null);
+        if (refreshToken != null) {
+            refreshToken.updateRefreshToken(token);
+        } else {
+            refreshToken = RefreshToken.builder()
+                    .refreshToken(token)
+                    .member(member)
+                    .build();
+        }
+        refreshTokenRepository.save(refreshToken);
     }
 }
