@@ -2,15 +2,13 @@ package com.singsong.api.controller;
 
 import com.singsong.api.response.MemberInfoRes;
 import com.singsong.api.service.MemberService;
-import com.singsong.api.service.MemberTagService;
+import com.singsong.api.service.TagService;
 import com.singsong.common.util.auth.MemberDetails;
 import com.singsong.db.entity.Member;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.List;
@@ -23,7 +21,7 @@ public class MemberController {
     MemberService memberService;
 
     @Autowired
-    MemberTagService memberTagService;
+    TagService tagService;
 
     @GetMapping("/info")
     public ResponseEntity<?> memberDetails(@ApiIgnore Authentication authentication) {
@@ -31,7 +29,7 @@ public class MemberController {
         MemberDetails memberDetails = (MemberDetails) authentication.getDetails();
         Member member = memberDetails.getUser();
 
-        List<String> tags = memberTagService.getMemberTagListByMember(member);
+        List<String> tags = tagService.getMemberTagListByMember(member);
 
         MemberInfoRes memberInfoRes = MemberInfoRes.builder()
                 .memberId(member.getMemberId())
@@ -44,6 +42,15 @@ public class MemberController {
                 .build();
 
         return ResponseEntity.status(200).body(memberInfoRes);
+    }
+
+    @PatchMapping("/tag/add")
+    public ResponseEntity<?> memberTagAdd(@RequestParam(value="tag") String tag, @ApiIgnore Authentication authentication) {
+        MemberDetails memberDetails = (MemberDetails) authentication.getDetails();
+        Member member = memberDetails.getUser();
+        tagService.addMemberTag(member,tag);
+
+        return ResponseEntity.status(200).build();
     }
 
 }

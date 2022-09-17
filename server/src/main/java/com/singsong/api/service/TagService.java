@@ -4,6 +4,8 @@ import com.singsong.db.entity.Member;
 
 import java.util.List;
 
-public interface MemberTagService {
+public interface TagService {
      List<String> getMemberTagListByMember(Member member);
+
+     void addMemberTag(Member member, String tag);
 }

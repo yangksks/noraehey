@@ -5,6 +5,8 @@ import com.singsong.common.exception.member.MemberNotFoundException;
 import com.singsong.common.exception.member.MemberUnauthorizedException;
 import com.singsong.common.exception.response.ErrorResponse;
 import com.singsong.common.exception.song.SongNotFoundException;
+import com.singsong.common.exception.tag.TagDuplicationException;
+import com.singsong.common.exception.tag.TagNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -40,6 +42,22 @@ public class GlobalControllerAdvice {
         ErrorResponse response = new ErrorResponse(e.getErrorCode());
         return new ResponseEntity<>(response, HttpStatus.valueOf(e.getErrorCode().getStatus()));
     }
+
+    // 태그가 없는 경우
+    @ExceptionHandler(TagNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleTagNotFoundException(TagNotFoundException e) {
+        log.error("handleTagNotFoundException", e);
+        ErrorResponse response = new ErrorResponse(e.getErrorCode());
+        return new ResponseEntity<>(response, HttpStatus.valueOf(e.getErrorCode().getStatus()));
+    }
+
+    @ExceptionHandler(TagDuplicationException.class)
+    public ResponseEntity<ErrorResponse> handleTagDuplicationException(TagDuplicationException e) {
+        log.error("handleTagDuplicationException", e);
+        ErrorResponse response = new ErrorResponse(e.getErrorCode());
+        return new ResponseEntity<>(response, HttpStatus.valueOf(e.getErrorCode().getStatus()));
+    }
+
 
 
 
