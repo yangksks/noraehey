@@ -10,4 +10,5 @@ public interface MemberService {
     Member createMember(KakaoMemberInfo kakaoMemberInfo);
 
     void saveRefreshToken(Member member, String token);
+
 }

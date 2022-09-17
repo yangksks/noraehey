@@ -1,6 +1,5 @@
 package com.singsong.db.entity;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -8,7 +7,6 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Getter
@@ -28,10 +26,6 @@ public class Member {
     private String memberProfileUrl;
     @Column(columnDefinition = "TINYINT", length=1)
     private int memberGender;
-
-    @OneToMany(mappedBy = "member")
-    @JsonManagedReference // 순환참조 문제해결
-    private List<MemberTag> memberTag;
 
     int memberHighPitch;
     int memberRole;
