@@ -6,6 +6,7 @@ import com.singsong.db.entity.MemberTag;
 import com.singsong.db.entity.Tag;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -15,4 +16,7 @@ public interface MemberTagRepository extends JpaRepository<MemberTag, Long> {
 
     Optional<List<MemberTagMapping>> findByMember(Member member);
     Optional<MemberTag> findByMemberAndTag(Member member, Tag tag);
+
+    @Transactional
+    void deleteByMemberAndTag(Member member, Tag tag);
 }

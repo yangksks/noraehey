@@ -44,6 +44,15 @@ public class MemberController {
         return ResponseEntity.status(200).body(memberInfoRes);
     }
 
+    @PatchMapping("/tag/delete")
+    public ResponseEntity<?> memberTagDelete(@RequestParam(value="tag") String tag, @ApiIgnore Authentication authentication) {
+        MemberDetails memberDetails = (MemberDetails) authentication.getDetails();
+        Member member = memberDetails.getUser();
+        tagService.deleteMemberTag(member,tag);
+
+        return ResponseEntity.status(200).build();
+    }
+
     @PatchMapping("/tag/add")
     public ResponseEntity<?> memberTagAdd(@RequestParam(value="tag") String tag, @ApiIgnore Authentication authentication) {
         MemberDetails memberDetails = (MemberDetails) authentication.getDetails();

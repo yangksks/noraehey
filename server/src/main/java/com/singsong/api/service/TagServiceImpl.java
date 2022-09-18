@@ -51,4 +51,16 @@ public class TagServiceImpl implements TagService {
 
         memberTagRepository.save(memberTag);
     }
+
+    @Override
+    public void deleteMemberTag(Member member, String tagName) {
+        Tag tag = tagRepository.findByTagName(tagName).orElseThrow(() -> new TagNotFoundException("존재하지 않는 태그입니다.", ErrorCode.TAG_NOT_FOUND));
+
+        if(!memberTagRepository.findByMemberAndTag(member,tag).isPresent())
+            throw new TagNotFoundException("추가되지 않은 태그입니다.", ErrorCode.TAG_NOT_FOUND);
+
+        memberTagRepository.deleteByMemberAndTag(member,tag);
+    }
+
+
 }

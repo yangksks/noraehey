@@ -26,7 +26,6 @@ public class GlobalControllerAdvice {
         return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-
     // 멤버
     @ExceptionHandler(MemberNotFoundException.class)
     public ResponseEntity<ErrorResponse> handleMemberNotFoundException(MemberNotFoundException e){
@@ -57,9 +56,6 @@ public class GlobalControllerAdvice {
         ErrorResponse response = new ErrorResponse(e.getErrorCode());
         return new ResponseEntity<>(response, HttpStatus.valueOf(e.getErrorCode().getStatus()));
     }
-
-
-
 
     // TODO: IOException 나누기 (S3 업로드에도 IOException 가능)
     // Kakao IOException

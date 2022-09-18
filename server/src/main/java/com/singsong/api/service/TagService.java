@@ -7,5 +7,6 @@ import java.util.List;
 public interface TagService {
      List<String> getMemberTagListByMember(Member member);
 
-     void addMemberTag(Member member, String tag);
+     void addMemberTag(Member member, String tagName);
+     void deleteMemberTag(Member member, String tagName);
 }
