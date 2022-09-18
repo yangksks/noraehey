@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.data.annotation.CreatedDate;
 
@@ -16,6 +17,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 @DynamicUpdate // 변경된 컬럼만 업데이트(patch)
+@DynamicInsert // insert 시 null 값은 넣지 않음
 public class Shorts {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
