@@ -26,10 +26,10 @@ public class S3Util {
         String originalName = createFileName(multipartFile.getOriginalFilename()); // 파일 이름
         long size = multipartFile.getSize(); // 파일 크기
         String extension = originalName.substring(originalName.lastIndexOf("."));
-//        TODO: 확장자 제한
-//        if (!(extension.equals(".jpeg") || extension.equals(".JPEG") || extension.equals(".jpg")|| extension.equals(".JPG") || extension.equals(".png") || extension.equals(".PNG"))) {
-//            return "fail";
-//        }
+
+        if (!(extension.equals(".mp3") || extension.equals(".MP3") || extension.equals(".m4a")|| extension.equals(".M4A"))) {
+            return "fail";
+        }
 
         ObjectMetadata objectMetaData = new ObjectMetadata();
         objectMetaData.setContentType(multipartFile.getContentType());
