@@ -27,7 +27,7 @@ public class MemberServiceImpl implements MemberService{
         // TODO: 기본값 수정
         Member member = Member.builder()
                 .memberEmail(kakaoMemberInfo.getEmail())
-                .memberNickname("노래쟁이 #" + kakaoMemberInfo.getId())
+                .memberNickname("노래쟁이#" + kakaoMemberInfo.getId())
                 // TODO: S3에 저장된 기본 프로필 이미지
                 .memberProfileUrl(null)
                 .memberHighPitch(0)

@@ -33,6 +33,6 @@ public class Member {
     }
 
     public void setMemberNickname(String nickname) {
-        this.memberNickname = nickname.replaceAll(" ", "")+" "+ this.memberNickname.split(" ")[1];
+        this.memberNickname = nickname;
     }
 }
