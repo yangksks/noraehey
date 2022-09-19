@@ -1,5 +1,6 @@
 package com.singsong.api.response;
 
+import com.singsong.db.entity.Song;
 import io.swagger.annotations.ApiModel;
 import lombok.Builder;
 import lombok.Getter;
@@ -13,4 +14,20 @@ import lombok.Setter;
 @Builder
 @ApiModel("SongEntityResponse")
 public class SongEntityRes {
+    Long songId;
+    String songTitle;
+    String songSinger;
+    String songImageUrl;
+    int songHighPitch;
+
+    public static SongEntityRes of(Song song){
+        SongEntityRes res = SongEntityRes.builder()
+                .songId(song.getSongId())
+                .songTitle(song.getSongTitle())
+                .songSinger(song.getSongSinger())
+                .songImageUrl(song.getSongImageUrl())
+                .songHighPitch(song.getSongHighPitch())
+                .build();
+        return res;
+    }
 }
