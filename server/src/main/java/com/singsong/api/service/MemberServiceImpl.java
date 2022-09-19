@@ -21,8 +21,8 @@ public class MemberServiceImpl implements MemberService{
     RefreshTokenRepository refreshTokenRepository;
     @Override
     public Member getMemberByMemberEmail(String memberEmail) {
-        Optional<Member> member = memberRepository.findByMemberEmail(memberEmail);
-        return member.orElseThrow(()-> new MemberNotFoundException("해당 이메일로 유저를 찾을 수 없습니다.", ErrorCode.MEMBER_NOT_FOUND));
+        Member member = memberRepository.findByMemberEmail(memberEmail);
+        return member;
     }
 
     // 회원가입
@@ -34,7 +34,7 @@ public class MemberServiceImpl implements MemberService{
                 .memberNickname("노래쟁이 #" + kakaoMemberInfo.getId())
                 // TODO: S3에 저장된 기본 프로필 이미지
                 .memberProfileUrl(null)
-                .memberGender(0)
+                .memberTag(null)
                 .memberHighPitch(0)
                 .memberRole(1)
                 .build();
@@ -56,5 +56,4 @@ public class MemberServiceImpl implements MemberService{
         }
         refreshTokenRepository.save(refreshToken);
     }
-
 }

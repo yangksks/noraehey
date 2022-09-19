@@ -23,8 +23,6 @@ public class Song {
     String songTitle;
     @Column(length = 50)
     String songSinger;
-    @Column(columnDefinition = "TINYINT", length=1)
-    int songGender;
     int songHighPitch;
     @Column(length = 50)
     String songGenre;
