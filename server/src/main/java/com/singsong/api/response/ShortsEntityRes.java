@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 
 @Getter
 @Builder
-public class ShortsBySongGetRes {
+public class ShortsEntityRes {
     // shorts
     Long shortsId;
     String shortsComment;
