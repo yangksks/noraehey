@@ -24,7 +24,6 @@ public class Member {
     private String memberNickname;
     @Column(length = 500)
     private String memberProfileUrl;
-
     int memberHighPitch;
     int memberRole;
 }
