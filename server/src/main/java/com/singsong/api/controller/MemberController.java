@@ -1,19 +1,17 @@
 package com.singsong.api.controller;
 
 import com.singsong.api.response.MemberInfoRes;
+import com.singsong.api.service.MemberService;
+import com.singsong.api.service.TagService;
 import com.singsong.common.util.auth.MemberDetails;
 import com.singsong.db.entity.Member;
-import com.singsong.db.entity.MemberTag;
-import com.singsong.db.repository.MemberRepository;
+import com.singsong.db.entity.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -21,22 +19,18 @@ import java.util.List;
 public class MemberController {
 
     @Autowired
-    MemberRepository memberRepository;
+    MemberService memberService;
 
-    // Todo: Exception 클래스 만들면 에러처리해야됩니다.
+    @Autowired
+    TagService tagService;
+
     @GetMapping("/info")
     public ResponseEntity<?> memberDetails(@ApiIgnore Authentication authentication) {
 
         MemberDetails memberDetails = (MemberDetails) authentication.getDetails();
-        String memberEmail = memberDetails.getUsername();
-        Member member = memberRepository.findByMemberEmail(memberEmail);
+        Member member = memberDetails.getUser();
 
-        // Todo : 다대다 연결테이블 조인과 관련된 더 효율적인 방법이 있으면 교체
-        List<MemberTag> memberTags = member.getMemberTag();
-        List<String> tags = new ArrayList<>();
-
-        for (int i = 0; i<memberTags.size(); i++)
-            tags.add(memberTags.get(i).getTag().getTagName());
+        List<Tag> tags = tagService.getMemberTagListByMember(member);
 
         MemberInfoRes memberInfoRes = MemberInfoRes.builder()
                 .memberId(member.getMemberId())
@@ -49,6 +43,24 @@ public class MemberController {
                 .build();
 
         return ResponseEntity.status(200).body(memberInfoRes);
+    }
+
+    @PatchMapping("/tag/delete")
+    public ResponseEntity<?> memberTagDelete(@RequestParam(value="tag") int tagId, @ApiIgnore Authentication authentication) {
+        MemberDetails memberDetails = (MemberDetails) authentication.getDetails();
+        Member member = memberDetails.getUser();
+        tagService.deleteMemberTag(member,tagId);
+
+        return ResponseEntity.status(200).build();
+    }
+
+    @PatchMapping("/tag/add")
+    public ResponseEntity<?> memberTagAdd(@RequestParam(value="tag") int tagId, @ApiIgnore Authentication authentication) {
+        MemberDetails memberDetails = (MemberDetails) authentication.getDetails();
+        Member member = memberDetails.getUser();
+        tagService.addMemberTag(member,tagId);
+
+        return ResponseEntity.status(200).build();
     }
 
 }

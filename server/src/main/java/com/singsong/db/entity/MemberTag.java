@@ -1,6 +1,5 @@
 package com.singsong.db.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -22,7 +21,6 @@ public class MemberTag {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
-    @JsonBackReference // 순환참조 문제해결
     private Member member;
 
     @ManyToOne(fetch = FetchType.LAZY)

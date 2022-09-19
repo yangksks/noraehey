@@ -1,5 +1,6 @@
 package com.singsong.api.response;
 
+import com.singsong.db.entity.Tag;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -14,5 +15,5 @@ public class MemberInfoRes {
     private String profileUrl;
     private int gender;
     private int songHighPitch;
-    private List<String> memberTagList;
+    private List<Tag> memberTagList;
 }

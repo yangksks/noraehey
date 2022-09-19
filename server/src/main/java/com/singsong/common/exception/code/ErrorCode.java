@@ -14,6 +14,11 @@ public enum ErrorCode {
     NICKNAME_DUPLICATION(409, "MEMBER_ERR_409", "이미 존재하는 닉네임입니다."),
     EMAIL_DUPLICATION(409, "MEMBER_ERR_409", "이미 존재하는 이메일입니다."),
     Member_Unauthorized(401, "MEMBER_ERR_401", "MEMBER UNAUTHORIZED"),
+
+    // 태그
+    TAG_NOT_FOUND(404,"TAG_ERR_404","태그가 존재하지 않습니다."),
+    TAG_DUPLICATION(409,"TAG_ERR_409","중복된 태그입니다."),
+
     // 카카오
     KAKAO_IO_EXCEPTION(409, "KAKAO_ERR_409", "KAKAO IO EXCEPTION"),
 
