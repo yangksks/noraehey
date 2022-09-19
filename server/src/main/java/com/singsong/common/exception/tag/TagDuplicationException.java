@@ -11,4 +11,10 @@ public class TagDuplicationException extends RuntimeException{
         super(message);
         this.errorCode = errorCode;
     }
+
+    @Override
+    public synchronized Throwable fillInStackTrace() {
+        return this;
+    }
+
 }

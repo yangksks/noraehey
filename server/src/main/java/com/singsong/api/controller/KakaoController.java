@@ -1,15 +1,11 @@
 package com.singsong.api.controller;
 
-import com.singsong.api.response.KakaoLoginPostRes;
+import com.singsong.api.response.MemberTokenRes;
 import com.singsong.api.service.KakaoService;
 import com.singsong.api.service.MemberService;
-import com.singsong.common.exception.code.ErrorCode;
-import com.singsong.common.exception.member.MemberNotFoundException;
 import com.singsong.common.model.response.KakaoMemberInfo;
 import com.singsong.common.util.JwtTokenUtil;
 import com.singsong.db.entity.Member;
-import com.singsong.db.entity.RefreshToken;
-import com.singsong.db.repository.RefreshTokenRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
@@ -57,12 +53,12 @@ public class KakaoController {
         // refreshToken DB에 초기화
         memberService.saveRefreshToken(member, tokens.get("refreshToken"));
 
-        KakaoLoginPostRes kakaoLoginPostRes = KakaoLoginPostRes.builder()
+        MemberTokenRes memberTokenRes = MemberTokenRes.builder()
                 .accessToken(tokens.get("accessToken"))
                 .refreshToken(tokens.get("refreshToken"))
                 .build();
 
-        return ResponseEntity.status(200).body(kakaoLoginPostRes);
+        return ResponseEntity.status(200).body(memberTokenRes);
 
 
     }

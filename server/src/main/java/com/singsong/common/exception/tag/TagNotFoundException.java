@@ -13,4 +13,9 @@ public class TagNotFoundException extends RuntimeException{
         this.errorCode = errorCode;
     }
 
+    @Override
+    public synchronized Throwable fillInStackTrace() {
+        return this;
+    }
+
 }
