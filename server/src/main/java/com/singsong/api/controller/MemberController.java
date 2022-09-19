@@ -4,6 +4,7 @@ import com.singsong.api.response.MemberInfoRes;
 import com.singsong.api.response.MemberTokenRes;
 import com.singsong.api.service.MemberService;
 import com.singsong.api.service.TagService;
+import com.singsong.common.util.JwtAuthenticationUtil;
 import com.singsong.common.util.JwtTokenUtil;
 import com.singsong.common.util.auth.MemberDetails;
 import com.singsong.db.entity.Member;
@@ -24,6 +25,8 @@ import java.util.Map;
 public class MemberController {
 
     @Autowired
+    JwtAuthenticationUtil jwtAuthenticationUtil;
+    @Autowired
     MemberService memberService;
 
     @Autowired
@@ -32,8 +35,7 @@ public class MemberController {
     @GetMapping("/info")
     public ResponseEntity<?> memberDetails(@ApiIgnore Authentication authentication) {
 
-        MemberDetails memberDetails = (MemberDetails) authentication.getDetails();
-        Member member = memberDetails.getUser();
+        Member member = jwtAuthenticationUtil.jwtTokenAuth(authentication);
 
         List<Tag> tags = tagService.getMemberTagListByMember(member);
 
@@ -70,8 +72,7 @@ public class MemberController {
 
     @PatchMapping("/tag/delete")
     public ResponseEntity<?> memberTagDelete(@RequestParam(value = "tag") int tagId, @ApiIgnore Authentication authentication) {
-        MemberDetails memberDetails = (MemberDetails) authentication.getDetails();
-        Member member = memberDetails.getUser();
+        Member member = jwtAuthenticationUtil.jwtTokenAuth(authentication);
         tagService.deleteMemberTag(member, tagId);
 
         return ResponseEntity.status(200).build();
@@ -79,8 +80,7 @@ public class MemberController {
 
     @PatchMapping("/tag/add")
     public ResponseEntity<?> memberTagAdd(@RequestParam(value = "tag") int tagId, @ApiIgnore Authentication authentication) {
-        MemberDetails memberDetails = (MemberDetails) authentication.getDetails();
-        Member member = memberDetails.getUser();
+        Member member = jwtAuthenticationUtil.jwtTokenAuth(authentication);
         tagService.addMemberTag(member, tagId);
 
         return ResponseEntity.status(200).build();
