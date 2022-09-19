@@ -51,4 +51,10 @@ public class MemberServiceImpl implements MemberService{
         }
         refreshTokenRepository.save(refreshToken);
     }
+
+    @Override
+    public void modifyHighPitch(Member member, int highPitch) {
+        member.setMemberHighPitch(highPitch);
+        memberRepository.save(member);
+    }
 }

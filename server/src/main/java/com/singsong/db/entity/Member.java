@@ -27,6 +27,10 @@ public class Member {
     @Column(columnDefinition = "TINYINT", length=1)
     private int memberGender;
 
-    int memberHighPitch;
-    int memberRole;
+    private int memberHighPitch;
+    private int memberRole;
+
+    public void setMemberHighPitch(int highPitch) {
+        this.memberHighPitch = highPitch;
+    }
 }

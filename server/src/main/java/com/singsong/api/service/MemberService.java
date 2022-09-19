@@ -11,4 +11,6 @@ public interface MemberService {
 
     void saveRefreshToken(Member member, String token);
 
+    void modifyHighPitch(Member member,int highPitch);
+
 }

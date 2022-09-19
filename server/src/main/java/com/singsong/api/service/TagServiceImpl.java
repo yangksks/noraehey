@@ -1,5 +1,6 @@
 package com.singsong.api.service;
 
+import com.singsong.api.response.MemberInfoRes;
 import com.singsong.common.exception.code.ErrorCode;
 import com.singsong.common.exception.tag.TagDuplicationException;
 import com.singsong.common.exception.tag.TagNotFoundException;
@@ -24,7 +25,7 @@ public class TagServiceImpl implements TagService {
     TagRepository tagRepository;
 
     @Override
-    public List<Tag> getMemberTagListByMember(Member member) {
+    public MemberInfoRes getMemberInfoRes(Member member) {
 
         List<MemberTagMapping> memberTagList = memberTagRepository.findByMember(member);
 
@@ -33,7 +34,15 @@ public class TagServiceImpl implements TagService {
             tags.add(tag.getTag());
         }
 
-        return tags;
+        return MemberInfoRes.builder()
+                .memberId(member.getMemberId())
+                .email(member.getMemberEmail())
+                .gender(member.getMemberGender())
+                .nickName(member.getMemberNickname())
+                .songHighPitch(member.getMemberHighPitch())
+                .profileUrl(member.getMemberProfileUrl())
+                .memberTagList(tags)
+                .build();
     }
 
     @Override
