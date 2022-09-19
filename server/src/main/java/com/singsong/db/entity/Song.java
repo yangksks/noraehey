@@ -34,4 +34,5 @@ public class Song {
     String songKy;
     @Column(length = 500)
     String songTag;
+    int songLikeCount;
 }

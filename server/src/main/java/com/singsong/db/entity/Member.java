@@ -25,8 +25,6 @@ public class Member {
     @Column(length = 500)
     private String memberProfileUrl;
     @Column(columnDefinition = "TINYINT", length=1)
-    private int memberGender;
-
     int memberHighPitch;
     int memberRole;
 }
