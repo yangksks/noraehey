@@ -6,7 +6,7 @@ import lombok.Getter;
 
 @Getter
 @Builder
-public class KakaoLoginPostRes {
+public class MemberTokenRes {
     String accessToken;
     String refreshToken;
 }

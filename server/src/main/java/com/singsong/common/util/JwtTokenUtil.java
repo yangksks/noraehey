@@ -113,23 +113,15 @@ public class JwtTokenUtil {
         return tokens;
     }
 
-    public Boolean reGenerateRefreshToken(Member member) throws Exception {
-        RefreshToken refreshToken = refreshTokenRepository.findByMemberMemberId(member.getMemberId()).orElse(null);
-        if (refreshToken == null) {
-            log.info("[reGenerateRefreshToken] refreshToken 정보가 존재하지 않습니다.");
-            return false;
-        }
-
+    public RefreshToken reGenerateRefreshToken(Member member, RefreshToken refreshToken) {
         try {
             JWT
                     .require(Algorithm.HMAC512(secretKey.getBytes()))
                     .withIssuer(ISSUER)
                     .build().verify(refreshToken.getRefreshToken().replace(TOKEN_PREFIX, ""));
             log.info("[reGenerateRefreshToken] refreshToken이 만료되지 않았습니다.");
-            return true;
-        }
-        // refreshToken이 만료된 경우 재발급
-        catch (TokenExpiredException e) {
+            return refreshToken;
+        } catch (TokenExpiredException e) { // refreshToken이 만료된 경우 재발급
             RefreshToken newRefreshToken = RefreshToken.builder()
                     .refreshTokenId(refreshToken.getRefreshTokenId())
                     .refreshToken("Bearer " + getRefreshToken(member.getMemberEmail()))
@@ -137,12 +129,12 @@ public class JwtTokenUtil {
                     .build();
             refreshTokenRepository.save(newRefreshToken);
             log.info("[reGenerateRefreshToken] refreshToken 재발급 완료 : {}", newRefreshToken.getRefreshToken());
-            return true;
+            return newRefreshToken;
         }
         // 그 외 예외처리
         catch (Exception e) {
             log.error("[reGenerateRefreshToken] refreshToken 재발급 중 문제 발생 : {}", e.getMessage());
-            return false;
+            return null;
         }
     }
 
