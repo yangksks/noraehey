@@ -6,7 +6,7 @@ import com.singsong.db.entity.RefreshToken;
 
 public interface MemberService {
     Member getMemberByMemberEmail(String memberEmail);
-
+    Member getMemberByMemberId(Long memberId);
     // 회원가입
     Member createMember(KakaoMemberInfo kakaoMemberInfo);
 

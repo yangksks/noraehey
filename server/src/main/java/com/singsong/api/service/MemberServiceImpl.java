@@ -2,6 +2,7 @@ package com.singsong.api.service;
 
 import com.singsong.common.exception.code.ErrorCode;
 import com.singsong.common.exception.member.MemberUnauthorizedException;
+import com.singsong.common.exception.member.MemberNotFoundException;
 import com.singsong.common.model.response.KakaoMemberInfo;
 import com.singsong.common.util.JwtTokenUtil;
 import com.singsong.db.entity.Member;
@@ -12,7 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class MemberServiceImpl implements MemberService {
+public class MemberServiceImpl implements MemberService{
 
     @Autowired
     MemberRepository memberRepository;
@@ -24,7 +25,13 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public Member getMemberByMemberEmail(String memberEmail) {
-        Member member = memberRepository.findByMemberEmail(memberEmail);
+        Member member = memberRepository.findByMemberEmail(memberEmail).orElse(null);
+        return member;
+    }
+
+    @Override
+    public Member getMemberByMemberId(Long memberId) {
+        Member member = memberRepository.findByMemberId(memberId).orElseThrow(() -> new MemberNotFoundException("member not found", ErrorCode.MEMBER_NOT_FOUND));
         return member;
     }
 
