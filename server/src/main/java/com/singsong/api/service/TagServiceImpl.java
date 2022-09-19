@@ -26,7 +26,7 @@ public class TagServiceImpl implements TagService {
     @Override
     public List<String> getMemberTagListByMember(Member member) {
 
-        List<MemberTagMapping> memberTagList = memberTagRepository.findByMember(member).orElse(new ArrayList<>());
+        List<MemberTagMapping> memberTagList = memberTagRepository.findByMember(member);
 
         List<String> tags = new ArrayList<>();
         for (MemberTagMapping tag : memberTagList) {

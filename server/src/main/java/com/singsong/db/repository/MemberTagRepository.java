@@ -14,7 +14,7 @@ import java.util.Optional;
 @Repository
 public interface MemberTagRepository extends JpaRepository<MemberTag, Long> {
 
-    Optional<List<MemberTagMapping>> findByMember(Member member);
+    List<MemberTagMapping> findByMember(Member member);
     Optional<MemberTag> findByMemberAndTag(Member member, Tag tag);
 
     @Transactional
