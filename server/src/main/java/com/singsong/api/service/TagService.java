@@ -1,12 +1,13 @@
 package com.singsong.api.service;
 
 import com.singsong.db.entity.Member;
+import com.singsong.db.entity.Tag;
 
 import java.util.List;
 
 public interface TagService {
-     List<String> getMemberTagListByMember(Member member);
+     List<Tag> getMemberTagListByMember(Member member);
 
-     void addMemberTag(Member member, String tagName);
-     void deleteMemberTag(Member member, String tagName);
+     void addMemberTag(Member member, int tagId);
+     void deleteMemberTag(Member member,int tagId);
 }

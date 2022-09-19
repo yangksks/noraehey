@@ -1,7 +1,5 @@
 package com.singsong.api.service;
 
-import com.singsong.common.exception.code.ErrorCode;
-import com.singsong.common.exception.member.MemberNotFoundException;
 import com.singsong.common.model.response.KakaoMemberInfo;
 import com.singsong.db.entity.Member;
 import com.singsong.db.entity.RefreshToken;
@@ -9,8 +7,6 @@ import com.singsong.db.repository.MemberRepository;
 import com.singsong.db.repository.RefreshTokenRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 public class MemberServiceImpl implements MemberService{
@@ -34,7 +30,6 @@ public class MemberServiceImpl implements MemberService{
                 .memberNickname("노래쟁이 #" + kakaoMemberInfo.getId())
                 // TODO: S3에 저장된 기본 프로필 이미지
                 .memberProfileUrl(null)
-                .memberTag(null)
                 .memberHighPitch(0)
                 .memberRole(1)
                 .build();

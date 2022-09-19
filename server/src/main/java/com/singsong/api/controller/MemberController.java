@@ -5,6 +5,7 @@ import com.singsong.api.service.MemberService;
 import com.singsong.api.service.TagService;
 import com.singsong.common.util.auth.MemberDetails;
 import com.singsong.db.entity.Member;
+import com.singsong.db.entity.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -29,7 +30,7 @@ public class MemberController {
         MemberDetails memberDetails = (MemberDetails) authentication.getDetails();
         Member member = memberDetails.getUser();
 
-        List<String> tags = tagService.getMemberTagListByMember(member);
+        List<Tag> tags = tagService.getMemberTagListByMember(member);
 
         MemberInfoRes memberInfoRes = MemberInfoRes.builder()
                 .memberId(member.getMemberId())
@@ -45,19 +46,19 @@ public class MemberController {
     }
 
     @PatchMapping("/tag/delete")
-    public ResponseEntity<?> memberTagDelete(@RequestParam(value="tag") String tag, @ApiIgnore Authentication authentication) {
+    public ResponseEntity<?> memberTagDelete(@RequestParam(value="tag") int tagId, @ApiIgnore Authentication authentication) {
         MemberDetails memberDetails = (MemberDetails) authentication.getDetails();
         Member member = memberDetails.getUser();
-        tagService.deleteMemberTag(member,tag);
+        tagService.deleteMemberTag(member,tagId);
 
         return ResponseEntity.status(200).build();
     }
 
     @PatchMapping("/tag/add")
-    public ResponseEntity<?> memberTagAdd(@RequestParam(value="tag") String tag, @ApiIgnore Authentication authentication) {
+    public ResponseEntity<?> memberTagAdd(@RequestParam(value="tag") int tagId, @ApiIgnore Authentication authentication) {
         MemberDetails memberDetails = (MemberDetails) authentication.getDetails();
         Member member = memberDetails.getUser();
-        tagService.addMemberTag(member,tag);
+        tagService.addMemberTag(member,tagId);
 
         return ResponseEntity.status(200).build();
     }
