@@ -20,17 +20,19 @@ public class Member {
     private Long memberId;
     @Column(length = 100)
     private String memberEmail;
-    @Column(length = 20)
+    @Column(length = 30)
     private String memberNickname;
     @Column(length = 500)
     private String memberProfileUrl;
-    @Column(columnDefinition = "TINYINT", length=1)
-    private int memberGender;
 
     private int memberHighPitch;
     private int memberRole;
 
     public void setMemberHighPitch(int highPitch) {
         this.memberHighPitch = highPitch;
+    }
+
+    public void setMemberNickname(String nickname) {
+        this.memberNickname = nickname.replaceAll(" ", "")+" "+ this.memberNickname.split(" ")[1];
     }
 }

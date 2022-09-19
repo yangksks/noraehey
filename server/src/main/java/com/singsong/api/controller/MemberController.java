@@ -11,6 +11,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
+import java.util.Map;
+
 @RestController
 @RequestMapping("/member")
 public class MemberController {
@@ -28,6 +30,16 @@ public class MemberController {
         MemberInfoRes memberInfoRes = tagService.getMemberInfoRes(member);
 
         return ResponseEntity.status(200).body(memberInfoRes);
+    }
+
+    @PatchMapping("/nickname")
+    public ResponseEntity<?> nickNameModify(@ApiIgnore Authentication authentication,
+                                            @RequestBody Map<String,String> req) {
+        MemberDetails memberDetails = (MemberDetails) authentication.getDetails();
+        Member member = memberDetails.getUser();
+        memberService.modifyNickName(member,req.get("nickname"));
+
+        return ResponseEntity.status(200).build();
     }
 
     @PatchMapping("/tag/add")

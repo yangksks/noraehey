@@ -37,7 +37,6 @@ public class TagServiceImpl implements TagService {
         return MemberInfoRes.builder()
                 .memberId(member.getMemberId())
                 .email(member.getMemberEmail())
-                .gender(member.getMemberGender())
                 .nickName(member.getMemberNickname())
                 .songHighPitch(member.getMemberHighPitch())
                 .profileUrl(member.getMemberProfileUrl())

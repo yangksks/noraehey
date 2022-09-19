@@ -57,4 +57,11 @@ public class MemberServiceImpl implements MemberService{
         member.setMemberHighPitch(highPitch);
         memberRepository.save(member);
     }
+
+    @Override
+    public void modifyNickName(Member member, String nickname) {
+        member.setMemberNickname(nickname);
+        System.out.println(member);
+        memberRepository.save(member);
+    }
 }

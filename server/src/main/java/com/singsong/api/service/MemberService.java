@@ -13,4 +13,6 @@ public interface MemberService {
 
     void modifyHighPitch(Member member,int highPitch);
 
+    void modifyNickName(Member member,String nickname);
+
 }
