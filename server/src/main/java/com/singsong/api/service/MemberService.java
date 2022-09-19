@@ -2,6 +2,7 @@ package com.singsong.api.service;
 
 import com.singsong.common.model.response.KakaoMemberInfo;
 import com.singsong.db.entity.Member;
+import com.singsong.db.entity.RefreshToken;
 
 public interface MemberService {
     Member getMemberByMemberEmail(String memberEmail);
@@ -10,5 +11,6 @@ public interface MemberService {
     Member createMember(KakaoMemberInfo kakaoMemberInfo);
 
     void saveRefreshToken(Member member, String token);
+    RefreshToken modifyRefreshToken(String refreshToken);
 
 }

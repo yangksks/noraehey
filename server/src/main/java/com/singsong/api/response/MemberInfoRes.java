@@ -13,7 +13,6 @@ public class MemberInfoRes {
     private String email;
     private String nickName;
     private String profileUrl;
-    private int gender;
     private int songHighPitch;
     private List<Tag> memberTagList;
 }
