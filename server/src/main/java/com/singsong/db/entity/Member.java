@@ -17,15 +17,14 @@ import javax.persistence.*;
 public class Member {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long memberId;
+    private Long memberId;
     @Column(length = 100)
-    String memberEmail;
+    private String memberEmail;
     @Column(length = 20)
-    String memberNickname;
+    private String memberNickname;
     @Column(length = 500)
-    String memberProfileUrl;
-    @Column(length = 500)
-    String memberTag;
+    private String memberProfileUrl;
+    @Column(columnDefinition = "TINYINT", length=1)
     int memberHighPitch;
     int memberRole;
 }

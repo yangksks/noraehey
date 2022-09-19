@@ -13,12 +13,17 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@DynamicUpdate // 변경된 컬럼만 업데이트(patch)
-public class Tag {
+@DynamicUpdate
+public class MemberTag {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int tagId;
+    private Long memberTagId;
 
-    @Column(length = 20)
-    String tagName;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id")
+    private Member member;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "tag_id")
+    private Tag tag;
 }

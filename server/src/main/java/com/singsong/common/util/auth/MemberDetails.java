@@ -1,4 +1,4 @@
-package com.singsong.common.auth;
+package com.singsong.common.util.auth;
 
 import com.singsong.db.entity.Member;
 import org.springframework.beans.factory.annotation.Autowired;

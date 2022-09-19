@@ -15,4 +15,5 @@ public interface SongRepository extends JpaRepository<Song, Long> {
 //    List<Song> findAllBySongTitleContainsAndSongTitleNot(String word1, String word2, Pageable pageable);
     List<Song> findAllBySongSinger(String word, Pageable pageable);
     List<Song> findAllBySongSingerContains(String word, Pageable pageable);
+    Song findSongBySongId(Long songId);
 }

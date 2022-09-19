@@ -1,4 +1,4 @@
-package com.singsong.common.auth;
+package com.singsong.common.util.auth;
 
 import com.singsong.api.service.MemberService;
 import com.singsong.db.entity.Member;

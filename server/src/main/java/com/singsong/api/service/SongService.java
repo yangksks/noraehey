@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface SongService {
     List<Song> searchSongList(String word);
-    boolean isValid(String word, int page);
+    Song getSongBySongId(Long songId);
 }

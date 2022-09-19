@@ -1,17 +1,16 @@
 package com.singsong.api.service;
 
+import com.singsong.common.exception.code.ErrorCode;
+import com.singsong.common.exception.song.SongNotFoundException;
 import com.singsong.db.entity.Song;
 import com.singsong.db.repository.SongRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class SongServiceImpl implements SongService {
+public class SongServiceImpl implements SongService{
 
     @Autowired
     SongRepository songRepository;
@@ -25,13 +24,11 @@ public class SongServiceImpl implements SongService {
     }
 
     @Override
-    public boolean isValid(String word, int page) {
-        List<Song> songList = songRepository.findAllBySongTitleOrderBySongLikeCountDesc(word);
-        songList.addAll(songRepository.findAllBySongTitleContainsAndSongTitleNotOrderBySongLikeCountDesc(word, word));
-        int lastIndex = (page + 1) * 20 - 1;
-        if(songList.size() < (page+1) * 20 ){
-            lastIndex = songList.size() - 1;
+    public Song getSongBySongId(Long songId) {
+        Song song = songRepository.findSongBySongId(songId);
+        if (song == null) {
+            throw new SongNotFoundException("song not found", ErrorCode.SONG_NOT_FOUND);
         }
-        return false;
+        return song;
     }
 }
