@@ -30,6 +30,7 @@ import java.util.List;
 @Service
 public class ShortsServiceImpl implements ShortsService {
 
+    static final int SIZE = 2;
     @Autowired
     ShortsRepository shortsRepository;
     @Autowired
@@ -54,14 +55,14 @@ public class ShortsServiceImpl implements ShortsService {
 
     @Override
     public List<Shorts> getShortsListBySongId(Long songId, int page) {
-        Pageable pageable = PageRequest.of(page, 2, Sort.by("shortsCreateTime").descending());
+        Pageable pageable = PageRequest.of(page, SIZE, Sort.by("shortsCreateTime").descending());
         List<Shorts> shortsList = shortsRepository.findAllBySongSongId(songId, pageable);
         return shortsList;
     }
 
     @Override
     public List<Shorts> getShortsListByMemberId(Long memberId, int page) {
-        Pageable pageable = PageRequest.of(page, 2, Sort.by("shortsCreateTime").descending());
+        Pageable pageable = PageRequest.of(page, SIZE, Sort.by("shortsCreateTime").descending());
         List<Shorts> shortsList = shortsRepository.findAllByMemberMemberId(memberId, pageable);
         return shortsList;
     }
@@ -185,13 +186,47 @@ public class ShortsServiceImpl implements ShortsService {
     @Override
     @Transactional // delete 필수
     public void deleteShortsLike(Member member, Long shortsId) {
-        Shorts shorts = shortsRepository.findByShortsId(shortsId).orElseThrow(() -> new ShortsNotFoundException("shorts not found", ErrorCode.SHORTS_NOT_FOUND));
+        shortsRepository.findByShortsId(shortsId).orElseThrow(() -> new ShortsNotFoundException("shorts not found", ErrorCode.SHORTS_NOT_FOUND));
         // 좋아요 하지 않은 쇼츠를 삭제한다면
         if (shortsLikeRepository.findByShortsShortsIdAndMemberMemberId(shortsId, member.getMemberId()) == null) {
             throw new ShortsLikeNotFoundExcepion("shorts like not found", ErrorCode.SHORTS_LIKE_NOT_FOUND);
         }
 
         shortsLikeRepository.deleteByMemberMemberIdAndAndShortsShortsId(member.getMemberId(), shortsId);
+    }
+
+    @Override
+    public List<ShortsEntityRes> getLikeShortsList(Member member, int page) {
+        Pageable pageable = PageRequest.of(page, SIZE);
+        List<Shorts> shortsList = shortsRepository.findByLike(member.getMemberId(), pageable);
+        List<ShortsEntityRes> resList = new ArrayList<>();
+        for (Shorts shorts: shortsList) {
+            Song song = songRepository.findSongBySongId(shorts.getSong().getSongId());
+            boolean isLiked = shortsLikeRepository.findByShortsShortsIdAndMemberMemberId(shorts.getShortsId(), member.getMemberId()) != null;
+            int likeCount = shortsLikeRepository.countByShortsShortsId(shorts.getShortsId()).intValue();
+            Member shortsMember = memberRepository.findByMemberId(shorts.getMember().getMemberId()).orElseThrow(() -> new MemberNotFoundException("member not found", ErrorCode.MEMBER_NOT_FOUND));
+            ShortsEntityRes shortsEntityRes = ShortsEntityRes.builder()
+                    .shortsId(shorts.getShortsId())
+                    .shortsComment(shorts.getShortsComment())
+                    .shortsAudioUrl(shorts.getShortsAudioUrl())
+                    .shortsCreateTime(shorts.getShortsCreateTime())
+                    .songId(song.getSongId())
+                    .songTitle(song.getSongTitle())
+                    .songSinger(song.getSongSinger())
+                    .songHighPitch(song.getSongHighPitch())
+                    .songImageUrl(song.getSongImageUrl())
+                    .songTj(song.getSongTj())
+                    .songKy(song.getSongKy())
+                    .memberId(shortsMember.getMemberId())
+                    .memberNickname(shortsMember.getMemberNickname())
+                    .memberProfileUrl(shortsMember.getMemberProfileUrl())
+                    .likeCount(likeCount)
+                    .isLiked(isLiked)
+                    .build();
+
+            resList.add(shortsEntityRes);
+        }
+        return resList;
     }
 
 }

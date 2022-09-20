@@ -1,5 +1,6 @@
 package com.singsong.db.repository;
 
+import com.singsong.db.entity.Shorts;
 import com.singsong.db.entity.ShortsLike;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

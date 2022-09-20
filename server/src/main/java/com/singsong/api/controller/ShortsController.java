@@ -87,7 +87,6 @@ public class ShortsController {
     public ResponseEntity<?> getRandomShorts(@ApiIgnore Authentication authentication) {
         Member member = jwtAuthenticationUtil.jwtTokenAuth(authentication);
         List<ShortsEntityRes> resList = shortsService.createShortsListByRandom(member);
-
         return ResponseEntity.status(200).body(resList);
     }
 
@@ -101,11 +100,27 @@ public class ShortsController {
     }
 
     // 쇼츠 좋아요 삭제
-    @DeleteMapping("like")
+    @DeleteMapping("/like")
     public ResponseEntity<?> deleteShortsLike(@RequestParam("shortsId") Long shortsId, @ApiIgnore Authentication authentication) {
         Member member = jwtAuthenticationUtil.jwtTokenAuth(authentication);
         shortsService.deleteShortsLike(member, shortsId);
         int likeCount = shortsService.countShortsLike(shortsId);
         return ResponseEntity.status(200).body(ShortsLikeRes.of(shortsId, likeCount, false));
+    }
+
+    // 좋아요 쇼츠 조회
+    @GetMapping("/like")
+    public ResponseEntity<?> getLikeShorts(@RequestParam("page") int page, @ApiIgnore Authentication authentication) {
+        Member member = jwtAuthenticationUtil.jwtTokenAuth(authentication);
+
+        if (page < 0) return ResponseEntity.status(200).body(ShortsListRes.of(false, new ArrayList<>()));
+        
+        List<ShortsEntityRes> resList = shortsService.getLikeShortsList(member, page);
+        // 다음 page 여부 체크
+        List<ShortsEntityRes> hasMoreList = shortsService.getLikeShortsList(member, page + 1);
+        boolean hasMore = hasMoreList.size() > 0 ? true : false;
+
+        return ResponseEntity.status(200).body(ShortsListRes.of(hasMore, resList));
+
     }
 }
