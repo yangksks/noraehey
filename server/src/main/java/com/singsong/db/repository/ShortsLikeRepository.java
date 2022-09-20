@@ -8,4 +8,6 @@ import org.springframework.stereotype.Repository;
 public interface ShortsLikeRepository extends JpaRepository<ShortsLike, Long> {
     ShortsLike findByShortsShortsIdAndMemberMemberId(Long shortsId, Long memberId);
     Long countByShortsShortsId(Long shortsId);
+
+    void deleteByMemberMemberIdAndAndShortsShortsId(Long memberId, Long shortsId);
 }
