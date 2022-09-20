@@ -51,6 +51,6 @@ const BtnList = styled.div`
 const Evaluation = styled.div<{ evalToggle: boolean }>`
   height: ${(props) => (props.evalToggle ? '100px' : '0px')};
   overflow: hidden;
-  transition: 1s;
+  transition: 0.5s;
 `;
 export default SongBtnList;

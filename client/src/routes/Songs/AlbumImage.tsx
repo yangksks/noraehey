@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
-
+import { IoIosHeartEmpty } from 'react-icons/io';
 export type albumType = {
   url: string;
   songTj: number;
@@ -18,9 +18,9 @@ const AlbumImage = (props: albumType) => {
           <p className="KY">KY {songKy}</p>
         </div>
         {isLiked ? (
-          <AiFillHeart size={40} color={'#F44336'} />
+          <AiFillHeart size={35} color={'#f47b73'} />
         ) : (
-          <AiOutlineHeart size={40} color={'#F44336'} />
+          <AiOutlineHeart size={35} color={'#f47b73'} />
         )}
       </NumAndLike>
     </AlbumBox>
