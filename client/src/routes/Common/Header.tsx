@@ -44,7 +44,8 @@ const TopBox = styled.div`
 
 const HeaderBottom = styled.div`
   width: 100%;
-  height: 50px;
+  height: 30px;
+  position: relative;
 `;
 
 const HeaderTop = styled.div<{ infoBar: boolean }>`
@@ -65,7 +66,7 @@ const HeaderTop = styled.div<{ infoBar: boolean }>`
 
 const BottomBox = styled.div`
   width: 100%;
-  height: 100%;
+  height: calc(100% + 1px);
   position: absolute;
   border-radius: 30px 0 0 0;
   background-color: white;
