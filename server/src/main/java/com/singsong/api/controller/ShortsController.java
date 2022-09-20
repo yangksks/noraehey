@@ -2,6 +2,7 @@ package com.singsong.api.controller;
 
 import com.singsong.api.request.ShortsRegisterPostReq;
 import com.singsong.api.response.ShortsEntityRes;
+import com.singsong.api.response.ShortsLikeRes;
 import com.singsong.api.response.ShortsListRes;
 import com.singsong.api.service.MemberService;
 import com.singsong.api.service.ShortsService;
@@ -81,4 +82,30 @@ public class ShortsController {
         return ResponseEntity.status(200).body(ShortsListRes.of(hasMore, resList));
     }
 
+    // 랜덤 쇼츠 조회
+    @GetMapping("/random")
+    public ResponseEntity<?> getRandomShorts(@ApiIgnore Authentication authentication) {
+        Member member = jwtAuthenticationUtil.jwtTokenAuth(authentication);
+        List<ShortsEntityRes> resList = shortsService.createShortsListByRandom(member);
+
+        return ResponseEntity.status(200).body(resList);
+    }
+
+    // 쇼츠 좋아요 추가
+    @PostMapping("/like")
+    public ResponseEntity<?> addShortsLike(@RequestParam("shortsId") Long shortsId, @ApiIgnore Authentication authentication) {
+        Member member = jwtAuthenticationUtil.jwtTokenAuth(authentication);
+        shortsService.addShortsLike(member, shortsId);
+        int likeCount = shortsService.countShortsLike(shortsId);
+        return ResponseEntity.status(200).body(ShortsLikeRes.of(shortsId, likeCount, true));
+    }
+
+    // 쇼츠 좋아요 삭제
+    @DeleteMapping("like")
+    public ResponseEntity<?> deleteShortsLike(@RequestParam("shortsId") Long shortsId, @ApiIgnore Authentication authentication) {
+        Member member = jwtAuthenticationUtil.jwtTokenAuth(authentication);
+        shortsService.deleteShortsLike(member, shortsId);
+        int likeCount = shortsService.countShortsLike(shortsId);
+        return ResponseEntity.status(200).body(ShortsLikeRes.of(shortsId, likeCount, false));
+    }
 }

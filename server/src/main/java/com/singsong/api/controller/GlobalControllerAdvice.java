@@ -4,6 +4,9 @@ import com.singsong.common.exception.code.ErrorCode;
 import com.singsong.common.exception.member.MemberNotFoundException;
 import com.singsong.common.exception.member.MemberUnauthorizedException;
 import com.singsong.common.exception.response.ErrorResponse;
+import com.singsong.common.exception.shorts.ShortsLikeDuplicatedException;
+import com.singsong.common.exception.shorts.ShortsLikeNotFoundExcepion;
+import com.singsong.common.exception.shorts.ShortsNotFoundException;
 import com.singsong.common.exception.song.SongNotFoundException;
 import com.singsong.common.exception.tag.TagDuplicationException;
 import com.singsong.common.exception.tag.TagNotFoundException;
@@ -71,6 +74,28 @@ public class GlobalControllerAdvice {
     public ResponseEntity<ErrorResponse> handleSongNotFoundException(SongNotFoundException e){
         log.error("handleSongNotFoundException", e);
         ErrorResponse response = new ErrorResponse(e.getErrorCode());
+        return new ResponseEntity<>(response, HttpStatus.valueOf(e.getErrorCode().getStatus()));
+    }
+
+    // 쇼츠
+    @ExceptionHandler(ShortsNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleShortsNotFoundException(ShortsNotFoundException e) {
+        log.error("handleShortsNotFoundException", e);
+        ErrorResponse response = new ErrorResponse(ErrorCode.SHORTS_NOT_FOUND);
+        return new ResponseEntity<>(response, HttpStatus.valueOf(e.getErrorCode().getStatus()));
+    }
+
+    @ExceptionHandler(ShortsLikeDuplicatedException.class)
+    public ResponseEntity<ErrorResponse> handleShortsLikeDuplicationException(ShortsLikeDuplicatedException e) {
+        log.error("handleShortsLikeDuplicationException", e);
+        ErrorResponse response = new ErrorResponse(ErrorCode.SHORTS_LIKE_DUPLICATION);
+        return new ResponseEntity<>(response, HttpStatus.valueOf(e.getErrorCode().getStatus()));
+    }
+
+    @ExceptionHandler(ShortsLikeNotFoundExcepion.class)
+    public ResponseEntity<ErrorResponse> handleShortsLikeNotFoundException(ShortsLikeNotFoundExcepion e) {
+        log.error("handleShortsLikeNotFoundException", e);
+        ErrorResponse response = new ErrorResponse(ErrorCode.SHORTS_LIKE_NOT_FOUND);
         return new ResponseEntity<>(response, HttpStatus.valueOf(e.getErrorCode().getStatus()));
     }
 

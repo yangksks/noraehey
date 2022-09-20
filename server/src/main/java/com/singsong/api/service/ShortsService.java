@@ -15,5 +15,9 @@ public interface ShortsService {
     List<Shorts> getShortsListByMemberId(Long memberId, int page);
     List<ShortsEntityRes> createShortsListBySong(List<Shorts> shortsList, Song song, Member member);
     List<ShortsEntityRes> createShortsListByMember(List<Shorts> shortsList, Member loginMember, Member shortsMember);
+    List<ShortsEntityRes> createShortsListByRandom(Member member);
 
+    int countShortsLike(Long shortsId);
+    void addShortsLike(Member member, Long shortsId);
+    void deleteShortsLike(Member member, Long shortsId);
 }
