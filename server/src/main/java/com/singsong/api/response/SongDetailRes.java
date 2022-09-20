@@ -20,13 +20,14 @@ public class SongDetailRes {
     String songSinger;
     int songHighPitch;
     String songGenre;
+    String songAlbum;
     String songImageUrl;
     String songTj;
     String songKy;
     int songLikeCount;
     boolean isLiked;
     int songLevel;
-    int songEvalCount;
+    Long songEvalCount;
     int myEval;
     String songLyrics;
 
@@ -36,6 +37,7 @@ public class SongDetailRes {
                 .songSinger(song.getSongSinger())
                 .songHighPitch(song.getSongHighPitch())
                 .songGenre(song.getSongGenre())
+                .songAlbum(song.getSongAlbum())
                 .songImageUrl(song.getSongImageUrl())
                 .songTj(song.getSongTj())
                 .songKy(song.getSongKy())
