@@ -11,4 +11,9 @@ public class MemberNotFoundException extends RuntimeException{
         super(message);
         this.errorCode = errorCode;
     }
+
+    @Override
+    public synchronized Throwable fillInStackTrace() {
+        return this;
+    }
 }

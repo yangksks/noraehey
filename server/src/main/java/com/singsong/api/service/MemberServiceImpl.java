@@ -1,9 +1,10 @@
 package com.singsong.api.service;
 
 import com.singsong.common.exception.code.ErrorCode;
+import com.singsong.common.exception.member.MemberUnauthorizedException;
 import com.singsong.common.exception.member.MemberNotFoundException;
-import com.singsong.common.exception.tag.TagNotFoundException;
 import com.singsong.common.model.response.KakaoMemberInfo;
+import com.singsong.common.util.JwtTokenUtil;
 import com.singsong.db.entity.Member;
 import com.singsong.db.entity.RefreshToken;
 import com.singsong.db.repository.MemberRepository;
@@ -18,6 +19,10 @@ public class MemberServiceImpl implements MemberService{
     MemberRepository memberRepository;
     @Autowired
     RefreshTokenRepository refreshTokenRepository;
+
+    @Autowired
+    JwtTokenUtil jwtTokenUtil;
+
     @Override
     public Member getMemberByMemberEmail(String memberEmail) {
         Member member = memberRepository.findByMemberEmail(memberEmail).orElse(null);
@@ -59,5 +64,16 @@ public class MemberServiceImpl implements MemberService{
                     .build();
         }
         refreshTokenRepository.save(refreshToken);
+    }
+
+    @Override
+    public RefreshToken modifyRefreshToken(String refreshToken) {
+        // refreshToken 정보 조회
+        RefreshToken originRefreshToken = refreshTokenRepository.findByRefreshToken(refreshToken)
+                .orElseThrow(() -> new MemberUnauthorizedException("잘못된 토큰입니다.", ErrorCode.Member_Unauthorized) );
+
+        Member member = originRefreshToken.getMember();
+
+        return  jwtTokenUtil.reGenerateRefreshToken(member, originRefreshToken);
     }
 }
