@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import styled from 'styled-components';
 import AdminPage from './routes/Admin/AdminPage';
 import MagazineCreatePage from './routes/Admin/MagazineCreatePage';
 import MagazineUpdatePage from './routes/Admin/MagazineUpdatePage';
@@ -12,13 +13,13 @@ import ShortsDetailPage from './routes/Shorts/ShortsDetailPage';
 import SongsDetailPage from './routes/Songs/SongsDetailPage';
 import SearchPage from './routes/Search/SearchPage';
 import SettingPage from './routes/Profile/SettingPage';
-import MenuBar from './routes/Common/MenuBar';
 import NavBar from './routes/Common/NavBar';
+import Header from './routes/Common/Header';
 
 const Router = () => {
   return (
     <BrowserRouter>
-      <NavBar />
+      <Header />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/intro" element={<LandingPage />} />
@@ -40,9 +41,14 @@ const Router = () => {
           />
         </Route>
       </Routes>
-      <MenuBar />
+      <Footer />
+      <NavBar />
     </BrowserRouter>
   );
 };
 
+const Footer = styled.div`
+  width: 100%;
+  height: 100px;
+`;
 export default Router;

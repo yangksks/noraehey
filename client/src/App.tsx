@@ -1,6 +1,6 @@
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 import GlobalStyle from './style/GlobalStyle';
-import './font.css';
+import './style/font.css';
 import Router from './Router';
 
 const App = () => {

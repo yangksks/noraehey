@@ -1,28 +1,37 @@
 import styled from 'styled-components';
-import MusicListCard from './MusicListCard';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
+import MagazineCardBig from './MagazineCardBig';
+import MagazineCardSmall from './MagazineCardSmall';
 
-const MusicCardSwiper = () => {
+const magazines = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+
+const MagazineListSwiper = () => {
   return (
     <CardContainer>
       <Swiper
-        slidesPerView={1.3}
-        centeredSlides={true}
-        spaceBetween={30}
+        slidesOffsetBefore={10}
+        slidesOffsetAfter={10}
+        slidesPerView={1.6}
+        spaceBetween={10}
         className="mySwiper">
-        <SwiperSlide>
-          <MusicListCard />
-        </SwiperSlide>
-        <SwiperSlide>
-          <MusicListCard />
-        </SwiperSlide>
-        <SwiperSlide>
-          <MusicListCard />
-        </SwiperSlide>
-        <SwiperSlide>
-          <MusicListCard />
-        </SwiperSlide>
+        {magazines.map((magazine) => (
+          <SwiperSlide>
+            <MagazineCardBig />
+          </SwiperSlide>
+        ))}
+      </Swiper>
+      <Swiper
+        slidesOffsetBefore={10}
+        slidesOffsetAfter={10}
+        slidesPerView={3.3}
+        spaceBetween={10}
+        className="mySwiper">
+        {magazines.map((magazine) => (
+          <SwiperSlide>
+            <MagazineCardSmall />
+          </SwiperSlide>
+        ))}
       </Swiper>
     </CardContainer>
   );
@@ -31,7 +40,6 @@ const MusicCardSwiper = () => {
 const CardContainer = styled.div`
   position: relative;
   width: 100%;
-  aspect-ratio: 0.77;
   display: flex;
   flex-direction: column;
   justify-content: start;
@@ -42,6 +50,8 @@ const CardContainer = styled.div`
   .swiper {
     width: 100%;
     height: 100%;
+    padding: 10px;
+    box-sizing: border-box;
   }
 
   .swiper-slide {
@@ -63,16 +73,5 @@ const CardContainer = styled.div`
     width: 60%;
     transition: 0.3s;
   }
-
-  .swiper-slide-active {
-    scale: 1.08;
-    transition: 0.3s;
-  }
-
-  .swiper-slide-prev div,
-  .swiper-slide-next div {
-    background-color: #e6e6e6;
-    transition: 0.6s;
-  }
 `;
-export default MusicCardSwiper;
+export default MagazineListSwiper;
