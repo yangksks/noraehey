@@ -1,8 +1,9 @@
 package com.singsong.api.service;
 
 import com.singsong.common.exception.code.ErrorCode;
-import com.singsong.common.exception.member.MemberUnauthorizedException;
 import com.singsong.common.exception.member.MemberNotFoundException;
+import com.singsong.common.exception.member.MemberUnauthorizedException;
+import com.singsong.common.model.response.BaseResponseBody;
 import com.singsong.common.model.response.KakaoMemberInfo;
 import com.singsong.common.util.JwtTokenUtil;
 import com.singsong.db.entity.Member;
@@ -10,6 +11,7 @@ import com.singsong.db.entity.RefreshToken;
 import com.singsong.db.repository.MemberRepository;
 import com.singsong.db.repository.RefreshTokenRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -75,5 +77,30 @@ public class MemberServiceImpl implements MemberService{
         Member member = originRefreshToken.getMember();
 
         return  jwtTokenUtil.reGenerateRefreshToken(member, originRefreshToken);
+    }
+
+    @Override
+    public void modifyHighPitch(Member member, int highPitch) {
+        member.setMemberHighPitch(highPitch);
+        memberRepository.save(member);
+    }
+
+    @Override
+    public void modifyNickName(Member member, String nickname) {
+        member.setMemberNickname(nickname);
+        System.out.println(member);
+        memberRepository.save(member);
+    }
+
+    @Override
+    public ResponseEntity<?> getMemberByNickname(String nickname) {
+
+        if(nickname.length() > 20)
+            return ResponseEntity.status(409).body(BaseResponseBody.of(409, "LENGTH_ERROR"));
+
+        if(memberRepository.findByMemberNickname(nickname).isPresent())
+            return ResponseEntity.status(409).body(BaseResponseBody.of(409, "DUPLICATION_ERROR"));
+
+        return  ResponseEntity.status(200).build();
     }
 }

@@ -26,4 +26,13 @@ public class Member {
     private String memberProfileUrl;
     int memberHighPitch;
     int memberRole;
+
+
+    public void setMemberHighPitch(int highPitch) {
+        this.memberHighPitch = highPitch;
+    }
+
+    public void setMemberNickname(String nickname) {
+        this.memberNickname = nickname;
+    }
 }

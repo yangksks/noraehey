@@ -9,7 +9,6 @@ import com.singsong.common.util.JwtTokenUtil;
 import com.singsong.common.util.auth.MemberDetails;
 import com.singsong.db.entity.Member;
 import com.singsong.db.entity.RefreshToken;
-import com.singsong.db.entity.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -17,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -31,25 +29,6 @@ public class MemberController {
 
     @Autowired
     TagService tagService;
-
-    @GetMapping("/info")
-    public ResponseEntity<?> memberDetails(@ApiIgnore Authentication authentication) {
-
-        Member member = jwtAuthenticationUtil.jwtTokenAuth(authentication);
-
-        List<Tag> tags = tagService.getMemberTagListByMember(member);
-
-        MemberInfoRes memberInfoRes = MemberInfoRes.builder()
-                .memberId(member.getMemberId())
-                .email(member.getMemberEmail())
-                .nickName(member.getMemberNickname())
-                .songHighPitch(member.getMemberHighPitch())
-                .profileUrl(member.getMemberProfileUrl())
-                .memberTagList(tags)
-                .build();
-
-        return ResponseEntity.status(200).body(memberInfoRes);
-    }
 
     @GetMapping("/refresh")
     public ResponseEntity<?> tokenRefresh(@RequestHeader(value = "REFRESH-TOKEN") String refreshToken) {
@@ -70,10 +49,26 @@ public class MemberController {
         return ResponseEntity.status(200).body(memberTokenRes);
     }
 
-    @PatchMapping("/tag/delete")
-    public ResponseEntity<?> memberTagDelete(@RequestParam(value = "tag") int tagId, @ApiIgnore Authentication authentication) {
+    @GetMapping("/info")
+    public ResponseEntity<?> memberDetails(@ApiIgnore Authentication authentication) {
         Member member = jwtAuthenticationUtil.jwtTokenAuth(authentication);
-        tagService.deleteMemberTag(member, tagId);
+        MemberInfoRes memberInfoRes = tagService.getMemberInfoRes(member);
+
+        return ResponseEntity.status(200).body(memberInfoRes);
+    }
+
+    @GetMapping("/nickname/{nickname}")
+    public ResponseEntity<?> nickNameValidate(@PathVariable String nickname) {
+
+        return memberService.getMemberByNickname(nickname);
+    }
+
+    @PatchMapping("/nickname")
+    public ResponseEntity<?> nickNameModify(@ApiIgnore Authentication authentication,
+                                            @RequestBody Map<String,String> req) {
+        MemberDetails memberDetails = (MemberDetails) authentication.getDetails();
+        Member member = memberDetails.getUser();
+        memberService.modifyNickName(member,req.get("nickname"));
 
         return ResponseEntity.status(200).build();
     }
@@ -82,6 +77,24 @@ public class MemberController {
     public ResponseEntity<?> memberTagAdd(@RequestParam(value = "tag") int tagId, @ApiIgnore Authentication authentication) {
         Member member = jwtAuthenticationUtil.jwtTokenAuth(authentication);
         tagService.addMemberTag(member, tagId);
+
+        return ResponseEntity.status(200).build();
+    }
+
+    @PatchMapping("/tag/delete")
+    public ResponseEntity<?> memberTagDelete(@RequestParam(value = "tag") int tagId, @ApiIgnore Authentication authentication) {
+        Member member = jwtAuthenticationUtil.jwtTokenAuth(authentication);
+        tagService.deleteMemberTag(member, tagId);
+
+        return ResponseEntity.status(200).build();
+    }
+
+    @PatchMapping("/highpitch")
+    public  ResponseEntity<?> highPitchModifiy(@RequestParam(value="highpitch") int highPitch, @ApiIgnore Authentication authentication) {
+        MemberDetails memberDetails = (MemberDetails) authentication.getDetails();
+        Member member = memberDetails.getUser();
+
+        memberService.modifyHighPitch(member,highPitch);
 
         return ResponseEntity.status(200).build();
     }
