@@ -1,5 +1,7 @@
 package com.singsong.api.service;
 
+import com.singsong.api.response.MemberInfoRes;
+import com.singsong.api.response.MemberTokenRes;
 import com.singsong.common.exception.code.ErrorCode;
 import com.singsong.common.exception.member.MemberNotFoundException;
 import com.singsong.common.exception.member.MemberUnauthorizedException;
@@ -69,14 +71,23 @@ public class MemberServiceImpl implements MemberService{
     }
 
     @Override
-    public RefreshToken modifyRefreshToken(String refreshToken) {
+    public MemberTokenRes modifyRefreshToken(String oldRefreshToken) {
         // refreshToken 정보 조회
-        RefreshToken originRefreshToken = refreshTokenRepository.findByRefreshToken(refreshToken)
+        RefreshToken originRefreshToken = refreshTokenRepository.findByRefreshToken(oldRefreshToken)
                 .orElseThrow(() -> new MemberUnauthorizedException("잘못된 토큰입니다.", ErrorCode.Member_Unauthorized) );
 
         Member member = originRefreshToken.getMember();
 
-        return  jwtTokenUtil.reGenerateRefreshToken(member, originRefreshToken);
+        RefreshToken newRefreshToken = jwtTokenUtil.reGenerateRefreshToken(member, originRefreshToken);
+
+        String accessToken = JwtTokenUtil.getToken(member.getMemberEmail());
+        String refreshToken = newRefreshToken.getRefreshToken().replace("Bearer ", "");
+
+
+        return  MemberTokenRes.builder()
+                .accessToken(accessToken)
+                .refreshToken(refreshToken)
+                .build();
     }
 
     @Override
@@ -102,5 +113,18 @@ public class MemberServiceImpl implements MemberService{
             return ResponseEntity.status(409).body(BaseResponseBody.of(409, "DUPLICATION_ERROR"));
 
         return  ResponseEntity.status(200).build();
+    }
+
+    @Override
+    public MemberInfoRes getMemberInfoRes(Long memberId) {
+
+        Member member = memberRepository.findByMemberId(memberId).orElseThrow(() -> new MemberNotFoundException("member not found", ErrorCode.MEMBER_NOT_FOUND));
+
+        MemberInfoRes memberInfoRes = MemberInfoRes.builder()
+                .memberNickname(member.getMemberNickname())
+                .memberProfileUrl(member.getMemberProfileUrl())
+                .build();
+
+        return memberInfoRes;
     }
 }
