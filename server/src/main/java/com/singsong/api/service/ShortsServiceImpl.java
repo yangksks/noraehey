@@ -1,10 +1,13 @@
 package com.singsong.api.service;
 
 import com.singsong.api.response.ShortsEntityRes;
+import com.singsong.common.exception.code.ErrorCode;
+import com.singsong.common.exception.member.MemberNotFoundException;
 import com.singsong.common.util.S3Util;
 import com.singsong.db.entity.Member;
 import com.singsong.db.entity.Shorts;
 import com.singsong.db.entity.Song;
+import com.singsong.db.repository.MemberRepository;
 import com.singsong.db.repository.ShortsLikeRepository;
 import com.singsong.db.repository.ShortsRepository;
 import com.singsong.db.repository.SongRepository;
@@ -28,6 +31,8 @@ public class ShortsServiceImpl implements ShortsService {
     ShortsLikeRepository shortsLikeRepository;
     @Autowired
     SongRepository songRepository;
+    @Autowired
+    MemberRepository memberRepository;
     @Autowired
     S3Util s3Util;
 
@@ -59,40 +64,10 @@ public class ShortsServiceImpl implements ShortsService {
     public List<ShortsEntityRes> createShortsListBySong(List<Shorts> shortsList, Song song, Member member) {
         List<ShortsEntityRes> resList = new ArrayList<>();
         for (Shorts shorts: shortsList) {
-            boolean isLiked = shortsLikeRepository.findByShortsShortsIdAndMemberMemberId(shorts.getShortsId(), member.getMemberId()) == null ? false : true;
+            boolean isLiked = shortsLikeRepository.findByShortsShortsIdAndMemberMemberId(shorts.getShortsId(), member.getMemberId()) != null;
             int likeCount = shortsLikeRepository.countByShortsShortsId(shorts.getShortsId()).intValue();
-            ShortsEntityRes shortsGetRes = ShortsEntityRes.builder()
-                    .shortsId(shorts.getShortsId())
-                    .shortsComment(shorts.getShortsComment())
-                    .shortsAudioUrl(shorts.getShortsAudioUrl())
-                    .shortsCreateTime(shorts.getShortsCreateTime())
-                    .songId(song.getSongId())
-                    .songTitle(song.getSongTitle())
-                    .songSinger(song.getSongSinger())
-                    .songHighPitch(song.getSongHighPitch())
-                    .songImageUrl(song.getSongImageUrl())
-                    .songTj(song.getSongTj())
-                    .songKy(song.getSongKy())
-                    .memberId(member.getMemberId())
-                    .memberNickname(member.getMemberNickname())
-                    .memberProfileUrl(member.getMemberProfileUrl())
-                    .likeCount(likeCount)
-                    .isLiked(isLiked)
-                    .build();
-
-        resList.add(shortsGetRes);
-        }
-        return resList;
-    }
-
-    @Override
-    public List<ShortsEntityRes> createShortsListByMember(List<Shorts> shortsList, Member loginMember, Member shortsMember) {
-        List<ShortsEntityRes> resList = new ArrayList<>();
-        for (Shorts shorts: shortsList) {
-            Song song = songRepository.findSongBySongId(shorts.getSong().getSongId());
-            boolean isLiked = shortsLikeRepository.findByShortsShortsIdAndMemberMemberId(shorts.getShortsId(), loginMember.getMemberId()) == null ? false : true;
-            int likeCount = shortsLikeRepository.countByShortsShortsId(shorts.getShortsId()).intValue();
-            ShortsEntityRes shortsGetRes = ShortsEntityRes.builder()
+            Member shortsMember = memberRepository.findByMemberId(shorts.getMember().getMemberId()).orElseThrow(() -> new MemberNotFoundException("member not found", ErrorCode.MEMBER_NOT_FOUND));
+            ShortsEntityRes shortsEntityRes = ShortsEntityRes.builder()
                     .shortsId(shorts.getShortsId())
                     .shortsComment(shorts.getShortsComment())
                     .shortsAudioUrl(shorts.getShortsAudioUrl())
@@ -111,9 +86,73 @@ public class ShortsServiceImpl implements ShortsService {
                     .isLiked(isLiked)
                     .build();
 
-            resList.add(shortsGetRes);
+        resList.add(shortsEntityRes);
+        }
+        return resList;
+    }
+
+    @Override
+    public List<ShortsEntityRes> createShortsListByMember(List<Shorts> shortsList, Member loginMember, Member shortsMember) {
+        List<ShortsEntityRes> resList = new ArrayList<>();
+        for (Shorts shorts: shortsList) {
+            Song song = songRepository.findSongBySongId(shorts.getSong().getSongId());
+            boolean isLiked = shortsLikeRepository.findByShortsShortsIdAndMemberMemberId(shorts.getShortsId(), loginMember.getMemberId()) != null;
+            int likeCount = shortsLikeRepository.countByShortsShortsId(shorts.getShortsId()).intValue();
+            ShortsEntityRes shortsEntityRes = ShortsEntityRes.builder()
+                    .shortsId(shorts.getShortsId())
+                    .shortsComment(shorts.getShortsComment())
+                    .shortsAudioUrl(shorts.getShortsAudioUrl())
+                    .shortsCreateTime(shorts.getShortsCreateTime())
+                    .songId(song.getSongId())
+                    .songTitle(song.getSongTitle())
+                    .songSinger(song.getSongSinger())
+                    .songHighPitch(song.getSongHighPitch())
+                    .songImageUrl(song.getSongImageUrl())
+                    .songTj(song.getSongTj())
+                    .songKy(song.getSongKy())
+                    .memberId(shortsMember.getMemberId())
+                    .memberNickname(shortsMember.getMemberNickname())
+                    .memberProfileUrl(shortsMember.getMemberProfileUrl())
+                    .likeCount(likeCount)
+                    .isLiked(isLiked)
+                    .build();
+
+            resList.add(shortsEntityRes);
         }
 
+        return resList;
+    }
+
+    @Override
+    public List<ShortsEntityRes> createShortsListByRandom(Member member) {
+        List<Shorts> shortsList = shortsRepository.findByRandom();
+        List<ShortsEntityRes> resList = new ArrayList<>();
+        for (Shorts shorts: shortsList) {
+            Song song = songRepository.findSongBySongId(shorts.getSong().getSongId());
+            boolean isLiked = shortsLikeRepository.findByShortsShortsIdAndMemberMemberId(shorts.getShortsId(), member.getMemberId()) != null;
+            int likeCount = shortsLikeRepository.countByShortsShortsId(shorts.getShortsId()).intValue();
+            Member shortsMember = memberRepository.findByMemberId(shorts.getMember().getMemberId()).orElseThrow(() -> new MemberNotFoundException("member not found", ErrorCode.MEMBER_NOT_FOUND));
+            ShortsEntityRes shortsEntityRes = ShortsEntityRes.builder()
+                    .shortsId(shorts.getShortsId())
+                    .shortsComment(shorts.getShortsComment())
+                    .shortsAudioUrl(shorts.getShortsAudioUrl())
+                    .shortsCreateTime(shorts.getShortsCreateTime())
+                    .songId(song.getSongId())
+                    .songTitle(song.getSongTitle())
+                    .songSinger(song.getSongSinger())
+                    .songHighPitch(song.getSongHighPitch())
+                    .songImageUrl(song.getSongImageUrl())
+                    .songTj(song.getSongTj())
+                    .songKy(song.getSongKy())
+                    .memberId(shortsMember.getMemberId())
+                    .memberNickname(shortsMember.getMemberNickname())
+                    .memberProfileUrl(shortsMember.getMemberProfileUrl())
+                    .likeCount(likeCount)
+                    .isLiked(isLiked)
+                    .build();
+
+            resList.add(shortsEntityRes);
+        }
         return resList;
     }
 
