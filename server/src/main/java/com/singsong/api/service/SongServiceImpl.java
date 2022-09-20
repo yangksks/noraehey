@@ -52,4 +52,25 @@ public class SongServiceImpl implements SongService {
                 .songLyrics(song.getSongLyrics())
                 .build());
     }
+
+    @Override
+    public void updateSongLike(Long songId, int result) {
+        Song song = songRepository.findSongBySongId(songId);
+        songRepository.save(Song.builder()
+                .songId(songId)
+                .songTitle(song.getSongTitle())
+                .songSinger(song.getSongSinger())
+                .songGenre(song.getSongGenre())
+                .songTag(song.getSongTag())
+                .songNum(song.getSongNum())
+                .songHighPitch(song.getSongHighPitch())
+                .songImageUrl(song.getSongImageUrl())
+                .songKy(song.getSongKy())
+                .songTj(song.getSongTj())
+                .songLikeCount(song.getSongLikeCount() + result)
+                .songEvalCount(song.getSongEvalCount())
+                .songLevel(song.getSongLevel())
+                .songLyrics(song.getSongLyrics())
+                .build());
+    }
 }

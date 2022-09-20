@@ -81,4 +81,22 @@ public class SongController {
         songService.updateSongLevel(song.getSongId(), updatedSongLevel, songEvalCount);
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "success"));
     }
+
+    @PostMapping("/like")
+    public ResponseEntity<? extends BaseResponseBody> registerSongLike(@RequestBody Map<String, Long> songLikeMap, @ApiIgnore Authentication authentication){
+        Member member = jwtAuthenticationUtil.jwtTokenAuth(authentication);
+        Song song = songService.getSongBySongId(songLikeMap.get("songId"));
+        int result = songLikeService.registerSongLike(member, song);
+        songService.updateSongLike(songLikeMap.get("songId"), result);
+        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "success"));
+    }
+
+    @DeleteMapping("/like")
+    public ResponseEntity<? extends BaseResponseBody> deleteSongLike(@RequestBody Map<String, Long> songLikeMap, @ApiIgnore Authentication authentication){
+        Member member = jwtAuthenticationUtil.jwtTokenAuth(authentication);
+        Song song = songService.getSongBySongId(songLikeMap.get("songId"));
+        int result = songLikeService.deleteSongLike(member, song);
+        songService.updateSongLike(songLikeMap.get("songId"), result);
+        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "success"));
+    }
 }
