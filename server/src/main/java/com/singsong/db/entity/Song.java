@@ -26,6 +26,8 @@ public class Song {
     int songHighPitch;
     @Column(length = 50)
     String songGenre;
+    @Column(length = 60)
+    String songAlbum;
     @Column(length = 500)
     String songImageUrl;
     @Column(length = 10)
