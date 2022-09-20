@@ -20,13 +20,13 @@ public class Member {
     private Long memberId;
     @Column(length = 100)
     private String memberEmail;
-    @Column(length = 30)
+    @Column(length = 20)
     private String memberNickname;
     @Column(length = 500)
     private String memberProfileUrl;
+    int memberHighPitch;
+    int memberRole;
 
-    private int memberHighPitch;
-    private int memberRole;
 
     public void setMemberHighPitch(int highPitch) {
         this.memberHighPitch = highPitch;
