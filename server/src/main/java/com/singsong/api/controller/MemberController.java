@@ -1,6 +1,7 @@
 package com.singsong.api.controller;
 
 import com.singsong.api.response.MemberInfoRes;
+import com.singsong.api.response.MyInfoRes;
 import com.singsong.api.response.MemberTokenRes;
 import com.singsong.api.service.MemberService;
 import com.singsong.api.service.TagService;
@@ -50,11 +51,11 @@ public class MemberController {
     }
 
     @GetMapping("/info")
-    public ResponseEntity<?> memberDetails(@ApiIgnore Authentication authentication) {
+    public ResponseEntity<?> myInfoDetail(@ApiIgnore Authentication authentication) {
         Member member = jwtAuthenticationUtil.jwtTokenAuth(authentication);
-        MemberInfoRes memberInfoRes = tagService.getMemberInfoRes(member);
+        MyInfoRes myInfoRes = tagService.getMyInfo(member);
 
-        return ResponseEntity.status(200).body(memberInfoRes);
+        return ResponseEntity.status(200).body(myInfoRes);
     }
 
     @GetMapping("/nickname/{nickname}")
@@ -97,6 +98,19 @@ public class MemberController {
         memberService.modifyHighPitch(member,highPitch);
 
         return ResponseEntity.status(200).build();
+    }
+
+    @GetMapping("/info/{memberId}")
+    public ResponseEntity<?> memberDetail(@PathVariable Long memberId) {
+
+        Member member = memberService.getMemberByMemberId(memberId);
+
+        MemberInfoRes memberInfoRes = MemberInfoRes.builder()
+                .memberNickname(member.getMemberNickname())
+                .memberProfileUrl(member.getMemberProfileUrl())
+                .build();
+
+        return  ResponseEntity.status(200).body(memberInfoRes);
     }
 
 }
