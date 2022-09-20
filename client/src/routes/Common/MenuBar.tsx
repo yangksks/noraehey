@@ -9,8 +9,9 @@ const MenuBar = () => {
 
   return (
     <Menu>
-      {MenuName.map((name) => (
+      {MenuName.map((name, i) => (
         <MenuBarButton
+          key={i}
           urlNow={urlNow === name}
           change={() => {
             setUrlNow(name);
