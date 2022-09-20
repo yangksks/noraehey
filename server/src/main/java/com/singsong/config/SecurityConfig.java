@@ -70,7 +70,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .addFilter(new JwtAuthenticationFilter(authenticationManager(), memberService)) //HTTP 요청에 JWT 토큰 인증 필터를 거치도록 필터를 추가
                 .authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/api/shorts").authenticated()
-//                .antMatchers(HttpMethod.PATCH, "/api/member").authenticated()
+                .antMatchers(HttpMethod.GET, "/api/member/info").authenticated()
 //                .antMatchers(HttpMethod.PATCH, "/api/member/img").authenticated()
 //                .antMatchers(HttpMethod.PATCH, "/api/member/password").authenticated()
 //                .antMatchers(HttpMethod.DELETE, "/api/member").authenticated()
