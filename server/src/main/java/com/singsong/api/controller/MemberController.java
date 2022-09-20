@@ -2,20 +2,18 @@ package com.singsong.api.controller;
 
 import com.singsong.api.response.MemberInfoRes;
 import com.singsong.api.response.MemberTokenRes;
+import com.singsong.api.response.MyInfoRes;
 import com.singsong.api.service.MemberService;
 import com.singsong.api.service.TagService;
 import com.singsong.common.util.JwtAuthenticationUtil;
-import com.singsong.common.util.JwtTokenUtil;
 import com.singsong.common.util.auth.MemberDetails;
 import com.singsong.db.entity.Member;
-import com.singsong.db.entity.RefreshToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
-import java.util.HashMap;
 import java.util.Map;
 
 @RestController
@@ -33,28 +31,17 @@ public class MemberController {
     @GetMapping("/refresh")
     public ResponseEntity<?> tokenRefresh(@RequestHeader(value = "REFRESH-TOKEN") String refreshToken) {
 
-        RefreshToken newRefreshToken = memberService.modifyRefreshToken(refreshToken);
-
-        String accessToken = JwtTokenUtil.getToken(newRefreshToken.getMember().getMemberEmail());
-        Map<String, String> tokens = new HashMap<>();
-
-        tokens.put("accessToken", accessToken);
-        tokens.put("refreshToken", newRefreshToken.getRefreshToken().replace("Bearer ", ""));
-
-        MemberTokenRes memberTokenRes = MemberTokenRes.builder()
-                .accessToken(tokens.get("accessToken"))
-                .refreshToken(tokens.get("refreshToken"))
-                .build();
+        MemberTokenRes memberTokenRes = memberService.modifyRefreshToken(refreshToken);
 
         return ResponseEntity.status(200).body(memberTokenRes);
     }
 
     @GetMapping("/info")
-    public ResponseEntity<?> memberDetails(@ApiIgnore Authentication authentication) {
+    public ResponseEntity<?> myInfoDetail(@ApiIgnore Authentication authentication) {
         Member member = jwtAuthenticationUtil.jwtTokenAuth(authentication);
-        MemberInfoRes memberInfoRes = tagService.getMemberInfoRes(member);
+        MyInfoRes myInfoRes = tagService.getMyInfo(member);
 
-        return ResponseEntity.status(200).body(memberInfoRes);
+        return ResponseEntity.status(200).body(myInfoRes);
     }
 
     @GetMapping("/nickname/{nickname}")
@@ -97,6 +84,14 @@ public class MemberController {
         memberService.modifyHighPitch(member,highPitch);
 
         return ResponseEntity.status(200).build();
+    }
+
+    @GetMapping("/info/{memberId}")
+    public ResponseEntity<?> memberDetail(@PathVariable Long memberId) {
+
+        MemberInfoRes memberInfoRes = memberService.getMemberInfoRes(memberId);
+
+        return  ResponseEntity.status(200).body(memberInfoRes);
     }
 
 }
