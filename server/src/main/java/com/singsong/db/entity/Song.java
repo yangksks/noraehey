@@ -35,4 +35,8 @@ public class Song {
     @Column(length = 500)
     String songTag;
     int songLikeCount;
+    int songLevel;
+    int songEvalCount;
+    @Column(columnDefinition = "TEXT")
+    String songLyrics;
 }
