@@ -81,4 +81,12 @@ public class ShortsController {
         return ResponseEntity.status(200).body(ShortsListRes.of(hasMore, resList));
     }
 
+    // 랜덤 쇼츠 조회
+    @GetMapping("/random")
+    public ResponseEntity<?> getRandomShorts(@ApiIgnore Authentication authentication) {
+        Member member = jwtAuthenticationUtil.jwtTokenAuth(authentication);
+        List<ShortsEntityRes> resList = shortsService.createShortsListByRandom(member);
+
+        return ResponseEntity.status(200).body(resList);
+    }
 }
