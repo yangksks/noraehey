@@ -1,17 +1,23 @@
 package com.singsong.api.controller;
 
+import com.singsong.api.response.SongDetailRes;
 import com.singsong.api.response.SongEntityRes;
 import com.singsong.api.response.SongListRes;
+import com.singsong.api.service.SongLevelService;
+import com.singsong.api.service.SongLikeService;
 import com.singsong.api.service.SongService;
+import com.singsong.common.util.JwtAuthenticationUtil;
+import com.singsong.common.util.auth.MemberDetails;
 import com.singsong.db.entity.Song;
+import com.singsong.db.entity.SongLevel;
+import com.singsong.db.entity.SongLike;
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +28,16 @@ import java.util.List;
 public class SongController {
 
     @Autowired
+    JwtAuthenticationUtil jwtAuthenticationUtil;
+
+    @Autowired
     SongService songService;
+
+    @Autowired
+    SongLikeService songLikeService;
+
+    @Autowired
+    SongLevelService songLevelService;
 
     @GetMapping("/search")
     public ResponseEntity<SongListRes> searchSongList(@RequestParam("word") String word, @RequestParam("page") int page){
@@ -44,4 +59,13 @@ public class SongController {
         return ResponseEntity.status(200).body(SongListRes.of(hasMore, songEntityResList));
     }
 
+    @GetMapping("/info/{songId}")
+    public ResponseEntity<SongDetailRes> getSongDetail(@PathVariable("songId") Long songId, @ApiIgnore Authentication authentication){
+        MemberDetails memberDetails = (MemberDetails) authentication.getDetails();
+        Long memberId = memberDetails.getMemberId();
+        Song song = songService.getSongBySongId(songId);
+        SongLike songLike = songLikeService.getSongLikeBySongIdAndMemberId(songId, memberId);
+        SongLevel songLevel = songLevelService.getSongLevelBySongIdAndMemberId(songId, memberId);
+        return ResponseEntity.status(200).body(SongDetailRes.of(song, songLike, songLevel));
+    }
 }
