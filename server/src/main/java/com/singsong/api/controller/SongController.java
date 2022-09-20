@@ -16,6 +16,9 @@ import com.singsong.db.entity.SongLevel;
 import com.singsong.db.entity.SongLike;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
@@ -44,7 +47,7 @@ public class SongController {
 
     @GetMapping("/search")
     public ResponseEntity<SongListRes> searchSongList(@RequestParam("word") String word, @RequestParam("page") int page){
-        int pageSize = 2;
+        int pageSize = 20;
         boolean hasMore = false;
         List<SongEntityRes> songEntityResList = new ArrayList<>();
         List<Song> songList = songService.searchSongList(word);
@@ -98,5 +101,22 @@ public class SongController {
         int result = songLikeService.deleteSongLike(member, song);
         songService.updateSongLike(songLikeMap.get("songId"), result);
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "success"));
+    }
+
+    @GetMapping("/like")
+    public ResponseEntity<SongListRes> getSongLikeList(@RequestParam("page") int page, @ApiIgnore Authentication authentication){
+        Member member = jwtAuthenticationUtil.jwtTokenAuth(authentication);
+        int pageSize = 20;
+        Pageable pageable = PageRequest.of(page, pageSize);
+        boolean hasMore = false;
+        List<SongEntityRes> songEntityResList = new ArrayList<>();
+        List<Song> songLikeList = songLikeService.getSongLikeListByMemberId(member.getMemberId(), pageable);
+        List<Song> hasMoreList = songLikeService.getSongLikeListByMemberId(member.getMemberId(), PageRequest.of(page + 1, pageSize));
+        if (hasMoreList.size() != 0) hasMore = true;
+        for(Song song : songLikeList){
+            SongEntityRes songEntityRes = SongEntityRes.of(song);
+            songEntityResList.add(songEntityRes);
+        }
+        return ResponseEntity.status(200).body(SongListRes.of(hasMore, songEntityResList));
     }
 }
