@@ -11,6 +11,7 @@ const NavBar = () => {
     <Menu>
       {MenuName.map((name) => (
         <NavBarButton
+          key={name}
           urlNow={urlNow === name}
           change={() => {
             setUrlNow(name);

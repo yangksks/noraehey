@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import MusicCardSwiper from './MusicCardSwiper';
 import ShortsListSwiper from './ShortsListSwiper';
 import { BsCollectionPlay } from 'react-icons/bs';
+import { GrArticle } from 'react-icons/gr';
 import MagazineList from './MagazineList';
 
 const HomePage = () => {
@@ -14,6 +15,10 @@ const HomePage = () => {
           HEY쇼츠
         </FeatTitle>
         <ShortsListSwiper />
+        <FeatTitle>
+          <GrArticle />
+          매거진
+        </FeatTitle>
         <MagazineList />
       </ContentBox>
     </Container>

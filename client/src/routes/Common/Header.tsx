@@ -50,7 +50,7 @@ const HeaderBottom = styled.div`
 const HeaderTop = styled.div<{ infoBar: boolean }>`
   width: 100%;
   padding: 20px;
-  height: ${({ infoBar }) => (infoBar ? '220px' : '80px')};
+  height: ${({ infoBar }) => (infoBar ? '230px' : '80px')};
   display: flex;
   flex-direction: column;
   justify-content: start;
@@ -96,6 +96,7 @@ const ProfileImg = styled(CgProfile)`
   height: 40px;
   color: #ffffff;
   border-radius: 50px;
+  cursor: pointer;
 `;
 
 export default Header;
