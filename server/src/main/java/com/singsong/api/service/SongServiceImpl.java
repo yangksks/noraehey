@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class SongServiceImpl implements SongService{
+public class SongServiceImpl implements SongService {
 
     @Autowired
     SongRepository songRepository;
@@ -30,5 +30,26 @@ public class SongServiceImpl implements SongService{
             throw new SongNotFoundException("song not found", ErrorCode.SONG_NOT_FOUND);
         }
         return song;
+    }
+
+    @Override
+    public void updateSongLevel(Long songId, int updatedSongLevel, Long songEvalCount) {
+        Song song = songRepository.findSongBySongId(songId);
+        songRepository.save(Song.builder()
+                .songId(songId)
+                .songTitle(song.getSongTitle())
+                .songSinger(song.getSongSinger())
+                .songGenre(song.getSongGenre())
+                .songTag(song.getSongTag())
+                .songNum(song.getSongNum())
+                .songHighPitch(song.getSongHighPitch())
+                .songImageUrl(song.getSongImageUrl())
+                .songKy(song.getSongKy())
+                .songTj(song.getSongTj())
+                .songLikeCount(song.getSongLikeCount())
+                .songEvalCount(songEvalCount)
+                .songLevel(updatedSongLevel)
+                .songLyrics(song.getSongLyrics())
+                .build());
     }
 }

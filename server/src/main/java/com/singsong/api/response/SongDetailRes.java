@@ -26,7 +26,7 @@ public class SongDetailRes {
     int songLikeCount;
     boolean isLiked;
     int songLevel;
-    int songEvalCount;
+    Long songEvalCount;
     int myEval;
     String songLyrics;
 
