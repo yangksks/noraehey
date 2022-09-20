@@ -1,28 +1,24 @@
 import styled from 'styled-components';
-import MusicListCard from './MusicListCard';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
+import ShortsListCard from './ShortsListCard';
+
+const shorts = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
 const MusicCardSwiper = () => {
   return (
     <CardContainer>
       <Swiper
-        slidesPerView={1.3}
-        centeredSlides={true}
-        spaceBetween={30}
+        slidesOffsetBefore={10}
+        slidesOffsetAfter={10}
+        slidesPerView={2.3}
+        spaceBetween={10}
         className="mySwiper">
-        <SwiperSlide>
-          <MusicListCard />
-        </SwiperSlide>
-        <SwiperSlide>
-          <MusicListCard />
-        </SwiperSlide>
-        <SwiperSlide>
-          <MusicListCard />
-        </SwiperSlide>
-        <SwiperSlide>
-          <MusicListCard />
-        </SwiperSlide>
+        {shorts.map((short) => (
+          <SwiperSlide>
+            <ShortsListCard />
+          </SwiperSlide>
+        ))}
       </Swiper>
     </CardContainer>
   );
@@ -31,7 +27,6 @@ const MusicCardSwiper = () => {
 const CardContainer = styled.div`
   position: relative;
   width: 100%;
-  aspect-ratio: 0.77;
   display: flex;
   flex-direction: column;
   justify-content: start;
@@ -42,6 +37,8 @@ const CardContainer = styled.div`
   .swiper {
     width: 100%;
     height: 100%;
+    padding: 10px;
+    box-sizing: border-box;
   }
 
   .swiper-slide {
@@ -62,17 +59,6 @@ const CardContainer = styled.div`
     align-items: center;
     width: 60%;
     transition: 0.3s;
-  }
-
-  .swiper-slide-active {
-    scale: 1.08;
-    transition: 0.3s;
-  }
-
-  .swiper-slide-prev div,
-  .swiper-slide-next div {
-    background-color: #e6e6e6;
-    transition: 0.6s;
   }
 `;
 export default MusicCardSwiper;

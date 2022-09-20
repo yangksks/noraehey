@@ -9,7 +9,7 @@ export type ButtonType = {
   change: Function;
 };
 
-const MenuBarButton = (props: ButtonType) => {
+const NavBarButton = (props: ButtonType) => {
   return (
     <MenuButton urlNow={props.urlNow} onClick={() => props.change()}>
       {
@@ -66,6 +66,10 @@ const MenuButton = styled.div<{ urlNow: boolean }>`
       urlNow ? '0px -1px 1px rgba(0, 0, 0, 0.3)' : ''};
     z-index: -100;
   }
+
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
-export default MenuBarButton;
+export default NavBarButton;
