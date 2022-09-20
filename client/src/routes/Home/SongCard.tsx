@@ -28,7 +28,7 @@ const SongBox = styled.div`
   flex-direction: row;
   justify-content: start;
   align-items: start;
-  padding: 10px 0;
+  padding: 5px 0;
   border-top: solid 1px #a0a0a0;
 `;
 

@@ -12,7 +12,7 @@ const MagazineListSwiper = () => {
       <Swiper
         slidesOffsetBefore={10}
         slidesOffsetAfter={10}
-        slidesPerView={1.3}
+        slidesPerView={1.6}
         spaceBetween={10}
         className="mySwiper">
         {magazines.map((magazine) => (

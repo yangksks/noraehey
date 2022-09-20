@@ -23,6 +23,7 @@ const MusicListCard = () => {
         <SongCard songData={songData} userInfo={userInfo} />
         <SongCard songData={songData} userInfo={userInfo} />
         <SongCard songData={songData} userInfo={userInfo} />
+        <SongCard songData={songData} userInfo={userInfo} />
       </BoxSongs>
     </MusicBox>
   );

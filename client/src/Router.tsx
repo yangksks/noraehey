@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import styled from 'styled-components';
 import AdminPage from './routes/Admin/AdminPage';
 import MagazineCreatePage from './routes/Admin/MagazineCreatePage';
 import MagazineUpdatePage from './routes/Admin/MagazineUpdatePage';
@@ -40,9 +41,14 @@ const Router = () => {
           />
         </Route>
       </Routes>
+      <Footer />
       <NavBar />
     </BrowserRouter>
   );
 };
 
+const Footer = styled.div`
+  width: 100%;
+  height: 100px;
+`;
 export default Router;

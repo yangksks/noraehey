@@ -47,11 +47,11 @@ const User = styled.div`
 const HeadAndFoot = styled.div`
   position: relative;
   width: 100%;
-  height: 30%;
+  height: 25%;
   padding: 10px;
   display: flex;
   flex-direction: column;
-  justify-content: start;
+  justify-content: center;
   align-items: start;
   font-size: 11px;
   color: #ffffff;
@@ -62,7 +62,7 @@ const HeadAndFoot = styled.div`
 const Description = styled.div`
   position: relative;
   width: 100%;
-  height: 70%;
+  height: 50%;
   padding: 10px;
   display: flex;
   flex-direction: column;
@@ -76,7 +76,7 @@ const Description = styled.div`
 
 const ShortsBox = styled.div<{ album: string }>`
   width: 100%;
-  aspect-ratio: 0.9;
+  aspect-ratio: 0.6;
   display: flex;
   flex-direction: column;
   justify-content: center;

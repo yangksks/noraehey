@@ -38,7 +38,6 @@ const ContentBox = styled.div`
   width: 100%;
   height: 100%;
   max-width: 420px;
-  padding-bottom: 100px;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -51,7 +50,7 @@ const ContentBox = styled.div`
 const FeatTitle = styled.h1`
   width: 100%;
   font-size: 22px;
-  margin: 20px;
+  margin: 10px;
   padding-left: 20px;
   font-family: 'omni035';
   display: flex;
