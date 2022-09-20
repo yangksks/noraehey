@@ -1,13 +1,13 @@
 import styled from 'styled-components';
 
-const MagazineCardBig = (props: any) => {
+const MagazineCardBig = () => {
   const songData = {
     URL: 'https://file.mk.co.kr/meet/neds/2022/05/image_readtop_2022_406833_16520588985036000.jpg',
     title: '르세라핌 컴백!',
   };
 
   return (
-    <BigCardContainer type={props.type}>
+    <BigCardContainer>
       <BigCard album={songData.URL}>
         <Title>{songData.title}</Title>
       </BigCard>
@@ -18,25 +18,20 @@ const MagazineCardBig = (props: any) => {
 const Title = styled.div`
   width: 100%;
   height: 100%;
-  padding: 10px;
+  padding: 30px;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  justify-content: end;
+  align-items: start;
   font-size: 22px;
   color: white;
   font-family: 'omni035';
 `;
 
-const BigCardContainer = styled.div<{ type: number }>`
+const BigCardContainer = styled.div`
   aspect-ratio: 1;
-  width: 66.6666%;
-  padding: ${({ type }) =>
-    ({
-      1: '10px 10px 5px 20px',
-      2: '5px 20px 10px 10px',
-    }[type])};
+  width: 100%;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -56,19 +51,12 @@ const BigCard = styled.div<{ album: string }>`
   border: 0.5px solid #a3a3a3;
   box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.4);
   background-image: linear-gradient(
-      rgba(255, 255, 255, 0),
-      rgba(0, 0, 0, 0.7),
-      rgba(255, 255, 255, 0)
+      rgba(255, 255, 255, 0) 0%,
+      rgba(0, 0, 0, 0.9) 90%
     ),
     url(${({ album }) => album});
   background-size: cover;
   background-position: center center;
-
-  &:hover {
-    transform: scale(1.025);
-    transition: 0.4s;
-    cursor: pointer;
-  }
 `;
 
 export default MagazineCardBig;

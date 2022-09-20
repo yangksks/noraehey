@@ -3,7 +3,7 @@ import MusicCardSwiper from './MusicCardSwiper';
 import ShortsListSwiper from './ShortsListSwiper';
 import { BsCollectionPlay } from 'react-icons/bs';
 import { GrArticle } from 'react-icons/gr';
-import MagazineList from './MagazineList';
+import MagazineListSwiper from './MagazineListSwiper';
 
 const HomePage = () => {
   return (
@@ -19,7 +19,7 @@ const HomePage = () => {
           <GrArticle />
           매거진
         </FeatTitle>
-        <MagazineList />
+        <MagazineListSwiper />
       </ContentBox>
     </Container>
   );
@@ -59,6 +59,11 @@ const FeatTitle = styled.h1`
   justify-content: start;
   align-items: center;
   gap: 5px;
+
+  svg {
+    font-size: 28px;
+    padding-bottom: 4px;
+  }
 `;
 
 export default HomePage;

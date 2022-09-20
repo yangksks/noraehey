@@ -8,23 +8,16 @@ const MagazineCardSmall = (props: any) => {
   };
 
   return (
-    <MagazineSmall type={props.type}>
+    <MagazineSmall>
       <SmallCard>
         <Title>
           {songData.title}
-          <PlayButton />
+          <FaPlayCircle />
         </Title>
       </SmallCard>
     </MagazineSmall>
   );
 };
-
-const PlayButton = styled(FaPlayCircle)`
-  position: relative;
-  width: 50%;
-  height: 50%;
-  color: black;
-`;
 
 const Title = styled.div`
   position: relative;
@@ -41,18 +34,15 @@ const Title = styled.div`
   border-radius: 20px;
   background-color: #fff;
   box-sizing: border-box;
+
+  svg {
+    font-size: 30px;
+  }
 `;
 
-const MagazineSmall = styled.div<{ type: number }>`
+const MagazineSmall = styled.div`
   aspect-ratio: 1;
   width: 100%;
-  padding: ${({ type }) =>
-    ({
-      1: '10px 20px 5px 0px',
-      2: '5px 20px 5px 0px',
-      3: '5px 0px 5px 20px',
-      4: '5px 0px 10px 20px',
-    }[type])};
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -73,12 +63,6 @@ const SmallCard = styled.div`
   border-radius: 20px;
   box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.4);
   border: 2px solid #960ede;
-
-  &:hover {
-    transform: scale(1.04);
-    transition: 0.3s;
-    cursor: pointer;
-  }
 `;
 
 export default MagazineCardSmall;

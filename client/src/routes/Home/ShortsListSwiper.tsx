@@ -3,30 +3,22 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import ShortsListCard from './ShortsListCard';
 
+const shorts = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+
 const MusicCardSwiper = () => {
   return (
     <CardContainer>
       <Swiper
-        slidesOffsetBefore={20}
-        slidesOffsetAfter={20}
+        slidesOffsetBefore={10}
+        slidesOffsetAfter={10}
         slidesPerView={2.3}
         spaceBetween={10}
         className="mySwiper">
-        <SwiperSlide>
-          <ShortsListCard />
-        </SwiperSlide>
-        <SwiperSlide>
-          <ShortsListCard />
-        </SwiperSlide>
-        <SwiperSlide>
-          <ShortsListCard />
-        </SwiperSlide>
-        <SwiperSlide>
-          <ShortsListCard />
-        </SwiperSlide>
-        <SwiperSlide>
-          <ShortsListCard />
-        </SwiperSlide>
+        {shorts.map((short) => (
+          <SwiperSlide>
+            <ShortsListCard />
+          </SwiperSlide>
+        ))}
       </Swiper>
     </CardContainer>
   );
@@ -45,6 +37,8 @@ const CardContainer = styled.div`
   .swiper {
     width: 100%;
     height: 100%;
+    padding: 10px;
+    box-sizing: border-box;
   }
 
   .swiper-slide {
