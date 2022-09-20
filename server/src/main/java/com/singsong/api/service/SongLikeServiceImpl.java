@@ -5,7 +5,10 @@ import com.singsong.db.entity.Song;
 import com.singsong.db.entity.SongLike;
 import com.singsong.db.repository.SongLikeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class SongLikeServiceImpl implements SongLikeService {
@@ -17,6 +20,12 @@ public class SongLikeServiceImpl implements SongLikeService {
     public SongLike getSongLikeBySongIdAndMemberId(Long songId, Long memberId) {
         SongLike songLike = songLikeRepository.findBySongSongIdAndMemberMemberId(songId, memberId).orElse(null);
         return songLike;
+    }
+
+    @Override
+    public List<Song> getSongLikeListByMemberId(Long memberId, Pageable pageable) {
+        List<Song> songLikeList = songLikeRepository.findAllByMemberMemberId(memberId, pageable);
+        return songLikeList;
     }
 
     @Override
