@@ -7,6 +7,7 @@ interface songLyricsType {
 
 const SongLyrics = (props: songLyricsType) => {
   const { lyrics } = props;
+  const printLyrics = lyrics.replace(/\n/gi, '<br />');
   const [lyricsToggle, setLyricsToggle] = useState(false);
   return (
     <>
@@ -16,7 +17,9 @@ const SongLyrics = (props: songLyricsType) => {
         }}>
         {lyricsToggle ? '가사접기' : '가사보기'}
       </LyricsBtn>
-      {lyricsToggle ? <LyricsText>{lyrics}</LyricsText> : null}
+      <LyricsText
+        dangerouslySetInnerHTML={{ __html: printLyrics }}
+        lyricsToggle={lyricsToggle}></LyricsText>
     </>
   );
 };
@@ -30,5 +33,13 @@ const LyricsBtn = styled.button`
   color: ${(props) => props.theme.colors.textGray};
 `;
 
-const LyricsText = styled.p``;
+const LyricsText = styled.div<{ lyricsToggle: boolean }>`
+  width: calc(100% - 40px);
+  height: ${(props) => (props.lyricsToggle ? '200px' : '0px')};
+  text-align: center;
+  font-size: 14px;
+  transition: 1s;
+  overflow: auto;
+  line-height: 20px;
+`;
 export default SongLyrics;

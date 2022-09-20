@@ -32,7 +32,7 @@ const Title = styled.div`
     flex-shrink: 1;
     width: 100%;
     padding-left: 25px;
-    font-size: 1.2rem;
+    font-size: 18px;
     font-weight: 700;
   }
 `;
