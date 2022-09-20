@@ -12,13 +12,13 @@ import ShortsDetailPage from './routes/Shorts/ShortsDetailPage';
 import SongsDetailPage from './routes/Songs/SongsDetailPage';
 import SearchPage from './routes/Search/SearchPage';
 import SettingPage from './routes/Profile/SettingPage';
-import MenuBar from './routes/Common/MenuBar';
 import NavBar from './routes/Common/NavBar';
+import Header from './routes/Common/Header';
 
 const Router = () => {
   return (
     <BrowserRouter>
-      <NavBar />
+      <Header />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/intro" element={<LandingPage />} />
@@ -40,7 +40,7 @@ const Router = () => {
           />
         </Route>
       </Routes>
-      <MenuBar />
+      <NavBar />
     </BrowserRouter>
   );
 };
