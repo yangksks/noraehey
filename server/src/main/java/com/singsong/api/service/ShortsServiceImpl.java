@@ -3,9 +3,13 @@ package com.singsong.api.service;
 import com.singsong.api.response.ShortsEntityRes;
 import com.singsong.common.exception.code.ErrorCode;
 import com.singsong.common.exception.member.MemberNotFoundException;
+import com.singsong.common.exception.shorts.ShortsLikeDuplicatedException;
+import com.singsong.common.exception.shorts.ShortsLikeNotFoundExcepion;
+import com.singsong.common.exception.shorts.ShortsNotFoundException;
 import com.singsong.common.util.S3Util;
 import com.singsong.db.entity.Member;
 import com.singsong.db.entity.Shorts;
+import com.singsong.db.entity.ShortsLike;
 import com.singsong.db.entity.Song;
 import com.singsong.db.repository.MemberRepository;
 import com.singsong.db.repository.ShortsLikeRepository;
@@ -18,6 +22,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.transaction.Transactional;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -154,6 +159,39 @@ public class ShortsServiceImpl implements ShortsService {
             resList.add(shortsEntityRes);
         }
         return resList;
+    }
+
+    @Override
+    public int countShortsLike(Long shortsId) {
+        return shortsLikeRepository.countByShortsShortsId(shortsId).intValue();
+    }
+
+    @Override
+    public void addShortsLike(Member member, Long shortsId) {
+        Shorts shorts = shortsRepository.findByShortsId(shortsId).orElseThrow(() -> new ShortsNotFoundException("shorts not found", ErrorCode.SHORTS_NOT_FOUND));
+        // 이미 좋아요를 한 쇼츠
+        if (shortsLikeRepository.findByShortsShortsIdAndMemberMemberId(shortsId, member.getMemberId()) != null) {
+            throw new ShortsLikeDuplicatedException("shorts like duplicated", ErrorCode.SHORTS_LIKE_DUPLICATION);
+        }
+
+        ShortsLike shortsLike = ShortsLike.builder()
+                .shorts(shorts)
+                .member(member)
+                .build();
+        shortsLikeRepository.save(shortsLike);
+
+    }
+
+    @Override
+    @Transactional // delete 필수
+    public void deleteShortsLike(Member member, Long shortsId) {
+        Shorts shorts = shortsRepository.findByShortsId(shortsId).orElseThrow(() -> new ShortsNotFoundException("shorts not found", ErrorCode.SHORTS_NOT_FOUND));
+        // 좋아요 하지 않은 쇼츠를 삭제한다면
+        if (shortsLikeRepository.findByShortsShortsIdAndMemberMemberId(shortsId, member.getMemberId()) == null) {
+            throw new ShortsLikeNotFoundExcepion("shorts like not found", ErrorCode.SHORTS_LIKE_NOT_FOUND);
+        }
+
+        shortsLikeRepository.deleteByMemberMemberIdAndAndShortsShortsId(member.getMemberId(), shortsId);
     }
 
 }
