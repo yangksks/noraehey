@@ -25,7 +25,7 @@ public class SongServiceImpl implements SongService {
 
     @Override
     public Song getSongBySongId(Long songId) {
-        Song song = songRepository.findSongBySongId(songId);
+        Song song = songRepository.findSongBySongId(songId).orElseThrow(() -> new SongNotFoundException("song not found", ErrorCode.SONG_NOT_FOUND));
         if (song == null) {
             throw new SongNotFoundException("song not found", ErrorCode.SONG_NOT_FOUND);
         }
@@ -34,7 +34,7 @@ public class SongServiceImpl implements SongService {
 
     @Override
     public void updateSongLevel(Long songId, int updatedSongLevel, Long songEvalCount) {
-        Song song = songRepository.findSongBySongId(songId);
+        Song song = songRepository.findSongBySongId(songId).orElseThrow(() -> new SongNotFoundException("song not found", ErrorCode.SONG_NOT_FOUND));;
         songRepository.save(Song.builder()
                 .songId(songId)
                 .songTitle(song.getSongTitle())
@@ -55,7 +55,7 @@ public class SongServiceImpl implements SongService {
 
     @Override
     public void updateSongLike(Long songId, int result) {
-        Song song = songRepository.findSongBySongId(songId);
+        Song song = songRepository.findSongBySongId(songId).orElseThrow(() -> new SongNotFoundException("song not found", ErrorCode.SONG_NOT_FOUND));;
         songRepository.save(Song.builder()
                 .songId(songId)
                 .songTitle(song.getSongTitle())

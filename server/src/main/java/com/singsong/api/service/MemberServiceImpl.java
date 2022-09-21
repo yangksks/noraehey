@@ -83,7 +83,6 @@ public class MemberServiceImpl implements MemberService{
         String accessToken = JwtTokenUtil.getToken(member.getMemberEmail());
         String refreshToken = newRefreshToken.getRefreshToken().replace("Bearer ", "");
 
-
         return  MemberTokenRes.builder()
                 .accessToken(accessToken)
                 .refreshToken(refreshToken)
