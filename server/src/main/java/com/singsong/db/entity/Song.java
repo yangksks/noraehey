@@ -23,11 +23,11 @@ public class Song {
     String songTitle;
     @Column(length = 50)
     String songSinger;
-    @Column(columnDefinition = "TINYINT", length=1)
-    int songGender;
     int songHighPitch;
     @Column(length = 50)
     String songGenre;
+    @Column(length = 60)
+    String songAlbum;
     @Column(length = 500)
     String songImageUrl;
     @Column(length = 10)
@@ -36,4 +36,9 @@ public class Song {
     String songKy;
     @Column(length = 500)
     String songTag;
+    int songLikeCount;
+    int songLevel;
+    Long songEvalCount;
+    @Column(columnDefinition = "TEXT")
+    String songLyrics;
 }
