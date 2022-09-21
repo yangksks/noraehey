@@ -6,14 +6,19 @@ import com.singsong.api.response.MyInfoRes;
 import com.singsong.api.service.MemberService;
 import com.singsong.api.service.TagService;
 import com.singsong.common.util.JwtAuthenticationUtil;
+import com.singsong.common.util.S3Util;
 import com.singsong.common.util.auth.MemberDetails;
 import com.singsong.db.entity.Member;
+import com.singsong.db.entity.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import springfox.documentation.annotations.ApiIgnore;
 
+import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -28,10 +33,18 @@ public class MemberController {
     @Autowired
     TagService tagService;
 
+    @Autowired
+    S3Util s3Util;
+
     @GetMapping("/refresh")
     public ResponseEntity<?> tokenRefresh(@RequestHeader(value = "REFRESH-TOKEN") String refreshToken) {
 
-        MemberTokenRes memberTokenRes = memberService.modifyRefreshToken(refreshToken);
+        Map<String, String> tokens = memberService.modifyRefreshToken(refreshToken);
+
+        MemberTokenRes memberTokenRes = MemberTokenRes.builder()
+                .accessToken(tokens.get("accessToken"))
+                .refreshToken(tokens.get("refreshToken"))
+                .build();
 
         return ResponseEntity.status(200).body(memberTokenRes);
     }
@@ -39,7 +52,16 @@ public class MemberController {
     @GetMapping("/info")
     public ResponseEntity<?> myInfoDetail(@ApiIgnore Authentication authentication) {
         Member member = jwtAuthenticationUtil.jwtTokenAuth(authentication);
-        MyInfoRes myInfoRes = tagService.getMyInfo(member);
+        List<Tag> tags = tagService.getMyInfo(member);
+
+        MyInfoRes myInfoRes = MyInfoRes.builder()
+                .memberId(member.getMemberId())
+                .email(member.getMemberEmail())
+                .nickName(member.getMemberNickname())
+                .songHighPitch(member.getMemberHighPitch())
+                .profileUrl(member.getMemberProfileUrl())
+                .memberTagList(tags)
+                .build();
 
         return ResponseEntity.status(200).body(myInfoRes);
     }
@@ -47,15 +69,38 @@ public class MemberController {
     @GetMapping("/nickname/{nickname}")
     public ResponseEntity<?> nickNameValidate(@PathVariable String nickname) {
 
-        return memberService.getMemberByNickname(nickname);
+        memberService.getMemberByNickname(nickname);
+
+        return ResponseEntity.status(200).build();
     }
 
     @PatchMapping("/nickname")
     public ResponseEntity<?> nickNameModify(@ApiIgnore Authentication authentication,
-                                            @RequestBody Map<String,String> req) {
+                                            @RequestBody Map<String, String> req) {
         MemberDetails memberDetails = (MemberDetails) authentication.getDetails();
         Member member = memberDetails.getUser();
-        memberService.modifyNickName(member,req.get("nickname"));
+        memberService.modifyNickName(member, req.get("nickname"));
+
+        return ResponseEntity.status(200).build();
+    }
+
+    @PatchMapping("/profileimg")
+    public ResponseEntity<?> profileModify(@ApiIgnore Authentication authentication, @RequestPart MultipartFile profileImg) throws IOException {
+        Member member = jwtAuthenticationUtil.jwtTokenAuth(authentication);
+        String s3Url = s3Util.uploadMemberProfileImageFile(profileImg, member.getMemberId());
+
+        String memberImageUrl = member.getMemberProfileUrl();
+        if (memberImageUrl != null) s3Util.deleteFile(memberImageUrl.substring(49));
+
+        memberService.modifyProfile(member, s3Url);
+
+        return ResponseEntity.status(200).build();
+    }
+
+    @PatchMapping("/delete")
+    public ResponseEntity<?> memberRemove(@ApiIgnore Authentication authentication) {
+        Member member = jwtAuthenticationUtil.jwtTokenAuth(authentication);
+        memberService.removeMember(member);
 
         return ResponseEntity.status(200).build();
     }
@@ -71,17 +116,17 @@ public class MemberController {
     @PatchMapping("/tag/delete")
     public ResponseEntity<?> memberTagDelete(@RequestParam(value = "tag") int tagId, @ApiIgnore Authentication authentication) {
         Member member = jwtAuthenticationUtil.jwtTokenAuth(authentication);
-        tagService.deleteMemberTag(member, tagId);
+        tagService.removeMemberTag(member, tagId);
 
         return ResponseEntity.status(200).build();
     }
 
     @PatchMapping("/highpitch")
-    public  ResponseEntity<?> highPitchModifiy(@RequestParam(value="highpitch") int highPitch, @ApiIgnore Authentication authentication) {
+    public ResponseEntity<?> highPitchModifiy(@RequestParam(value = "highpitch") int highPitch, @ApiIgnore Authentication authentication) {
         MemberDetails memberDetails = (MemberDetails) authentication.getDetails();
         Member member = memberDetails.getUser();
 
-        memberService.modifyHighPitch(member,highPitch);
+        memberService.modifyHighPitch(member, highPitch);
 
         return ResponseEntity.status(200).build();
     }
@@ -89,9 +134,14 @@ public class MemberController {
     @GetMapping("/info/{memberId}")
     public ResponseEntity<?> memberDetail(@PathVariable Long memberId) {
 
-        MemberInfoRes memberInfoRes = memberService.getMemberInfoRes(memberId);
+        Member member = memberService.getMemberInfoRes(memberId);
 
-        return  ResponseEntity.status(200).body(memberInfoRes);
+        MemberInfoRes memberInfoRes = MemberInfoRes.builder()
+                .memberNickname(member.getMemberNickname())
+                .memberProfileUrl(member.getMemberProfileUrl())
+                .build();
+
+        return ResponseEntity.status(200).body(memberInfoRes);
     }
 
 }

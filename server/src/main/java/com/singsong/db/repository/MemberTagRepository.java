@@ -19,4 +19,7 @@ public interface MemberTagRepository extends JpaRepository<MemberTag, Long> {
 
     @Transactional
     void deleteByMemberAndTag(Member member, Tag tag);
+
+    @Transactional
+    void deleteByMember(Member member);
 }
