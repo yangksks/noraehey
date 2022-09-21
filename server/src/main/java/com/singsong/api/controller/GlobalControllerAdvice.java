@@ -1,6 +1,7 @@
 package com.singsong.api.controller;
 
 import com.singsong.common.exception.code.ErrorCode;
+import com.singsong.common.exception.magazine.MagazineNotFoundException;
 import com.singsong.common.exception.member.MemberNotFoundException;
 import com.singsong.common.exception.member.MemberUnauthorizedException;
 import com.singsong.common.exception.response.ErrorResponse;
@@ -99,6 +100,13 @@ public class GlobalControllerAdvice {
         return new ResponseEntity<>(response, HttpStatus.valueOf(e.getErrorCode().getStatus()));
     }
 
+    // 매거진
+    @ExceptionHandler(MagazineNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleMagazineNotFoundException(MagazineNotFoundException e) {
+        log.error("handleMagazineNotFoundException", e);
+        ErrorResponse response = new ErrorResponse(ErrorCode.MAGAZINE_NOT_FOUND);
+        return new ResponseEntity<>(response, HttpStatus.valueOf(e.getErrorCode().getStatus()));
+    }
 
 
 //    @ExceptionHandler(NicknameDuplicateException.class)
