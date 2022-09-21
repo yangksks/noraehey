@@ -106,7 +106,7 @@ public class MemberController {
     }
 
     @PatchMapping("/tag/add")
-    public ResponseEntity<?> memberTagAdd(@RequestParam(value = "tag") int tagId, @ApiIgnore Authentication authentication) {
+    public ResponseEntity<?> memberTagAdd(@RequestParam(value = "tag") Long tagId, @ApiIgnore Authentication authentication) {
         Member member = jwtAuthenticationUtil.jwtTokenAuth(authentication);
         tagService.addMemberTag(member, tagId);
 
@@ -114,7 +114,7 @@ public class MemberController {
     }
 
     @PatchMapping("/tag/delete")
-    public ResponseEntity<?> memberTagDelete(@RequestParam(value = "tag") int tagId, @ApiIgnore Authentication authentication) {
+    public ResponseEntity<?> memberTagDelete(@RequestParam(value = "tag") Long tagId, @ApiIgnore Authentication authentication) {
         Member member = jwtAuthenticationUtil.jwtTokenAuth(authentication);
         tagService.removeMemberTag(member, tagId);
 
