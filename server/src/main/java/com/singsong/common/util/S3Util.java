@@ -66,6 +66,28 @@ public class S3Util {
         return magazineImageUrl;
     }
 
+    public String uploadMemberProfileImageFile(MultipartFile multipartFile, Long memberId) throws IOException {
+        String originalName = createFileName(multipartFile.getOriginalFilename()); // 파일 이름
+        long size = multipartFile.getSize(); // 파일 크기
+        String extension = originalName.substring(originalName.lastIndexOf("."));
+
+        if (!(extension.equals(".jpg") || extension.equals(".JPG")  || extension.equals(".png")  || extension.equals(".PNG") || extension.equals(".jpeg") || extension.equals(".JPEG"))) {
+            return "fail";
+        }
+
+        ObjectMetadata objectMetaData = new ObjectMetadata();
+        objectMetaData.setContentType(multipartFile.getContentType());
+        objectMetaData.setContentLength(size);
+
+        // S3 업로드
+        amazonS3Client.putObject(
+                new PutObjectRequest(bucket + "/member/" + memberId, originalName, multipartFile.getInputStream(), objectMetaData)
+                        .withCannedAcl(CannedAccessControlList.PublicRead)
+        );
+        String profileImageUrl = amazonS3Client.getUrl(bucket + "/member/" + memberId, originalName).toString(); // 접근가능한 URL 가져오기
+        return profileImageUrl;
+    }
+
 
     public void deleteFile(String fileName) {
         amazonS3Client.deleteObject(new DeleteObjectRequest(bucket, fileName));

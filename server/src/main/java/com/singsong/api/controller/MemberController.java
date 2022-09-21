@@ -86,7 +86,6 @@ public class MemberController {
 
     @PatchMapping("/profileimg")
     public ResponseEntity<?> profileModify(@ApiIgnore Authentication authentication, @RequestPart MultipartFile profileImg) throws IOException {
-        // TODO : S3에서 이미지보내고 url 받아오기
         Member member = jwtAuthenticationUtil.jwtTokenAuth(authentication);
         String s3Url = s3Util.uploadMemberProfileImageFile(profileImg, member.getMemberId());
 
