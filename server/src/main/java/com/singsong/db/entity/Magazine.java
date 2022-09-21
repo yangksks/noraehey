@@ -1,15 +1,14 @@
 package com.singsong.db.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -17,7 +16,7 @@ import javax.persistence.*;
 public class Magazine {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long megazineId;
+    Long magazineId;
     @Column(length = 100)
     String magazineTitle;
     @Column(length = 1000)
