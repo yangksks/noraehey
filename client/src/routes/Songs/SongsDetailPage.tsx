@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import styled from 'styled-components';
 import Container from '../../style/style';
@@ -10,12 +10,18 @@ import SongDetailShorts from './SongDetailShorts';
 // import { fetchData } from '../../utils/api/api';
 import SongInfo from './SongInfo';
 import { useParams } from 'react-router-dom';
+import { useLocation } from 'react-router';
 export type SongType = {
   songId: number;
   songName: string;
 };
 const SongsDetailPage = () => {
   const { songId } = useParams();
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
   const [songData, setSongData] = useState({
     songTitle: '눈의 꽃',
     songSinger: '박효신',
