@@ -14,10 +14,10 @@ const NavBarButton = (props: ButtonType) => {
     <MenuButton urlNow={props.urlNow} onClick={() => props.change()}>
       {
         {
-          home: <AiOutlineHome />,
-          song: <BiBookHeart />,
-          shorts: <BiSearch />,
-          search: <BsCollectionPlay />,
+          '': <AiOutlineHome />,
+          like: <BiBookHeart />,
+          shorts: <BsCollectionPlay />,
+          search: <BiSearch />,
         }[props.name]
       }
     </MenuButton>

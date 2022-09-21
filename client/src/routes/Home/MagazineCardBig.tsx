@@ -18,7 +18,7 @@ const MagazineCardBig = () => {
 const Title = styled.div`
   width: 100%;
   height: 100%;
-  padding: 30px;
+  padding: 20px;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -51,7 +51,7 @@ const BigCard = styled.div<{ album: string }>`
   border: 0.5px solid #a3a3a3;
   box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.4);
   background-image: linear-gradient(
-      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0) 30%,
       rgba(0, 0, 0, 0.9) 90%
     ),
     url(${({ album }) => album});

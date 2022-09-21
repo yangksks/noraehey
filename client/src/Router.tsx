@@ -18,6 +18,9 @@ import LikeShortsPage from './routes/Like/LikeShortsPage';
 import LikeSongPage from './routes/Like/LikeSongPage';
 import NavBar from './routes/Common/NavBar';
 import Header from './routes/Common/Header';
+import { useLocation } from 'react-router-dom';
+import { useEffect } from 'react';
+
 const Router = () => {
   return (
     <BrowserRouter>

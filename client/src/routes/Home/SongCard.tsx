@@ -7,7 +7,10 @@ interface songProps {
 
 const SongCard = (props: songProps) => {
   return (
-    <SongBox>
+    <SongBox
+      onClick={() => {
+        alert('곡정보 상세보기');
+      }}>
       <AlbumArt url={props.songData.URL}></AlbumArt>
       <SongInfo>
         <h1>{props.songData.title}</h1>

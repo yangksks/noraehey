@@ -23,4 +23,5 @@ const LikeShortsPage = () => {
 const ShortsList = styled.div`
   width: 100%;
 `;
+
 export default LikeShortsPage;
