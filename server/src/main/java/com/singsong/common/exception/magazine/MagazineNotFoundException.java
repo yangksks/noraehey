@@ -12,8 +12,8 @@ public class MagazineNotFoundException extends RuntimeException {
         this.errorCode = errorCode;
     }
 
-//    @Override
-//    public synchronized Throwable fillInStackTrace() {
-//        return this;
-//    }
+    @Override
+    public synchronized Throwable fillInStackTrace() {
+        return this;
+    }
 }

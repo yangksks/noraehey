@@ -70,7 +70,9 @@ public class MagazineServiceImpl implements MagazineService{
     @Override
     @Transactional
     public void deleteMagazine(Long magazineId) {
-        magazineRepository.findByMagazineId(magazineId).orElseThrow(() -> new MagazineNotFoundException("magazine not found", ErrorCode.MAGAZINE_NOT_FOUND));
+        Magazine magazine = magazineRepository.findByMagazineId(magazineId).orElseThrow(() -> new MagazineNotFoundException("magazine not found", ErrorCode.MAGAZINE_NOT_FOUND));
         magazineRepository.deleteByMagazineId(magazineId);
+        String magazineImageUrl = magazine.getMagazineImageUrl();
+        if (magazineImageUrl != null) s3Util.deleteFile(magazineImageUrl.substring(49));
     }
 }
