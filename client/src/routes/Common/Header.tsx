@@ -1,30 +1,44 @@
 import styled from 'styled-components';
 import { CgProfile } from 'react-icons/cg';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 
 const Header = () => {
   const [infoBar, setInfoBar] = useState(false);
-  return (
-    <HeaderContainer>
-      <HeaderTop infoBar={infoBar === true}>
-        <TopBox>
-          <Logo>
-            <p style={{ color: '#FFC34E' }}>NORAE</p>
-            <p style={{ color: 'white' }}>HEY</p>
-          </Logo>
-          <ProfileImg
-            onClick={() => {
-              setInfoBar(!infoBar);
-            }}
-          />
-        </TopBox>
-      </HeaderTop>
-      <HeaderBottom>
-        <BottomBox />
-        <BottomBox2 />
-      </HeaderBottom>
-    </HeaderContainer>
-  );
+  const [urlNow, setUrlNow] = useState('none');
+  const [navStatus, setNavStatus] = useState(true);
+  const url = useLocation().pathname.split('/')[1];
+
+  useEffect(() => {
+    setUrlNow(url);
+    url === 'login' ? setNavStatus(false) : setNavStatus(true);
+  });
+
+  const render = () => {
+    return (
+      <HeaderContainer>
+        <HeaderTop infoBar={infoBar === true}>
+          <TopBox>
+            <Logo>
+              <p style={{ color: '#FFC34E' }}>NORAE</p>
+              <p style={{ color: 'white' }}>HEY</p>
+            </Logo>
+            <ProfileImg
+              onClick={() => {
+                setInfoBar(!infoBar);
+              }}
+            />
+          </TopBox>
+        </HeaderTop>
+        <HeaderBottom>
+          <BottomBox />
+          <BottomBox2 />
+        </HeaderBottom>
+      </HeaderContainer>
+    );
+  };
+
+  return <>{navStatus ? render() : ''}</>;
 };
 
 const HeaderContainer = styled.header`
