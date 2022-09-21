@@ -1,6 +1,5 @@
 package com.singsong.api.service;
 
-import com.singsong.api.response.MyInfoRes;
 import com.singsong.common.exception.code.ErrorCode;
 import com.singsong.common.exception.tag.TagDuplicationException;
 import com.singsong.common.exception.tag.TagNotFoundException;
@@ -25,7 +24,7 @@ public class TagServiceImpl implements TagService {
     TagRepository tagRepository;
 
     @Override
-    public MyInfoRes getMyInfo(Member member) {
+    public List<Tag> getMyInfo(Member member) {
 
         List<MemberTagMapping> memberTagList = memberTagRepository.findByMember(member);
 
@@ -34,14 +33,7 @@ public class TagServiceImpl implements TagService {
             tags.add(tag.getTag());
         }
 
-        return MyInfoRes.builder()
-                .memberId(member.getMemberId())
-                .email(member.getMemberEmail())
-                .nickName(member.getMemberNickname())
-                .songHighPitch(member.getMemberHighPitch())
-                .profileUrl(member.getMemberProfileUrl())
-                .memberTagList(tags)
-                .build();
+        return tags;
     }
 
     @Override
@@ -61,7 +53,7 @@ public class TagServiceImpl implements TagService {
     }
 
     @Override
-    public void deleteMemberTag(Member member, Long tagId) {
+    public void removeMemberTag(Member member, Long tagId) {
         Tag tag = tagRepository.findByTagId(tagId).orElseThrow(() -> new TagNotFoundException("존재하지 않는 태그입니다.", ErrorCode.TAG_NOT_FOUND));
 
         if (!memberTagRepository.findByMemberAndTag(member, tag).isPresent())
@@ -81,6 +73,5 @@ public class TagServiceImpl implements TagService {
                     .build());
         }
     }
-
 
 }
