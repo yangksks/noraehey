@@ -50,7 +50,7 @@ dependencies {
     annotationProcessor("org.projectlombok:lombok:1.18.20")
     // S3
     implementation 'io.awspring.cloud:spring-cloud-starter-aws:2.3.1'
-    //json 파싱
+    // json 파싱
     dependencies { implementation 'com.google.code.gson:gson:2.8.7' }
     implementation('commons-io:commons-io:2.6')
     implementation("org.apache.commons:commons-collections4:4.4")
@@ -61,6 +61,10 @@ dependencies {
     implementation("com.google.guava:guava:29.0-jre")
     annotationProcessor("com.google.guava:guava:29.0-jre")
     testImplementation("com.jayway.jsonpath:json-path:2.4.0")
+
+    // RestTemplate 사용
+    implementation 'org.apache.httpcomponents:httpcore:4.4.15'
+    implementation 'org.apache.httpcomponents:httpclient:4.5.13'
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
