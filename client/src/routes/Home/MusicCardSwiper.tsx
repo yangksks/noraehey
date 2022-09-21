@@ -65,7 +65,7 @@ const CardContainer = styled.div`
   }
 
   .swiper-slide-active {
-    scale: 1.08;
+    scale: 1.05;
     transition: 0.3s;
   }
 

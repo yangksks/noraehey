@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import 'swiper/css';
 import MagazineCardBig from './MagazineCardBig';
 import MagazineCardSmall from './MagazineCardSmall';
+import 'swiper/css';
 
 const magazines = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
@@ -15,8 +15,8 @@ const MagazineListSwiper = () => {
         slidesPerView={1.6}
         spaceBetween={10}
         className="mySwiper">
-        {magazines.map((magazine) => (
-          <SwiperSlide>
+        {magazines.map((magazine, idx) => (
+          <SwiperSlide key={`big${idx}`}>
             <MagazineCardBig />
           </SwiperSlide>
         ))}
@@ -27,8 +27,8 @@ const MagazineListSwiper = () => {
         slidesPerView={3.3}
         spaceBetween={10}
         className="mySwiper">
-        {magazines.map((magazine) => (
-          <SwiperSlide>
+        {magazines.map((magazine, idx) => (
+          <SwiperSlide key={`small${idx}`}>
             <MagazineCardSmall />
           </SwiperSlide>
         ))}

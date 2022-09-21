@@ -1,23 +1,31 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import NavBarButton from './NavBarButton';
 
-const MenuName = ['home', 'song', 'shorts', 'search'];
+const MenuName = ['', 'like', 'shorts', 'search'];
+const MenuURL = ['', 'like/songlist', 'shorts/1', 'search'];
 
 const NavBar = () => {
-  const [urlNow, setUrlNow] = useState('home');
+  const [urlNow, setUrlNow] = useState('none');
+  const url = useLocation().pathname.split('/')[1];
+
+  useEffect(() => {
+    setUrlNow(url);
+  });
 
   return (
     <Menu>
-      {MenuName.map((name) => (
-        <NavBarButton
-          key={name}
-          urlNow={urlNow === name}
-          change={() => {
-            setUrlNow(name);
-          }}
-          name={name}
-        />
+      {MenuName.map((name, idx) => (
+        <Link to={`/${MenuURL[idx]}`} key={name}>
+          <NavBarButton
+            urlNow={urlNow === name}
+            change={() => {
+              setUrlNow(name);
+            }}
+            name={name}
+          />
+        </Link>
       ))}
     </Menu>
   );

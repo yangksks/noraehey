@@ -38,7 +38,6 @@ const BoxHeader = styled.div`
   flex-direction: column;
   justify-content: start;
   align-items: start;
-  border-radius: 20px;
   font-size: 18px;
   font-family: 'omni035';
   box-sizing: border-box;
