@@ -27,7 +27,7 @@ public class S3Util {
         long size = multipartFile.getSize(); // 파일 크기
         String extension = originalName.substring(originalName.lastIndexOf("."));
 
-        if (!(extension.equals(".mp3") || extension.equals(".MP3") || extension.equals(".m4a")|| extension.equals(".M4A"))) {
+        if (!(extension.equals(".mp3") || extension.equals(".MP3") || extension.equals(".m4a") || extension.equals(".M4A"))) {
             return "fail";
         }
 
@@ -44,7 +44,7 @@ public class S3Util {
         return shortsAudioUrl;
     }
 
-    public String uploadMemberProfileImageFile(MultipartFile multipartFile, Long memberId) throws IOException {
+    public String uploadMagazineImageFile(MultipartFile multipartFile, Long magazineId) throws IOException {
         String originalName = createFileName(multipartFile.getOriginalFilename()); // 파일 이름
         long size = multipartFile.getSize(); // 파일 크기
         String extension = originalName.substring(originalName.lastIndexOf("."));
@@ -59,11 +59,11 @@ public class S3Util {
 
         // S3 업로드
         amazonS3Client.putObject(
-                new PutObjectRequest(bucket + "/member/" + memberId, originalName, multipartFile.getInputStream(), objectMetaData)
+                new PutObjectRequest(bucket + "/magazine/" + magazineId, originalName, multipartFile.getInputStream(), objectMetaData)
                         .withCannedAcl(CannedAccessControlList.PublicRead)
         );
-        String profileImageUrl = amazonS3Client.getUrl(bucket + "/member/" + memberId, originalName).toString(); // 접근가능한 URL 가져오기
-        return profileImageUrl;
+        String magazineImageUrl = amazonS3Client.getUrl(bucket + "/magazine/" + magazineId, originalName).toString(); // 접근가능한 URL 가져오기
+        return magazineImageUrl;
     }
 
 

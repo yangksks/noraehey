@@ -6,6 +6,7 @@ import com.singsong.common.exception.member.MemberNotFoundException;
 import com.singsong.common.exception.shorts.ShortsLikeDuplicatedException;
 import com.singsong.common.exception.shorts.ShortsLikeNotFoundExcepion;
 import com.singsong.common.exception.shorts.ShortsNotFoundException;
+import com.singsong.common.exception.song.SongNotFoundException;
 import com.singsong.common.util.S3Util;
 import com.singsong.db.entity.Member;
 import com.singsong.db.entity.Shorts;
@@ -101,7 +102,7 @@ public class ShortsServiceImpl implements ShortsService {
     public List<ShortsEntityRes> createShortsListByMember(List<Shorts> shortsList, Member loginMember, Member shortsMember) {
         List<ShortsEntityRes> resList = new ArrayList<>();
         for (Shorts shorts: shortsList) {
-            Song song = songRepository.findSongBySongId(shorts.getSong().getSongId());
+            Song song = songRepository.findSongBySongId(shorts.getSong().getSongId()).orElseThrow(() -> new SongNotFoundException("song not found", ErrorCode.SONG_NOT_FOUND));
             boolean isLiked = shortsLikeRepository.findByShortsShortsIdAndMemberMemberId(shorts.getShortsId(), loginMember.getMemberId()) != null;
             int likeCount = shortsLikeRepository.countByShortsShortsId(shorts.getShortsId()).intValue();
             ShortsEntityRes shortsEntityRes = ShortsEntityRes.builder()
@@ -130,11 +131,12 @@ public class ShortsServiceImpl implements ShortsService {
     }
 
     @Override
+    @Transactional
     public List<ShortsEntityRes> createShortsListByRandom(Member member) {
         List<Shorts> shortsList = shortsRepository.findByRandom();
         List<ShortsEntityRes> resList = new ArrayList<>();
         for (Shorts shorts: shortsList) {
-            Song song = songRepository.findSongBySongId(shorts.getSong().getSongId());
+            Song song = songRepository.findSongBySongId(shorts.getSong().getSongId()).orElseThrow(() -> new SongNotFoundException("song not found", ErrorCode.SONG_NOT_FOUND));;
             boolean isLiked = shortsLikeRepository.findByShortsShortsIdAndMemberMemberId(shorts.getShortsId(), member.getMemberId()) != null;
             int likeCount = shortsLikeRepository.countByShortsShortsId(shorts.getShortsId()).intValue();
             Member shortsMember = memberRepository.findByMemberId(shorts.getMember().getMemberId()).orElseThrow(() -> new MemberNotFoundException("member not found", ErrorCode.MEMBER_NOT_FOUND));
@@ -180,7 +182,6 @@ public class ShortsServiceImpl implements ShortsService {
                 .member(member)
                 .build();
         shortsLikeRepository.save(shortsLike);
-
     }
 
     @Override
@@ -196,12 +197,13 @@ public class ShortsServiceImpl implements ShortsService {
     }
 
     @Override
+    @Transactional
     public List<ShortsEntityRes> getLikeShortsList(Member member, int page) {
         Pageable pageable = PageRequest.of(page, SIZE);
         List<Shorts> shortsList = shortsRepository.findByLike(member.getMemberId(), pageable);
         List<ShortsEntityRes> resList = new ArrayList<>();
         for (Shorts shorts: shortsList) {
-            Song song = songRepository.findSongBySongId(shorts.getSong().getSongId());
+            Song song = songRepository.findSongBySongId(shorts.getSong().getSongId()).orElseThrow(() -> new SongNotFoundException("song not found", ErrorCode.SONG_NOT_FOUND));;
             boolean isLiked = shortsLikeRepository.findByShortsShortsIdAndMemberMemberId(shorts.getShortsId(), member.getMemberId()) != null;
             int likeCount = shortsLikeRepository.countByShortsShortsId(shorts.getShortsId()).intValue();
             Member shortsMember = memberRepository.findByMemberId(shorts.getMember().getMemberId()).orElseThrow(() -> new MemberNotFoundException("member not found", ErrorCode.MEMBER_NOT_FOUND));

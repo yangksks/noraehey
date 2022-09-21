@@ -1,9 +1,12 @@
 package com.singsong.api.service;
 
+import com.singsong.api.response.MemberInfoRes;
+import com.singsong.api.response.MemberTokenRes;
 import com.singsong.common.exception.code.ErrorCode;
 import com.singsong.common.exception.member.MemberNicknameValidateException;
 import com.singsong.common.exception.member.MemberNotFoundException;
 import com.singsong.common.exception.member.MemberUnauthorizedException;
+import com.singsong.common.model.response.BaseResponseBody;
 import com.singsong.common.model.response.KakaoMemberInfo;
 import com.singsong.common.util.JwtTokenUtil;
 import com.singsong.db.entity.Member;
@@ -11,6 +14,7 @@ import com.singsong.db.entity.RefreshToken;
 import com.singsong.db.repository.MemberRepository;
 import com.singsong.db.repository.RefreshTokenRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
