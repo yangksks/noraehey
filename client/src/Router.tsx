@@ -13,9 +13,11 @@ import ShortsDetailPage from './routes/Shorts/ShortsDetailPage';
 import SongsDetailPage from './routes/Songs/SongsDetailPage';
 import SearchPage from './routes/Search/SearchPage';
 import SettingPage from './routes/Profile/SettingPage';
+import LikePage from './routes/Like/LikePage';
+import LikeShortsPage from './routes/Like/LikeShortsPage';
+import LikeSongPage from './routes/Like/LikeSongPage';
 import NavBar from './routes/Common/NavBar';
 import Header from './routes/Common/Header';
-
 const Router = () => {
   return (
     <BrowserRouter>
@@ -31,6 +33,10 @@ const Router = () => {
           <Route path="setting" element={<SettingPage />} />
         </Route>
         <Route path="/songs/:songId" element={<SongsDetailPage />} />
+        <Route path="/like/*" element={<LikePage />}>
+          <Route path="songlist" element={<LikeSongPage />} />
+          <Route path="shortslist" element={<LikeShortsPage />} />
+        </Route>
         <Route path="/magazine/:magazineId" element={<MagazineDetailPage />} />
         <Route path="/admin" element={<AdminPage />}>
           <Route path="magazine/create" element={<MagazineCreatePage />} />
