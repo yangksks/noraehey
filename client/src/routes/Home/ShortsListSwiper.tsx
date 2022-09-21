@@ -5,7 +5,7 @@ import ShortsListCard from './ShortsListCard';
 
 const shorts = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
-const MusicCardSwiper = () => {
+const ShortsCardSwiper = () => {
   return (
     <CardContainer>
       <Swiper
@@ -14,8 +14,8 @@ const MusicCardSwiper = () => {
         slidesPerView={2.3}
         spaceBetween={10}
         className="mySwiper">
-        {shorts.map((short) => (
-          <SwiperSlide>
+        {shorts.map((short, idx) => (
+          <SwiperSlide key={idx}>
             <ShortsListCard />
           </SwiperSlide>
         ))}
@@ -61,4 +61,4 @@ const CardContainer = styled.div`
     transition: 0.3s;
   }
 `;
-export default MusicCardSwiper;
+export default ShortsCardSwiper;

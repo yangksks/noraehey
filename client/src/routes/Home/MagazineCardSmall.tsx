@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { FaPlayCircle } from 'react-icons/fa';
 
-const MagazineCardSmall = (props: any) => {
+const MagazineCardSmall = () => {
   const songData = {
     URL: '',
     title: 'Top20',
