@@ -1,13 +1,12 @@
 package com.singsong.api.service;
 
-import com.singsong.api.response.MemberInfoRes;
-import com.singsong.api.response.MemberTokenRes;
 import com.singsong.common.model.response.KakaoMemberInfo;
 import com.singsong.db.entity.Member;
-import org.springframework.http.ResponseEntity;
+
+import java.util.Map;
 
 public interface MemberService {
-    MemberTokenRes modifyRefreshToken(String oldRefreshToken);
+    Map<String, String> modifyRefreshToken(String oldRefreshToken);
     Member getMemberByMemberEmail(String memberEmail);
     Member getMemberByMemberId(Long memberId);
     // 회원가입
@@ -19,7 +18,11 @@ public interface MemberService {
 
     void modifyNickName(Member member,String nickname);
 
-    ResponseEntity<?> getMemberByNickname(String nickname);
+    void getMemberByNickname(String nickname);
 
-    MemberInfoRes getMemberInfoRes(Long memberId);
+    Member getMemberInfoRes(Long memberId);
+
+    void removeMember(Member member);
+
+    void modifyProfile(Member member, String s3Url);
 }
