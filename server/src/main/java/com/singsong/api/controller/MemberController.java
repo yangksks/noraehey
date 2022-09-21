@@ -89,6 +89,9 @@ public class MemberController {
         Member member = jwtAuthenticationUtil.jwtTokenAuth(authentication);
         String s3Url = s3Util.uploadMemberProfileImageFile(profileImg, member.getMemberId());
 
+        String memberImageUrl = member.getMemberProfileUrl();
+        if (memberImageUrl != null) s3Util.deleteFile(memberImageUrl.substring(49));
+
         memberService.modifyProfile(member, s3Url);
 
         return ResponseEntity.status(200).build();
