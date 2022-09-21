@@ -37,11 +37,11 @@ public class TagServiceImpl implements TagService {
     }
 
     @Override
-    public void addMemberTag(Member member, int tagId) {
+    public void addMemberTag(Member member, Long tagId) {
 
-        Tag tag = tagRepository.findById(tagId).orElseThrow(() -> new TagNotFoundException("존재하지 않는 태그입니다.", ErrorCode.TAG_NOT_FOUND));
+        Tag tag = tagRepository.findByTagId(tagId).orElseThrow(() -> new TagNotFoundException("존재하지 않는 태그입니다.", ErrorCode.TAG_NOT_FOUND));
 
-        if(memberTagRepository.findByMemberAndTag(member,tag).isPresent())
+        if (memberTagRepository.findByMemberAndTag(member, tag).isPresent())
             throw new TagDuplicationException("이미 추가된 태그입니다.", ErrorCode.TAG_DUPLICATION);
 
         MemberTag memberTag = MemberTag.builder()
@@ -53,13 +53,25 @@ public class TagServiceImpl implements TagService {
     }
 
     @Override
-    public void removeMemberTag(Member member, int tagId) {
-        Tag tag = tagRepository.findById(tagId).orElseThrow(() -> new TagNotFoundException("존재하지 않는 태그입니다.", ErrorCode.TAG_NOT_FOUND));
+    public void removeMemberTag(Member member, Long tagId) {
+        Tag tag = tagRepository.findByTagId(tagId).orElseThrow(() -> new TagNotFoundException("존재하지 않는 태그입니다.", ErrorCode.TAG_NOT_FOUND));
 
-        if(!memberTagRepository.findByMemberAndTag(member,tag).isPresent())
+        if (!memberTagRepository.findByMemberAndTag(member, tag).isPresent())
             throw new TagNotFoundException("추가되지 않은 태그입니다.", ErrorCode.TAG_NOT_FOUND);
 
-        memberTagRepository.deleteByMemberAndTag(member,tag);
+        memberTagRepository.deleteByMemberAndTag(member, tag);
+    }
+
+    @Override
+    public void modifyMemberTags(Member member, List<Long> tagIdList) {
+        memberTagRepository.deleteAllByMemberMemberId(member.getMemberId());
+        for (Long tagId : tagIdList) {
+            Tag tag = tagRepository.findByTagId(tagId).orElseThrow(() -> new TagNotFoundException("존재하지 않는 태그입니다.", ErrorCode.TAG_NOT_FOUND));
+            memberTagRepository.save(MemberTag.builder()
+                    .member(member)
+                    .tag(tag)
+                    .build());
+        }
     }
 
 }
