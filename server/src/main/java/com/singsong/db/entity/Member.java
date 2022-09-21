@@ -36,5 +36,9 @@ public class Member {
         this.memberNickname = nickname;
     }
 
+    public void setMemberProfileUrl(String url) {
+        this.memberProfileUrl = url;
+    }
+
     public void deleteMember() {this.memberRole = 0;}
 }

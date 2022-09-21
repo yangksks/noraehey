@@ -17,7 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
-public class MemberServiceImpl implements MemberService{
+public class MemberServiceImpl implements MemberService {
 
     @Autowired
     MemberRepository memberRepository;
@@ -74,7 +74,7 @@ public class MemberServiceImpl implements MemberService{
     public MemberTokenRes modifyRefreshToken(String oldRefreshToken) {
         // refreshToken 정보 조회
         RefreshToken originRefreshToken = refreshTokenRepository.findByRefreshToken(oldRefreshToken)
-                .orElseThrow(() -> new MemberUnauthorizedException("잘못된 토큰입니다.", ErrorCode.Member_Unauthorized) );
+                .orElseThrow(() -> new MemberUnauthorizedException("잘못된 토큰입니다.", ErrorCode.Member_Unauthorized));
 
         Member member = originRefreshToken.getMember();
 
@@ -84,7 +84,7 @@ public class MemberServiceImpl implements MemberService{
         String refreshToken = newRefreshToken.getRefreshToken().replace("Bearer ", "");
 
 
-        return  MemberTokenRes.builder()
+        return MemberTokenRes.builder()
                 .accessToken(accessToken)
                 .refreshToken(refreshToken)
                 .build();
@@ -106,13 +106,13 @@ public class MemberServiceImpl implements MemberService{
     @Override
     public ResponseEntity<?> getMemberByNickname(String nickname) {
 
-        if(nickname.length() > 20)
+        if (nickname.length() > 20)
             return ResponseEntity.status(409).body(BaseResponseBody.of(409, "LENGTH_ERROR"));
 
-        if(memberRepository.findByMemberNickname(nickname).isPresent())
+        if (memberRepository.findByMemberNickname(nickname).isPresent())
             return ResponseEntity.status(409).body(BaseResponseBody.of(409, "DUPLICATION_ERROR"));
 
-        return  ResponseEntity.status(200).build();
+        return ResponseEntity.status(200).build();
     }
 
     @Override
@@ -126,6 +126,15 @@ public class MemberServiceImpl implements MemberService{
                 .build();
 
         return memberInfoRes;
+    }
+
+    @Override
+    public void modifyProfile(Member member, String s3Url) {
+
+        member.setMemberProfileUrl(s3Url);
+
+        memberRepository.save(member);
+
     }
 
     @Override

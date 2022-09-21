@@ -6,14 +6,17 @@ import com.singsong.api.response.MyInfoRes;
 import com.singsong.api.service.MemberService;
 import com.singsong.api.service.TagService;
 import com.singsong.common.util.JwtAuthenticationUtil;
+import com.singsong.common.util.S3Util;
 import com.singsong.common.util.auth.MemberDetails;
 import com.singsong.db.entity.Member;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import springfox.documentation.annotations.ApiIgnore;
 
+import java.io.IOException;
 import java.util.Map;
 
 @RestController
@@ -27,6 +30,9 @@ public class MemberController {
 
     @Autowired
     TagService tagService;
+
+    @Autowired
+    S3Util s3Util;
 
     @GetMapping("/refresh")
     public ResponseEntity<?> tokenRefresh(@RequestHeader(value = "REFRESH-TOKEN") String refreshToken) {
@@ -47,6 +53,7 @@ public class MemberController {
     @GetMapping("/nickname/{nickname}")
     public ResponseEntity<?> nickNameValidate(@PathVariable String nickname) {
 
+
         return memberService.getMemberByNickname(nickname);
     }
 
@@ -56,6 +63,17 @@ public class MemberController {
         MemberDetails memberDetails = (MemberDetails) authentication.getDetails();
         Member member = memberDetails.getUser();
         memberService.modifyNickName(member,req.get("nickname"));
+
+        return ResponseEntity.status(200).build();
+    }
+
+    @PatchMapping("/profileimg")
+    public ResponseEntity<?> profileModify(@ApiIgnore Authentication authentication, @RequestPart MultipartFile profileImg) throws IOException {
+        // TODO : S3에서 이미지보내고 url 받아오기
+        Member member = jwtAuthenticationUtil.jwtTokenAuth(authentication);
+        String s3Url = s3Util.uploadMemberProfileImageFile(profileImg,member.getMemberId());
+
+        memberService.modifyProfile(member,s3Url);
 
         return ResponseEntity.status(200).build();
     }
@@ -98,6 +116,7 @@ public class MemberController {
     public ResponseEntity<?> memberDetail(@PathVariable Long memberId) {
 
         MemberInfoRes memberInfoRes = memberService.getMemberInfoRes(memberId);
+
         return  ResponseEntity.status(200).body(memberInfoRes);
     }
 

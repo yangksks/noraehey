@@ -24,4 +24,6 @@ public interface MemberService {
     MemberInfoRes getMemberInfoRes(Long memberId);
 
     void removeMember(Member member);
+
+    void modifyProfile(Member member, String s3Url);
 }
