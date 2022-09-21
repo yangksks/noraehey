@@ -35,4 +35,6 @@ public class Member {
     public void setMemberNickname(String nickname) {
         this.memberNickname = nickname;
     }
+
+    public void deleteMember() {this.memberRole = 0;}
 }

@@ -60,6 +60,14 @@ public class MemberController {
         return ResponseEntity.status(200).build();
     }
 
+    @PatchMapping("/delete")
+    public ResponseEntity<?> memberRemove(@ApiIgnore Authentication authentication){
+        Member member = jwtAuthenticationUtil.jwtTokenAuth(authentication);
+        memberService.removeMember(member);
+
+        return ResponseEntity.status(200).build();
+    }
+
     @PatchMapping("/tag/add")
     public ResponseEntity<?> memberTagAdd(@RequestParam(value = "tag") int tagId, @ApiIgnore Authentication authentication) {
         Member member = jwtAuthenticationUtil.jwtTokenAuth(authentication);
@@ -71,7 +79,7 @@ public class MemberController {
     @PatchMapping("/tag/delete")
     public ResponseEntity<?> memberTagDelete(@RequestParam(value = "tag") int tagId, @ApiIgnore Authentication authentication) {
         Member member = jwtAuthenticationUtil.jwtTokenAuth(authentication);
-        tagService.deleteMemberTag(member, tagId);
+        tagService.removeMemberTag(member, tagId);
 
         return ResponseEntity.status(200).build();
     }
@@ -90,7 +98,6 @@ public class MemberController {
     public ResponseEntity<?> memberDetail(@PathVariable Long memberId) {
 
         MemberInfoRes memberInfoRes = memberService.getMemberInfoRes(memberId);
-
         return  ResponseEntity.status(200).body(memberInfoRes);
     }
 

@@ -22,4 +22,6 @@ public interface MemberService {
     ResponseEntity<?> getMemberByNickname(String nickname);
 
     MemberInfoRes getMemberInfoRes(Long memberId);
+
+    void removeMember(Member member);
 }

@@ -61,7 +61,7 @@ public class TagServiceImpl implements TagService {
     }
 
     @Override
-    public void deleteMemberTag(Member member, int tagId) {
+    public void removeMemberTag(Member member, int tagId) {
         Tag tag = tagRepository.findById(tagId).orElseThrow(() -> new TagNotFoundException("존재하지 않는 태그입니다.", ErrorCode.TAG_NOT_FOUND));
 
         if(!memberTagRepository.findByMemberAndTag(member,tag).isPresent())
@@ -69,6 +69,5 @@ public class TagServiceImpl implements TagService {
 
         memberTagRepository.deleteByMemberAndTag(member,tag);
     }
-
 
 }
