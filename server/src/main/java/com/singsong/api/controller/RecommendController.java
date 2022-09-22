@@ -72,7 +72,7 @@ public class RecommendController {
         System.out.println(pyRequest.getMemberId());
 
         // 4. 요청 URL을 정의해줍니다.
-        String url = "http://127.0.0.1:8000/api/v2/songs/recommend/";
+        String url = "https://j7a503.p.ssafy.io/api/v2/songs/recommend/";
 
         // 5. postForEntity() 메소드로 api를 호출합니다.
         ResponseEntity<Map> response = restTemplate.postForEntity(url, pyRequest, Map.class);
