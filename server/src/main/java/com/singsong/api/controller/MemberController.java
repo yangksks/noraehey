@@ -6,6 +6,7 @@ import com.singsong.api.response.MyInfoRes;
 import com.singsong.api.service.MemberService;
 import com.singsong.api.service.TagService;
 import com.singsong.common.util.JwtAuthenticationUtil;
+import com.singsong.common.util.JwtTokenUtil;
 import com.singsong.common.util.S3Util;
 import com.singsong.common.util.auth.MemberDetails;
 import com.singsong.db.entity.Member;
@@ -142,6 +143,30 @@ public class MemberController {
                 .build();
 
         return ResponseEntity.status(200).body(memberInfoRes);
+    }
+
+    //Todo: 개발 끝나면 삭제
+    @GetMapping("/login")
+    public ResponseEntity<?> devLogin() {
+        Member member = memberService.getMemberByMemberEmail("kst5428136@naver.com");
+
+       // Todo : 유저 늘릴때 이거 쓰면될듯?
+//        if (member == null) {
+//            member = memberService.createMember(kakaoMemberInfo);
+//        }
+
+        // accessToken, refreshToken 생성
+        Map<String, String> tokens = JwtTokenUtil.generateTokenSet(member.getMemberEmail());
+
+        // refreshToken DB에 초기화
+        memberService.saveRefreshToken(member, tokens.get("refreshToken"));
+
+        MemberTokenRes memberTokenRes = MemberTokenRes.builder()
+                .accessToken(tokens.get("accessToken"))
+                .refreshToken(tokens.get("refreshToken"))
+                .build();
+
+        return ResponseEntity.status(200).body(memberTokenRes);
     }
 
 }
