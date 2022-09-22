@@ -13,4 +13,5 @@ public interface TagService {
      void modifyMemberTags(Member member, List<Long> tagIdList);
      void addMemberTag(Member member, Long tagId);
      void removeMemberTag(Member member, Long tagId);
+     List<String> getTagNameList(List<Long> tagIdList);
 }
