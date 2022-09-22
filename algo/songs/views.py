@@ -98,6 +98,6 @@ def recommend(request):
   result.append(recommend_list)
 
   response = {
-    result: result
+    'result': result
   }
   return Response(response, status=status.HTTP_200_OK)
