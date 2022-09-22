@@ -63,6 +63,16 @@ public class TagServiceImpl implements TagService {
     }
 
     @Override
+    public List<String> getTagNameList(List<Long> tagIdList) {
+        List<String> tagNameList = new ArrayList<>();
+        for(Long tagId : tagIdList){
+            String tagName = tagRepository.findByTagId(tagId).orElseThrow(()-> new TagNotFoundException("존재하지 않는 태그입니다.", ErrorCode.TAG_NOT_FOUND)).getTagName();
+            tagNameList.add(tagName);
+        }
+        return tagNameList;
+    }
+
+    @Override
     public void modifyMemberTags(Member member, List<Long> tagIdList) {
         memberTagRepository.deleteAllByMemberMemberId(member.getMemberId());
         for (Long tagId : tagIdList) {
@@ -73,5 +83,4 @@ public class TagServiceImpl implements TagService {
                     .build());
         }
     }
-
 }
