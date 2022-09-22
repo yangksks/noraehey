@@ -1,9 +1,21 @@
-import React from 'react'
-
+import React from 'react';
+import styled from 'styled-components';
+import Container from '../../style/style';
 const ShortsDetailPage = () => {
   return (
-    <div>ShortsDetailPage</div>
-  )
-}
+    <Container>
+      <Shorts>
+        {/* <Profile></Profile>
+        <ProgressBar></ProgressBar>
+        <Contents></Contents>
+        <MusicBox></MusicBox> */}
+      </Shorts>
+    </Container>
+  );
+};
 
-export default ShortsDetailPage
+const Shorts = styled.div`
+  width: 100%;
+  background-color: red;
+`;
+export default ShortsDetailPage;
