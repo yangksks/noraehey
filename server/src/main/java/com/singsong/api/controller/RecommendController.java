@@ -66,6 +66,7 @@ public class RecommendController {
 
         PyRecommendPostReq pyRequest = PyRecommendPostReq.builder()
                 .memberId(member.getMemberId())
+                .memberHighPitch(member.getMemberHighPitch())
                 .tagNameList(tagNameList)
                 .build();
 
