@@ -61,15 +61,18 @@ public class RecommendController {
         RestTemplate restTemplate = new RestTemplate(factory);
 
         // HTTP Body로 들어갈 것들 만들기
+
+        List<String> tagNameList = tagService.getTagNameList(recommendPostReq.getTagIdList());
+
         PyRecommendPostReq pyRequest = PyRecommendPostReq.builder()
                 .memberId(member.getMemberId())
-                .tagIdList(recommendPostReq.getTagIdList())
+                .tagNameList(tagNameList)
                 .build();
 
         System.out.println(pyRequest.getMemberId());
 
         // 4. 요청 URL을 정의해줍니다.
-        String url = "http://localhost:8000/api/v2/songs/recommend/";
+        String url = "http://127.0.0.1:8000/api/v2/songs/recommend/";
 
         // 5. postForEntity() 메소드로 api를 호출합니다.
         ResponseEntity<Map> response = restTemplate.postForEntity(url, pyRequest, Map.class);

@@ -36,7 +36,7 @@ public class KakaoServiceImpl implements KakaoService {
 
         sb.append("grant_type=authorization_code");
         sb.append("&client_id=" + kakaoRestKey);
-        sb.append("&redirect_uri=http://localhost:8081/api/kakao/callback"); // TODO 인가코드 받은 redirect_uri 입력
+        sb.append("&redirect_uri=https://j7a503.p.ssafy.io/api/v1/kakao/callback"); // TODO 인가코드 받은 redirect_uri 입력
         sb.append("&code=" + code);
         bw.write(sb.toString());
         bw.flush();
