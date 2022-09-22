@@ -16,6 +16,7 @@ import lombok.Setter;
 @Builder
 @ApiModel("SongDetailResponse")
 public class SongDetailRes {
+    Long songId;
     String songTitle;
     String songSinger;
     int songHighPitch;
@@ -33,6 +34,7 @@ public class SongDetailRes {
 
     public static SongDetailRes of(Song song, SongLike songLike, SongLevel songLevel) {
         SongDetailRes res = SongDetailRes.builder()
+                .songId(song.getSongId())
                 .songTitle(song.getSongTitle())
                 .songSinger(song.getSongSinger())
                 .songHighPitch(song.getSongHighPitch())

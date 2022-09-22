@@ -11,5 +11,5 @@ import java.util.List;
 @Builder
 public class PyRecommendPostReq {
     Long memberId;
-    List<Long> tagIdList;
+    List<String> tagNameList;
 }
