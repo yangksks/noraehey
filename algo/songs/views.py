@@ -3,6 +3,7 @@ from rest_framework.response import Response
 from rest_framework import status
 import pandas as pd
 import numpy as np
+from songs.models import Song
 
 def cos_sim(A, B):
   return np.dot(A, B)/(np.linalg.norm(A) * np.linalg.norm(B))
@@ -49,16 +50,17 @@ def recommend(request):
   recommend_list = []
 
   # song_list = []
+  user_high_pitch = user["memberHighPitch"]
   # # 한 키 낮은거
-  low_song_list = 
+  low_song_list = Song.objects.filter(song_high_pitch=user_high_pitch-1)
   # song_list.append(low_song_list)
 
   # # 내 키 user["memberHighPitch"]
-  # fit_song_list = []
+  # fit_song_list = Song.objects.filter(song_high_pitch=user_high_pitch)
   # song_list.append(fit_song_list)
 
   # # 한 키 높은거
-  # high_song_list = []
+  # high_song_list = Song.objects.filter(song_high_pitch=user_high_pitch+1)
   # song_list.append(high_song_list)
 
 #  for list in song_list:
