@@ -5,6 +5,8 @@ import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.DeleteObjectRequest;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.singsong.common.exception.code.ErrorCode;
+import com.singsong.common.exception.file.FileUploadExtensionException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -27,9 +29,10 @@ public class S3Util {
         long size = multipartFile.getSize(); // 파일 크기
         String extension = originalName.substring(originalName.lastIndexOf("."));
 
-        if (!(extension.equals(".mp3") || extension.equals(".MP3") || extension.equals(".m4a") || extension.equals(".M4A"))) {
-            return "fail";
-        }
+        // TODO: 주석 풀기
+//        if (!(extension.equals(".mp3") || extension.equals(".MP3") || extension.equals(".m4a") || extension.equals(".M4A"))) {
+//            throw new FileUploadExtensionException("not allowed file extension", ErrorCode.FILE_UPLOAD_EXTENSION);
+//        }
 
         ObjectMetadata objectMetaData = new ObjectMetadata();
         objectMetaData.setContentType(multipartFile.getContentType());
@@ -50,7 +53,7 @@ public class S3Util {
         String extension = originalName.substring(originalName.lastIndexOf("."));
 
         if (!(extension.equals(".jpg") || extension.equals(".JPG") || extension.equals(".png") || extension.equals(".PNG") || extension.equals(".jpeg") || extension.equals(".JPEG"))) {
-            return "fail";
+            throw new FileUploadExtensionException("not allowed file extension", ErrorCode.FILE_UPLOAD_EXTENSION);
         }
 
         ObjectMetadata objectMetaData = new ObjectMetadata();
@@ -72,7 +75,7 @@ public class S3Util {
         String extension = originalName.substring(originalName.lastIndexOf("."));
 
         if (!(extension.equals(".jpg") || extension.equals(".JPG")  || extension.equals(".png")  || extension.equals(".PNG") || extension.equals(".jpeg") || extension.equals(".JPEG"))) {
-            return "fail";
+            throw new FileUploadExtensionException("not allowed file extension", ErrorCode.FILE_UPLOAD_EXTENSION);
         }
 
         ObjectMetadata objectMetaData = new ObjectMetadata();
