@@ -10,11 +10,11 @@ const MusicCardSwiper = () => {
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
-    }, 600);
+    }, 300);
   });
 
   return (
-    <CardContainer loading={loading}>
+    <CardContainer status={loading}>
       <Swiper
         slidesPerView={1.3}
         centeredSlides={true}
@@ -37,7 +37,7 @@ const MusicCardSwiper = () => {
   );
 };
 
-const CardContainer = styled.div<{ loading: boolean }>`
+const CardContainer = styled.div<{ status: boolean }>`
   position: relative;
   width: 100%;
   aspect-ratio: 0.77;
@@ -70,18 +70,18 @@ const CardContainer = styled.div<{ loading: boolean }>`
     -webkit-align-items: center;
     align-items: center;
     width: 60%;
-    transition: ${({ loading }) => (loading ? '0s' : '0.3s')};
+    transition: ${({ status }) => (status ? '0s' : '0.3s')};
   }
 
   .swiper-slide-active {
     scale: 1.05;
-    transition: ${({ loading }) => (loading ? '0s' : '0.3s')};
+    transition: ${({ status }) => (status ? '0s' : '0.3s')};
   }
 
   .swiper-slide-prev div,
   .swiper-slide-next div {
     background-color: #e6e6e6;
-    transition: ${({ loading }) => (loading ? '0s' : '0.6s')};
+    transition: ${({ status }) => (status ? '0s' : '0.6s')};
   }
 `;
 export default MusicCardSwiper;

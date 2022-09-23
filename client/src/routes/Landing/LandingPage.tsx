@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 const CLIENT_ID = '7751ec01f50361d6bce9db46f9383a9a';
