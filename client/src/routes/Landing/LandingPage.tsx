@@ -1,34 +1,43 @@
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-const setScreenSize = () => {
-  let vh = window.innerHeight * 0.01;
-  document.documentElement.style.setProperty('--vh', `${vh}px`);
-};
-setScreenSize();
+const CLIENT_ID = '7751ec01f50361d6bce9db46f9383a9a';
+const REDIRECT_URL = 'http://localhost:3000/kakao/callback';
+//const REDIRECT_URL = 'https://j7a503.p.ssafy.io/api/v1/kakao/callback';
+const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URL}&response_type=code`;
 
 const LandingPage = () => {
+  const setScreenSize = () => {
+    let vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty('--vh', `${vh}px`);
+  };
+  setScreenSize();
+  window.addEventListener('resize', () => setScreenSize());
   return (
     <LandingContainer>
       <TitleBox>
         <LeftBox>
-          <h1>노</h1>
-          <h2>래</h2>
-          <h3>해</h3>
+          <p className={'no'}>노</p>
+          <p className={'rae'}>래</p>
+          <p className={'hey'}>해</p>
         </LeftBox>
         <RightBox>
-          <h1>
+          <p>
             당신이 부를수있는
             <br />
             최고의 노래를
             <br />
             찾아보세요
-          </h1>
+          </p>
           <ImgBox src={'src/assets/images/coupleSinging.png'} />
         </RightBox>
       </TitleBox>
       <LoginBox>
-        <KakaoButton src={'src/assets/images/kakaoLogin.png'} />
-        <a>체험하기</a>
+        <Link to="/kakao/callback">
+          <KakaoButton src={'src/assets/images/kakaoLogin.png'} />
+        </Link>
+
+        <p>체험하기</p>
       </LoginBox>
     </LandingContainer>
   );
@@ -37,12 +46,7 @@ const LandingPage = () => {
 const LandingContainer = styled.div`
   width: 100%;
   height: calc(var(--vh, 1vh) * 100);
-  background: linear-gradient(
-    168.05deg,
-    #a793ff 0%,
-    #f4b9ee 55.13%,
-    #ffe27d 100%
-  );
+  background: ${(props) => props.theme.colors.gradientPurpleToYellow};
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -69,18 +73,19 @@ const LeftBox = styled.div`
   justify-content: start;
   padding-left: 30px;
   align-items: start;
-  h1 {
+  background-color: transparent;
+  .no {
     animation: fadeIn 2s forwards;
     font-size: 90px;
     color: white;
   }
-  h2 {
+  .rae {
     animation: fadeIn 3s forwards;
     padding: 0 25px;
     font-size: 90px;
     color: white;
   }
-  h3 {
+  .hey {
     animation: fadeIn 4s forwards;
     padding: 0 50px;
     font-size: 90px;
@@ -105,7 +110,7 @@ const RightBox = styled.div`
   flex-direction: column;
   justify-content: end;
   align-items: center;
-  h1 {
+  p {
     animation: fadeIn 3s forwards;
     font-family: 'omni025';
     margin-top: 3px;
@@ -130,7 +135,7 @@ const LoginBox = styled.div`
   flex-direction: column;
   justify-content: start;
   align-items: center;
-  a {
+  p {
     font-size: 14px;
     font-family: 'omni025';
     border-bottom: 0.5px solid;
@@ -138,10 +143,13 @@ const LoginBox = styled.div`
     -webkit-tap-highlight-color: transparent;
     cursor: pointer;
   }
+  a {
+    width: 75%;
+  }
 `;
 
 const KakaoButton = styled.img`
-  width: 80%;
+  width: 100%;
   cursor: pointer;
   &:active {
     scale: 0.95;

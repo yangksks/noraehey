@@ -8,12 +8,16 @@ const MenuURL = ['', 'like/songlist', 'shorts/1', 'search'];
 
 const NavBar = () => {
   const [urlNow, setUrlNow] = useState('none');
-  const [navStatus, setNavStatus] = useState(true);
+  const [navStatus, setNavStatus] = useState(false);
   const url = useLocation().pathname.split('/')[1];
 
   useEffect(() => {
     setUrlNow(url);
-    url === 'login' ? setNavStatus(false) : setNavStatus(true);
+    if (url === 'login' || url === 'tag' || url === 'voice') {
+      return setNavStatus(false);
+    } else {
+      setNavStatus(true);
+    }
   });
 
   const render = () => {

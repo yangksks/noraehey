@@ -4,7 +4,7 @@ import MagazineCreatePage from './routes/Admin/MagazineCreatePage';
 import MagazineUpdatePage from './routes/Admin/MagazineUpdatePage';
 import LandingPage from './routes/Landing/LandingPage';
 import TagPage from './routes/Tag/TagPage';
-import VoicePage from './routes/HighNote/HighNotePage';
+import HighNotePage from './routes/HighNote/HighNotePage';
 import HomePage from './routes/Home/HomePage';
 import ProfilePage from './routes/Profile/ProfilePage';
 import MagazineDetailPage from './routes/Magazine/MagazineDetailPage';
@@ -14,6 +14,7 @@ import SearchPage from './routes/Search/SearchPage';
 import SettingPage from './routes/Profile/SettingPage';
 import NavBar from './routes/Common/NavBar';
 import Header from './routes/Common/Header';
+import KakaoRedirectHandler from './routes/Landing/KakaoRedirectHandler';
 
 const Router = () => {
   return (
@@ -22,8 +23,12 @@ const Router = () => {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<LandingPage />} />
+        <Route
+          path="/kakao/callback"
+          element={<KakaoRedirectHandler />}
+        />
         <Route path="/tag" element={<TagPage />} />
-        <Route path="/voice" element={<VoicePage />} />
+        <Route path="/voice" element={<HighNotePage />} />
         <Route path="/shorts/:shortsId" element={<ShortsDetailPage />} />
         <Route path="/search" element={<SearchPage />} />
         <Route path="/profile/:userId" element={<ProfilePage />}>

@@ -10,7 +10,7 @@ const MusicCardSwiper = () => {
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
-    }, 400);
+    }, 600);
   });
 
   return (
