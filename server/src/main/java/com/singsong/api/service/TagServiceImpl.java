@@ -73,6 +73,12 @@ public class TagServiceImpl implements TagService {
     }
 
     @Override
+    public List<Tag> getTagList() {
+        List<Tag> tagList = tagRepository.findAll();
+        return tagList;
+    }
+
+    @Override
     public void modifyMemberTags(Member member, List<Long> tagIdList) {
         memberTagRepository.deleteAllByMemberMemberId(member.getMemberId());
         for (Long tagId : tagIdList) {
