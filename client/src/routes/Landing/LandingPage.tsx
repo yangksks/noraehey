@@ -3,7 +3,6 @@ import styled from 'styled-components';
 
 const CLIENT_ID = '7751ec01f50361d6bce9db46f9383a9a';
 const REDIRECT_URL = 'http://localhost:3000/kakao/callback';
-//const REDIRECT_URL = 'https://j7a503.p.ssafy.io/api/v1/kakao/callback';
 const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URL}&response_type=code`;
 
 const LandingPage = () => {
@@ -33,10 +32,9 @@ const LandingPage = () => {
         </RightBox>
       </TitleBox>
       <LoginBox>
-        <Link to="/kakao/callback">
+        <a href={KAKAO_AUTH_URL}>
           <KakaoButton src={'src/assets/images/kakaoLogin.png'} />
-        </Link>
-
+        </a>
         <p>체험하기</p>
       </LoginBox>
     </LandingContainer>
