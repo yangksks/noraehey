@@ -90,6 +90,15 @@ public class ShortsController {
         return ResponseEntity.status(200).body(resList);
     }
 
+    // 쇼츠 상세 조회
+    @GetMapping
+    public ResponseEntity<?> getShortsDetail(@RequestParam("shortsId") Long shortsId, @ApiIgnore Authentication authentication) {
+        Member member = jwtAuthenticationUtil.jwtTokenAuth(authentication);
+        ShortsEntityRes shortsEntityRes = shortsService.getShortsDetailByShortsId(shortsId, member);
+        return ResponseEntity.status(200).body(shortsEntityRes);
+    }
+
+
     // 쇼츠 좋아요 추가
     @PostMapping("/like")
     public ResponseEntity<?> addShortsLike(@RequestParam("shortsId") Long shortsId, @ApiIgnore Authentication authentication) {

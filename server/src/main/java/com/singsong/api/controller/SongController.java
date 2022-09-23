@@ -7,18 +7,14 @@ import com.singsong.api.response.SongListRes;
 import com.singsong.api.service.SongLevelService;
 import com.singsong.api.service.SongLikeService;
 import com.singsong.api.service.SongService;
+import com.singsong.api.service.TagService;
 import com.singsong.common.model.response.BaseResponseBody;
 import com.singsong.common.util.JwtAuthenticationUtil;
-import com.singsong.common.util.auth.MemberDetails;
-import com.singsong.db.entity.Member;
-import com.singsong.db.entity.Song;
-import com.singsong.db.entity.SongLevel;
-import com.singsong.db.entity.SongLike;
+import com.singsong.db.entity.*;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
@@ -44,6 +40,9 @@ public class SongController {
 
     @Autowired
     SongLevelService songLevelService;
+
+    @Autowired
+    TagService tagService;
 
     @GetMapping("/search")
     public ResponseEntity<SongListRes> searchSongList(@RequestParam("word") String word, @RequestParam("page") int page){
@@ -118,5 +117,12 @@ public class SongController {
             songEntityResList.add(songEntityRes);
         }
         return ResponseEntity.status(200).body(SongListRes.of(hasMore, songEntityResList));
+    }
+
+    @GetMapping("/tag")
+    public ResponseEntity<?> getTagList() {
+        List<Tag> tagList = tagService.getTagList();
+
+        return ResponseEntity.status(200).body(tagList);
     }
 }

@@ -5,8 +5,6 @@ import com.singsong.db.entity.Tag;
 
 import java.util.List;
 
-import java.util.List;
-
 public interface TagService {
      List<Tag> getMyInfo(Member member);
 
@@ -14,4 +12,5 @@ public interface TagService {
      void addMemberTag(Member member, Long tagId);
      void removeMemberTag(Member member, Long tagId);
      List<String> getTagNameList(List<Long> tagIdList);
+     List<Tag> getTagList();
 }
