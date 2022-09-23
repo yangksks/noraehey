@@ -38,4 +38,8 @@ public class Shorts {
 
     @CreatedDate
     private LocalDateTime shortsCreateTime;
+
+    public void setShortsAudioUrl(String shortsAudioUrl) {
+        this.shortsAudioUrl = shortsAudioUrl;
+    }
 }

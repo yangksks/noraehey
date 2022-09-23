@@ -1,6 +1,7 @@
 package com.singsong.api.controller;
 
 import com.singsong.common.exception.code.ErrorCode;
+import com.singsong.common.exception.file.FileUploadExtensionException;
 import com.singsong.common.exception.magazine.MagazineNotFoundException;
 import com.singsong.common.exception.member.MemberNotFoundException;
 import com.singsong.common.exception.member.MemberUnauthorizedException;
@@ -108,6 +109,13 @@ public class GlobalControllerAdvice {
         return new ResponseEntity<>(response, HttpStatus.valueOf(e.getErrorCode().getStatus()));
     }
 
+    // 파일 업로드
+    @ExceptionHandler(FileUploadExtensionException.class)
+    public ResponseEntity<ErrorResponse> handleFileUploadExtensionException(FileUploadExtensionException e) {
+        log.error("handleFileUploadExtensionException", e);
+        ErrorResponse response = new ErrorResponse(ErrorCode.FILE_UPLOAD_EXTENSION);
+        return new ResponseEntity<>(response, HttpStatus.valueOf(e.getErrorCode().getStatus()));
+    }
 
 //    @ExceptionHandler(NicknameDuplicateException.class)
 //    public ResponseEntity<ErrorResponse> handleNicknameDuplicateException(NicknameDuplicateException e){
