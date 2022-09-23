@@ -54,11 +54,11 @@ const NumAndLike = styled.div`
   }
 
   .TJ {
-    background-color: ${(props) => props.theme.colors.mainPurple};
+    background-color: #9278ff;
     margin-bottom: 5px;
   }
   .KY {
-    background-color: ${(props) => props.theme.colors.mainPink};
+    background-color: #c792ef;
   }
   svg {
   }

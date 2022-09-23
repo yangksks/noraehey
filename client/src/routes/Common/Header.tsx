@@ -1,30 +1,35 @@
 import styled from 'styled-components';
 import { CgProfile } from 'react-icons/cg';
 import { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 
 const Header = () => {
   const [infoBar, setInfoBar] = useState(false);
-  return (
-    <HeaderContainer>
-      <HeaderTop infoBar={infoBar === true}>
-        <TopBox>
-          <Logo>
-            <p style={{ color: '#FFC34E' }}>NORAE</p>
-            <p style={{ color: 'white' }}>HEY</p>
-          </Logo>
-          <ProfileImg
-            onClick={() => {
-              setInfoBar(!infoBar);
-            }}
-          />
-        </TopBox>
-      </HeaderTop>
-      <HeaderBottom>
-        <BottomBox />
-        <BottomBox2 />
-      </HeaderBottom>
-    </HeaderContainer>
-  );
+  const location = useLocation();
+
+  if (location.pathname.startsWith('/shorts')) return null;
+  else
+    return (
+      <HeaderContainer>
+        <HeaderTop infoBar={infoBar === true}>
+          <TopBox>
+            <Logo>
+              <p style={{ color: '#FFC34E' }}>NORAE</p>
+              <p style={{ color: 'white' }}>HEY</p>
+            </Logo>
+            <ProfileImg
+              onClick={() => {
+                setInfoBar(!infoBar);
+              }}
+            />
+          </TopBox>
+        </HeaderTop>
+        <HeaderBottom>
+          <BottomBox />
+          <BottomBox2 />
+        </HeaderBottom>
+      </HeaderContainer>
+    );
 };
 
 const HeaderContainer = styled.header`
