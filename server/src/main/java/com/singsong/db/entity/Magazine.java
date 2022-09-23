@@ -8,7 +8,6 @@ import java.util.List;
 
 @Entity
 @Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -24,4 +23,7 @@ public class Magazine {
     @Column(length = 500)
     String magazineImageUrl;
 
+    public void setMagazineImageUrl(String magazineImageUrl) {
+        this.magazineImageUrl = magazineImageUrl;
+    }
 }
