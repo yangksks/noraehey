@@ -20,9 +20,10 @@ import NavBar from './routes/Common/NavBar';
 import Header from './routes/Common/Header';
 import { useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
+import SearchSongPage from './routes/Search/SearchSongPage';
+import SearchSingerPage from './routes/Search/SearchSingerPage';
 
 const Router = () => {
-  
   return (
     <BrowserRouter>
       <Header />
@@ -33,6 +34,7 @@ const Router = () => {
         <Route path="/voice" element={<VoicePage />} />
         <Route path="/shorts/:shortsId" element={<ShortsDetailPage />} />
         <Route path="/search" element={<SearchPage />} />
+
         <Route path="/profile/:userId" element={<ProfilePage />}>
           <Route path="setting" element={<SettingPage />} />
         </Route>

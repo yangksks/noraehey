@@ -7,7 +7,7 @@ const LikeSongCard = (props: any) => {
   return (
     <SongBox
       onClick={() => {
-        navigate('/songs/12');
+        navigate(`/songs/${songData.songId}`);
       }}>
       <img src={songData.songImageUrl} alt="" />
       <div className="songInfo">
