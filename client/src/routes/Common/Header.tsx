@@ -11,7 +11,12 @@ const Header = () => {
 
   useEffect(() => {
     setUrlNow(url);
-    if (url === 'login' || url === 'tag' || url === 'voice') {
+    if (
+      url === 'login' ||
+      url === 'tag' ||
+      url === 'voice' ||
+      url === 'shorts'
+    ) {
       return setNavStatus(false);
     } else {
       setNavStatus(true);
