@@ -1,110 +1,100 @@
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import AudioContext from './AudioContext';
-import autoCorrelate from './AutoCorrelate';
-import { noteFromPitch, centsOffFromPitch, getDetunePercent } from './Helpers';
+import VoiceButton from './VoiceButton';
 
-const audioCtx = AudioContext.getAudioContext();
-const analyserNode = AudioContext.getAnalyser();
-const buflen = 2048;
-let buf = new Float32Array(buflen);
-
-const noteStrings = [
-  'C',
-  'C#',
-  'D',
-  'D#',
-  'E',
-  'F',
-  'F#',
-  'G',
-  'G#',
-  'A',
-  'A#',
-  'B',
-];
+const setScreenSize = () => {
+  let vh = window.innerHeight * 0.01;
+  document.documentElement.style.setProperty('--vh', `${vh}px`);
+};
+setScreenSize();
+window.addEventListener('resize', () => setScreenSize());
 
 const HighNotePage = () => {
-  const [source, setSource] = useState(null) as any;
-  const [started, setStart] = useState(false);
-  const [pitchNote, setPitchNote] = useState('C') as any;
-  const [pitchScale, setPitchScale] = useState('4') as any;
-  const [pitch, setPitch] = useState('0 Hz') as any;
-  const [detune, setDetune] = useState('0') as any;
-  const [note, setNote] = useState(0) as any;
-  const [notification, setNotification] = useState(false);
+  const reset = Array.from({ length: 100 }, () => 0);
+  const [pitchNum, setPitchNum] = useState(0);
+  const [started, setGetStarted] = useState(false);
+  const [maxNote, setMaxNote] = useState('');
+  const [pitchList, setPitchList] = useState(reset);
 
-  const setScreenSize = () => {
-    let vh = window.innerHeight * 0.01;
-    document.documentElement.style.setProperty('--vh', `${vh}px`);
+  useEffect(() => {
+    setPitchNum(0);
+    setMaxNote('');
+    setPitchList(reset);
+  }, [started]);
+
+  const getPitch = (note: number) => {
+    setPitchNum(note);
+    const newList = pitchList;
+    newList[note] += 1;
+    setPitchList(newList);
+    getHighestNote();
+    console.log(pitchList);
   };
-  setScreenSize();
-  window.addEventListener('resize', () => setScreenSize());
 
-  const updatePitch = (time: any) => {
-    analyserNode.getFloatTimeDomainData(buf);
-    var ac = autoCorrelate(buf, audioCtx.sampleRate);
-    if (ac > -1) {
-      let note = noteFromPitch(ac);
-      if (note < 100) {
-        let sym = noteStrings[note % 12];
-        let scl = Math.floor(note / 12) - 1;
-        let dtune = centsOffFromPitch(ac, note);
-        setPitch(parseFloat(ac.toString()).toFixed(2) + ' Hz');
-        setPitchNote(sym);
-        setPitchScale(scl);
-        setDetune(dtune);
-        setNotification(false);
-        setNote(note);
-        //console.log(note, sym, scl, dtune, ac);
+  const getStarted = (data: boolean) => {
+    setGetStarted(data);
+  };
+
+  const getResult = () => {
+    return (
+      <Footer>
+        <p>현재 최고음</p>
+        <p>{maxNote}</p>
+      </Footer>
+    );
+  };
+
+  const getHighestNote = () => {
+    const noteStrings = [
+      '도',
+      '도#',
+      '레',
+      '레#',
+      '미',
+      '파',
+      '파#',
+      '솔',
+      '솔#',
+      '라',
+      '라#',
+      '시',
+    ];
+    for (let i = 99; i >= 0; i--) {
+      if (pitchList[i] > 100) {
+        let sym = noteStrings[i % 12];
+        let scl = Math.floor(i / 12) - 3;
+        setMaxNote(`${sym} ${scl} 옥타브`);
+        break;
       }
     }
   };
 
-  useEffect(() => {
-    if (source != null) {
-      source.connect(analyserNode);
-    }
-  }, [source]);
-
-  setInterval(updatePitch, 1);
-
-  const start = async () => {
-    const input = await getMicInput();
-
-    if (audioCtx.state === 'suspended') {
-      await audioCtx.resume();
-    }
-    setStart(true);
-    setNotification(true);
-    setTimeout(() => setNotification(false), 5000);
-    setSource(audioCtx.createMediaStreamSource(input));
-  };
-
-  const stop = () => {
-    source.disconnect(analyserNode);
-    setStart(false);
-  };
-
-  const getMicInput = () => {
-    return navigator.mediaDevices.getUserMedia({
-      audio: {
-        echoCancellation: true,
-        autoGainControl: false,
-        noiseSuppression: false,
-        latency: 0,
-      },
-    });
-  };
   return (
     <VoiceContainer>
-      {note}
-      <Pitch>{pitchNote}</Pitch>
-      {pitchScale - 2}옥타브
-      {!started ? (
-        <StartBtn onClick={start}>Start</StartBtn>
+      {started ? (
+        <Title>
+          <p>자유롭게 소리를 내어보세요</p>
+          <p>한 음에서 3초이상 소리내면</p>
+          <p>최고음으로 인정됩니다.</p>
+        </Title>
       ) : (
-        <StartBtn onClick={stop}>Stop</StartBtn>
+        <Title>
+          <p className="title1">지금부터</p>
+          <p className="title2">고음</p>
+          <p className="title1">을 측정할게요</p>
+        </Title>
+      )}
+
+      <ButtonContainer>
+        <VoiceButton getStarted={getStarted} getPitch={getPitch} />
+      </ButtonContainer>
+      {started ? (
+        getResult()
+      ) : (
+        <Footer>
+          <a>마이크 사용이 어려우신가요?</a>
+        </Footer>
       )}
     </VoiceContainer>
   );
@@ -118,31 +108,76 @@ const VoiceContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  overflow: hidden;
-  gap: 30px;
 `;
 
-const Pitch = styled.div`
-  font-size: 30px;
-`;
-
-const StartBtn = styled.div`
+const Title = styled.div`
   position: relative;
-  width: 100px;
-  height: 100px;
-  border-radius: 50px;
-  background-color: white;
+  width: 100%;
+  height: 25%;
+  max-width: 420px;
+  font-size: 20px;
+  font-family: 'omni035';
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  align-items: center;
+  gap: 10px;
+  p {
+    position: relative;
+  }
+  .title1 {
+    animation: fadeIn 1s ease-in;
+  }
+  .title2 {
+    top: -10px;
+    font-size: 60px;
+    animation: fadeIn 1.5s ease-in forwards;
+  }
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      top: 0px;
+      opacity: 1;
+    }
+  }
+`;
+
+const ButtonContainer = styled.div`
+  width: 100%;
+  height: 50%;
+  max-width: 420px;
+  max-height: 420px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  box-shadow: 0 3px 4px black;
+`;
 
-  &:active {
-    box-shadow: 0 0px 4px black;
-    opacity: 0.8;
-    top: 3px;
+const Footer = styled.div`
+  width: 100%;
+  height: 25%;
+  max-width: 420px;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  gap: 20px;
+  a {
+    font-size: 14px;
+    font-family: 'omni025';
+    border-bottom: 0.5px solid;
+    color: #575757;
+    animation: fadeIn 1s ease-in;
+    cursor: pointer;
+  }
+  p {
+    font-size: 28px;
   }
 `;
+
+const FinishButton = styled.div``;
 
 export default HighNotePage;

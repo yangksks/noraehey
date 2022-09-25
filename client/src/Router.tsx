@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import AdminPage from './routes/Admin/AdminPage';
 import MagazineCreatePage from './routes/Admin/MagazineCreatePage';
 import MagazineUpdatePage from './routes/Admin/MagazineUpdatePage';
-import LandingPage from './routes/Landing/LandingPage';
+import LoginPage from './routes/Login/LoginPage';
 import TagPage from './routes/Tag/TagPage';
 import HighNotePage from './routes/HighNote/HighNotePage';
 import HomePage from './routes/Home/HomePage';
@@ -14,7 +14,7 @@ import SearchPage from './routes/Search/SearchPage';
 import SettingPage from './routes/Profile/SettingPage';
 import NavBar from './routes/Common/NavBar';
 import Header from './routes/Common/Header';
-import KakaoRedirectHandler from './routes/Landing/KakaoRedirectHandler';
+import KakaoRedirectHandler from './routes/Login/KakaoRedirectHandler';
 
 const Router = () => {
   return (
@@ -22,7 +22,7 @@ const Router = () => {
       <Header />
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/login" element={<LandingPage />} />
+        <Route path="/login" element={<LoginPage />} />
         <Route
           path="/kakao/callback"
           element={<KakaoRedirectHandler />}

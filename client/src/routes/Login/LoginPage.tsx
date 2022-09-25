@@ -4,7 +4,7 @@ const CLIENT_ID = '7751ec01f50361d6bce9db46f9383a9a';
 const REDIRECT_URL = 'http://localhost:3000/kakao/callback';
 const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URL}&response_type=code`;
 
-const LandingPage = () => {
+const LoginPage = () => {
   const setScreenSize = () => {
     let vh = window.innerHeight * 0.01;
     document.documentElement.style.setProperty('--vh', `${vh}px`);
@@ -12,7 +12,7 @@ const LandingPage = () => {
   setScreenSize();
   window.addEventListener('resize', () => setScreenSize());
   return (
-    <LandingContainer>
+    <LoginContainer>
       <TitleBox>
         <LeftBox>
           <p className={'no'}>노</p>
@@ -36,11 +36,11 @@ const LandingPage = () => {
         </a>
         <p>체험하기</p>
       </LoginBox>
-    </LandingContainer>
+    </LoginContainer>
   );
 };
 
-const LandingContainer = styled.div`
+const LoginContainer = styled.div`
   width: 100%;
   height: calc(var(--vh, 1vh) * 100);
   background: ${(props) => props.theme.colors.gradientPurpleToYellow};
@@ -154,4 +154,4 @@ const KakaoButton = styled.img`
   }
 `;
 
-export default LandingPage;
+export default LoginPage;
