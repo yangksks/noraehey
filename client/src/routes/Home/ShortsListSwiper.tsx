@@ -58,7 +58,6 @@ const CardContainer = styled.div`
     -webkit-align-items: center;
     align-items: center;
     width: 60%;
-    transition: 0.3s;
   }
 `;
 export default ShortsCardSwiper;

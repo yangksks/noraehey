@@ -53,6 +53,10 @@ const GlobalStyle = createGlobalStyle`
   }
   body {
     font-family: omni035, -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
+    -webkit-tap-highlight-color: transparent;
+    &::-webkit-scrollbar {
+      display: none;
+    }
   }
   a {
     text-decoration:none;
