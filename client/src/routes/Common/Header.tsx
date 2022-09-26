@@ -1,14 +1,29 @@
 import styled from 'styled-components';
 import { CgProfile } from 'react-icons/cg';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
 const Header = () => {
   const [infoBar, setInfoBar] = useState(false);
-  const location = useLocation();
+  const [urlNow, setUrlNow] = useState('none');
+  const [navStatus, setNavStatus] = useState(false);
+  const url = useLocation().pathname.split('/')[1];
 
-  if (location.pathname.startsWith('/shorts')) return null;
-  else
+  useEffect(() => {
+    setUrlNow(url);
+    if (
+      url === 'login' ||
+      url === 'tag' ||
+      url === 'voice' ||
+      url === 'shorts'
+    ) {
+      return setNavStatus(false);
+    } else {
+      setNavStatus(true);
+    }
+  });
+
+  const render = () => {
     return (
       <HeaderContainer>
         <HeaderTop infoBar={infoBar === true}>
@@ -30,6 +45,9 @@ const Header = () => {
         </HeaderBottom>
       </HeaderContainer>
     );
+  };
+
+  return <>{navStatus ? render() : ''}</>;
 };
 
 const HeaderContainer = styled.header`
