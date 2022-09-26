@@ -26,14 +26,12 @@ const Router = () => {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />
-        <Route
-          path="/kakao/callback"
-          element={<KakaoRedirectHandler />}
-        />
+        <Route path="/kakao/callback" element={<KakaoRedirectHandler />} />
         <Route path="/tag" element={<TagPage />} />
         <Route path="/voice" element={<HighNotePage />} />
         <Route path="/shorts/:shortsId" element={<ShortsDetailPage />} />
         <Route path="/search" element={<SearchPage />} />
+
         <Route path="/profile/:userId" element={<ProfilePage />}>
           <Route path="setting" element={<SettingPage />} />
         </Route>
