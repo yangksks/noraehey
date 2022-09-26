@@ -18,6 +18,8 @@ public class SongEntityRes {
     String songTitle;
     String songSinger;
     String songImageUrl;
+    String songTj;
+    String songKy;
     int songHighPitch;
 
     public static SongEntityRes of(Song song){
@@ -26,6 +28,8 @@ public class SongEntityRes {
                 .songTitle(song.getSongTitle())
                 .songSinger(song.getSongSinger())
                 .songImageUrl(song.getSongImageUrl())
+                .songTj(song.getSongTj())
+                .songKy(song.getSongKy())
                 .songHighPitch(song.getSongHighPitch())
                 .build();
         return res;

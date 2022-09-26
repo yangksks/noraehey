@@ -16,10 +16,16 @@ public class SongServiceImpl implements SongService {
     SongRepository songRepository;
 
     @Override
-    public List<Song> searchSongList(String word) {
-//        Pageable pageable = PageRequest.of(page, 20, Sort.by("songLikeCount").descending());
+    public List<Song> searchSongListByTitle(String word) {
         List<Song> songList = songRepository.findAllBySongTitleOrderBySongLikeCountDesc(word);
         songList.addAll(songRepository.findAllBySongTitleContainsAndSongTitleNotOrderBySongLikeCountDesc(word, word));
+        return songList;
+    }
+
+    @Override
+    public List<Song> searchSongListBySinger(String word) {
+        List<Song> songList = songRepository.findAllBySongSingerOrderBySongLikeCountDesc(word);
+        songList.addAll(songRepository.findAllBySongSingerContainsAndSongSingerNotOrderBySongLikeCountDesc(word, word));
         return songList;
     }
 

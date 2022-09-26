@@ -13,8 +13,7 @@ import java.util.Optional;
 public interface SongRepository extends JpaRepository<Song, Long> {
     List<Song> findAllBySongTitleOrderBySongLikeCountDesc(String word);
     List<Song> findAllBySongTitleContainsAndSongTitleNotOrderBySongLikeCountDesc(String word1, String word2);
-//    List<Song> findAllBySongTitleContainsAndSongTitleNot(String word1, String word2, Pageable pageable);
-    List<Song> findAllBySongSinger(String word, Pageable pageable);
-    List<Song> findAllBySongSingerContains(String word, Pageable pageable);
+    List<Song> findAllBySongSingerOrderBySongLikeCountDesc(String word);
+    List<Song> findAllBySongSingerContainsAndSongSingerNotOrderBySongLikeCountDesc(String word1, String word2);
     Optional<Song> findSongBySongId(Long songId);
 }
