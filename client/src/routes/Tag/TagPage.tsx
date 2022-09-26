@@ -1,7 +1,12 @@
 import styled from 'styled-components';
+import MyComponent from './MyComponent';
 
 const TagPage = () => {
-  return <TagContainer>TagPage</TagContainer>;
+  return (
+    <TagContainer>
+      <MyComponent></MyComponent>
+    </TagContainer>
+  );
 };
 
 const TagContainer = styled.div`
