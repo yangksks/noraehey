@@ -83,7 +83,6 @@ const ShortsBox = styled.div<{ album: string }>`
   align-items: center;
   background-color: white;
   border-radius: 15px;
-  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.2);
   background-image: linear-gradient(
       rgba(122, 122, 122, 0.55) 35%,
       rgba(0, 0, 0, 0.7) 90%

@@ -6,6 +6,7 @@ import { GrArticle } from 'react-icons/gr';
 import MagazineListSwiper from './MagazineListSwiper';
 
 const HomePage = () => {
+  
   return (
     <Container>
       <ContentBox>
@@ -62,6 +63,16 @@ const FeatTitle = styled.h1`
   svg {
     font-size: 28px;
     padding-bottom: 4px;
+  }
+`;
+
+const Loader = styled.div`
+  body {
+    transition: 0s !important;
+    -webkit-transition: none !important;
+    -moz-transition: none !important;
+    -ms-transition: none !important;
+    -o-transition: none !important;
   }
 `;
 

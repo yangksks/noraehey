@@ -1,11 +1,10 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import styled from 'styled-components';
 import AdminPage from './routes/Admin/AdminPage';
 import MagazineCreatePage from './routes/Admin/MagazineCreatePage';
 import MagazineUpdatePage from './routes/Admin/MagazineUpdatePage';
-import LandingPage from './routes/Landing/LandingPage';
+import LoginPage from './routes/Login/LoginPage';
 import TagPage from './routes/Tag/TagPage';
-import VoicePage from './routes/HighNote/HighNotePage';
+import HighNotePage from './routes/HighNote/HighNotePage';
 import HomePage from './routes/Home/HomePage';
 import ProfilePage from './routes/Profile/ProfilePage';
 import MagazineDetailPage from './routes/Magazine/MagazineDetailPage';
@@ -18,19 +17,21 @@ import LikeShortsPage from './routes/Like/LikeShortsPage';
 import LikeSongPage from './routes/Like/LikeSongPage';
 import NavBar from './routes/Common/NavBar';
 import Header from './routes/Common/Header';
-import { useLocation } from 'react-router-dom';
-import { useEffect } from 'react';
+import KakaoRedirectHandler from './routes/Login/KakaoRedirectHandler';
 
 const Router = () => {
-  
   return (
     <BrowserRouter>
       <Header />
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/intro" element={<LandingPage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route
+          path="/kakao/callback"
+          element={<KakaoRedirectHandler />}
+        />
         <Route path="/tag" element={<TagPage />} />
-        <Route path="/voice" element={<VoicePage />} />
+        <Route path="/voice" element={<HighNotePage />} />
         <Route path="/shorts/:shortsId" element={<ShortsDetailPage />} />
         <Route path="/search" element={<SearchPage />} />
         <Route path="/profile/:userId" element={<ProfilePage />}>
@@ -51,14 +52,8 @@ const Router = () => {
           />
         </Route>
       </Routes>
-      <Footer />
       <NavBar />
     </BrowserRouter>
   );
 };
-
-const Footer = styled.div`
-  width: 100%;
-  height: 100px;
-`;
 export default Router;
