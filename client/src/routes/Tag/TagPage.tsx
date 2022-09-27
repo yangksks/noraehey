@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import BubbleUI from 'react-bubble-ui';
 import 'react-bubble-ui/dist/index.css';
+import { useState } from 'react';
 const TagPage = () => {
   const options = {
     size: 100,
@@ -17,87 +18,37 @@ const TagPage = () => {
     gravitation: 5,
   };
 
-  const datas = [
-    1,
-    2,
-    3,
-    4,
-    5,
-    6,
-    7,
-    8,
-    '민서',
-    '재호',
-    1,
-    2,
-    3,
-    4,
-    5,
-    6,
-    7,
-    8,
-    '민서',
-    '재호',
-    1,
-    2,
-    3,
-    4,
-    5,
-    6,
-    7,
-    8,
-    '민서',
-    '재호',
-    1,
-    2,
-    3,
-    4,
-    5,
-    6,
-    7,
-    8,
-    '민서',
-    '재호',
-    1,
-    2,
-    3,
-    4,
-    5,
-    6,
-    7,
-    8,
-    '민서',
-    '재호',
-    1,
-    2,
-    3,
-    4,
-    5,
-    6,
-    7,
-    8,
-    '민서',
-    '재호',
-  ];
-
-  const children = datas.map((data, i) => {
-    return (
-      <div className="child" key={i}>
-        {data}
-      </div>
-    );
-  });
-  console.log('zz');
+  const [datas, setDatas] = useState([1, 2, 3, 4, 5, 6, 7, 8, 9, 0]);
+  const [userTag, setUserTag] = useState([1]);
   return (
     <TagContainer>
       <BubbleUI options={options} className="myBubbleUI">
-        {children}
-        {/* {datas.map((data, i) => (
-          <div className="child" key={i}>
+        {datas.map((data, i) => (
+          <div
+            className="child"
+            key={i}
+            onClick={() => {
+              setDatas(datas.filter((item) => item !== data));
+              setUserTag([...userTag, data]);
+            }}>
             {data}
           </div>
-        ))} */}
+        ))}
       </BubbleUI>
+      <MyTagList>
+        <ul>
+          {userTag.map((data, i) => (
+            <li
+              key="i"
+              onClick={() => {
+                setDatas([...datas, data]);
+                setUserTag(userTag.filter((item) => item !== data));
+              }}>
+              {data}
+            </li>
+          ))}
+        </ul>
+      </MyTagList>
     </TagContainer>
   );
 };
@@ -121,10 +72,25 @@ const TagContainer = styled.div`
       height: 100%;
       border-radius: 50%;
       background-color: #fff;
-      /* display: flex;
+      display: flex;
       align-items: center;
       justify-content: center;
-      transition: 0.2s linear; */
+      border: 2px solid ${(props) => props.theme.colors.mainPurple};
+    }
+  }
+`;
+
+const MyTagList = styled.div`
+  width: 100%;
+  ul {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    li {
+      padding: 10px;
+      background-color: #fff;
+      border-radius: 10px;
     }
   }
 `;
