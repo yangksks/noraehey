@@ -15,6 +15,7 @@ const KakaoRedirectHandler = () => {
     const { accessToken, refreshToken } = result.data;
     localStorage.setItem('refreshToken', refreshToken);
     sessionStorage.setItem('accessToken', accessToken);
+    console.log(result);
     navigate('/');
   };
 

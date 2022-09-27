@@ -3,6 +3,7 @@ import { CgProfile } from 'react-icons/cg';
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { fetchData } from '../../utils/api/api';
+import { Link } from 'react-router-dom';
 
 const Header = () => {
   const [infoBar, setInfoBar] = useState(false);
@@ -14,7 +15,6 @@ const Header = () => {
 
   const getUserInfo = async () => {
     const URL = '/api/v1/member/info';
-
     try {
       const result = await fetchData.get(URL);
       setUser(result.data);
@@ -24,8 +24,8 @@ const Header = () => {
   };
 
   const logout = () => {
-    localStorage.removeItem('refreshToken');
     sessionStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
     setNavStatus(false);
     navigate('/login');
   };
@@ -50,10 +50,12 @@ const Header = () => {
       <HeaderContainer>
         <HeaderTop infoBar={infoBar === true}>
           <TopBox>
-            <Logo>
-              <p style={{ color: '#FFC34E' }}>NORAE</p>
-              <p style={{ color: 'white' }}>HEY</p>
-            </Logo>
+            <Link to="/">
+              <Logo>
+                <p style={{ color: '#FFC34E' }}>NORAE</p>
+                <p style={{ color: 'white' }}>HEY</p>
+              </Logo>
+            </Link>
             <ProfileImg
               onClick={() => {
                 setInfoBar(!infoBar);
@@ -151,7 +153,14 @@ const ProfileImg = styled(CgProfile)`
 
 const InfoBox = styled.div`
   width: 100%;
-  padding-top: 20px;
+  height: 100%;
+  margin-top: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  background-color: tomato;
+  box-sizing: border-box;
   overflow: hidden;
 `;
 
