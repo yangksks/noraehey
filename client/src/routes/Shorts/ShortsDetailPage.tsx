@@ -1,4 +1,3 @@
-import React from 'react';
 import styled from 'styled-components';
 import Container from '../../style/style';
 import { IoClose } from 'react-icons/io5';

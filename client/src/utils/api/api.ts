@@ -1,8 +1,7 @@
 import axios from 'axios';
-import { setCookie, getCookie, removeCookie } from '../functions/cookies';
 
 const getAccessToken = () => {
-  const accessToken = getCookie('accessToken');
+  const accessToken = sessionStorage.getItem('accessToken');
   return accessToken;
 };
 const getLocalRefreshToken = () => {
@@ -16,6 +15,10 @@ export const setRefreshToken = (refreshToken: string) => {
 
 export const removeRefreshToken = () => {
   localStorage.removeItem('refreshToken');
+};
+
+export const removeAccessToken = () => {
+  sessionStorage.removeItem('accessToken');
 };
 
 const getNewAccessToken = () => {
@@ -63,7 +66,7 @@ instance.interceptors.response.use(
           const response = await getNewAccessToken();
           console.log(response);
           const { accessToken, refreshToken } = response.data;
-          setCookie('accessToken', accessToken);
+          sessionStorage.setItem('accessToken', accessToken);
           setRefreshToken(refreshToken);
           instance.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
           return instance(originalConfig);
@@ -72,7 +75,7 @@ instance.interceptors.response.use(
             err.response.status === 401 &&
             err.response.data?.message === 'REFRESH_ERROR'
           ) {
-            removeCookie('accessToken');
+            removeAccessToken();
             removeRefreshToken();
             setTimeout(() => {
               window.location.href = '/';

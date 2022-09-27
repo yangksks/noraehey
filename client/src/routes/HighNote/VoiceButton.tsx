@@ -4,7 +4,6 @@ import AudioContext from './AudioContext';
 import autoCorrelate from './AutoCorrelate';
 import VoiceButtonBorder from './VoiceButtonBorder';
 import { FiMic } from 'react-icons/fi';
-import { Link } from 'react-router-dom';
 
 const audioCtx = AudioContext.getAudioContext();
 const analyserNode = AudioContext.getAnalyser();
