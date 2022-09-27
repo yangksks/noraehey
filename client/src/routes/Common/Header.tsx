@@ -1,13 +1,34 @@
 import styled from 'styled-components';
 import { CgProfile } from 'react-icons/cg';
 import { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { fetchData } from '../../utils/api/api';
 
 const Header = () => {
   const [infoBar, setInfoBar] = useState(false);
   const [urlNow, setUrlNow] = useState('none');
   const [navStatus, setNavStatus] = useState(false);
+  const [user, setUser] = useState({} as any);
   const url = useLocation().pathname.split('/')[1];
+  const navigate = useNavigate();
+
+  const getUserInfo = async () => {
+    const URL = '/api/v1/member/info';
+
+    try {
+      const result = await fetchData.get(URL);
+      setUser(result.data);
+    } catch (err: any) {
+      console.log(err);
+    }
+  };
+
+  const logout = () => {
+    localStorage.removeItem('refreshToken');
+    sessionStorage.removeItem('accessToken');
+    setNavStatus(false);
+    navigate('/login');
+  };
 
   useEffect(() => {
     setUrlNow(url);
@@ -19,9 +40,10 @@ const Header = () => {
     ) {
       return setNavStatus(false);
     } else {
+      getUserInfo();
       setNavStatus(true);
     }
-  });
+  }, [url]);
 
   const render = () => {
     return (
@@ -38,6 +60,10 @@ const Header = () => {
               }}
             />
           </TopBox>
+          <InfoBox>
+            <p>{user.nickName}님 어서오세요</p>
+            <button onClick={logout}>Logout</button>
+          </InfoBox>
         </HeaderTop>
         <HeaderBottom>
           <BottomBox />
@@ -121,6 +147,12 @@ const ProfileImg = styled(CgProfile)`
   color: #ffffff;
   border-radius: 50px;
   cursor: pointer;
+`;
+
+const InfoBox = styled.div`
+  width: 100%;
+  padding-top: 20px;
+  overflow: hidden;
 `;
 
 export default Header;

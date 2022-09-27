@@ -18,20 +18,22 @@ import LikeSongPage from './routes/Like/LikeSongPage';
 import NavBar from './routes/Common/NavBar';
 import Header from './routes/Common/Header';
 import KakaoRedirectHandler from './routes/Login/KakaoRedirectHandler';
+import Protection from './routes/Common/Protection';
 
 const Router = () => {
   return (
     <BrowserRouter>
       <Header />
       <Routes>
-        <Route path="/" element={<HomePage />} />
+        <Route element={<Protection />}>
+          <Route path="/" element={<HomePage />} />
+        </Route>
         <Route path="/login" element={<LoginPage />} />
         <Route path="/kakao/callback" element={<KakaoRedirectHandler />} />
         <Route path="/tag" element={<TagPage />} />
         <Route path="/voice" element={<HighNotePage />} />
         <Route path="/shorts/:shortsId" element={<ShortsDetailPage />} />
         <Route path="/search" element={<SearchPage />} />
-
         <Route path="/profile/:userId" element={<ProfilePage />}>
           <Route path="setting" element={<SettingPage />} />
         </Route>

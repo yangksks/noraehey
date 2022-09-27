@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import VoiceButton from './VoiceButton';
 
@@ -17,19 +16,12 @@ const HighNotePage = () => {
   const [maxNote, setMaxNote] = useState('');
   const [pitchList, setPitchList] = useState(reset);
 
-  useEffect(() => {
-    setPitchNum(0);
-    setMaxNote('');
-    setPitchList(reset);
-  }, [started]);
-
   const getPitch = (note: number) => {
     setPitchNum(note);
     const newList = pitchList;
     newList[note] += 1;
     setPitchList(newList);
     getHighestNote();
-    console.log(pitchList);
   };
 
   const getStarted = (data: boolean) => {

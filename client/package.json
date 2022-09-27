@@ -13,7 +13,6 @@
     "axios": "^0.27.2",
     "react": "^16.8.0",
     "react-bubble-ui": "^1.1.2",
-    "react-cookie": "^4.1.1",
     "react-dom": "^16.8.0",
     "react-helmet-async": "^1.3.0",
     "react-icons": "^4.4.0",
@@ -22,7 +21,6 @@
     "recoil": "^0.7.5",
     "styled-components": "^5.3.5",
     "swiper": "^8.4.0",
-    "universal-cookie": "^4.0.4",
     "vite": "^3.0.7"
   },
   "devDependencies": {
