@@ -12,7 +12,7 @@ const ConvertAudio = (props: ConvertType) => {
   const [message, setMessage] = useState('Click Start to import');
   const [downloadLink, setDownloadLink] = useState('');
   const ffmpeg = createFFmpeg({
-    log: true,
+    log: false,
   });
 
   const doImport = async () => {
@@ -49,17 +49,7 @@ const ConvertAudio = (props: ConvertType) => {
       setMessage('Can not Import. need file check. 😪');
     }
   };
-  return (
-    <>
-      <button onClick={doImport}>Start</button>
-      <p>{message}</p>
-      {downloadLink.length !== 0 && (
-        <a href={downloadLink} download="result.m4a">
-          download
-        </a>
-      )}
-    </>
-  );
+  return <div className='shortsBtn' onClick={doImport}>쇼츠등록</div>;
 };
 
 export default ConvertAudio;
