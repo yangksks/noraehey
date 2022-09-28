@@ -11,6 +11,7 @@ import java.util.List;
 
 public interface ShortsService {
     void saveShorts(Song song, Member member, String shortsComment, MultipartFile shortsAudioFile) throws IOException;
+    void deleteShorts(Long shortsId, Member member);
     List<Shorts> getShortsListBySongId(Long songId, int page);
     List<Shorts> getShortsListByMemberId(Long memberId, int page);
     List<ShortsEntityRes> createShortsListBySong(List<Shorts> shortsList, Song song, Member member);
