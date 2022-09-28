@@ -4,73 +4,57 @@ import 'react-bubble-ui/dist/index.css';
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BsArrowRight } from 'react-icons/bs';
-const TagPage = () => {
-  const options = {
-    size: 100,
-    minSize: 20,
-    gutter: 12,
-    provideProps: false,
-    numCols: 7,
-    fringeWidth: 160,
-    yRadius: 100,
-    xRadius: 100,
-    cornerRadius: 100,
-    showGuides: false,
-    compact: true,
-    gravitation: 5,
-  };
+import { fetchData } from '../../utils/api/api';
 
-  const [datas, setDatas] = useState<string[]>([
-    '행복한',
-    '슬픈',
-    '우울',
-    '몽글몽글',
-    '여행',
-    '신나는',
-    '행복한',
-    '슬픈',
-    '우울',
-    '몽글몽글',
-    '여행',
-    '신나는',
-    '행복한',
-    '슬픈',
-    '우울',
-    '몽글몽글',
-    '여행',
-    '신나는',
-    '행복한',
-    '슬픈',
-    '우울',
-    '몽글몽글',
-    '여행',
-    '신나는',
-    '행복한',
-    '슬픈',
-    '우울',
-    '몽글몽글',
-    '여행',
-    '신나는',
-    '행복한',
-    '슬픈',
-    '우울',
-    '몽글몽글',
-    '여행',
-    '신나는',
-    '행복한',
-    '슬픈',
-    '우울',
-    '몽글몽글',
-    '여행',
-    '신나는',
-  ]);
-  const [userTag, setUserTag] = useState<string[]>([]);
+interface tagType {
+  tagId: number;
+  tagName: string;
+}
+
+const options = {
+  size: 100,
+  minSize: 20,
+  gutter: 12,
+  provideProps: false,
+  numCols: 7,
+  fringeWidth: 160,
+  yRadius: 100,
+  xRadius: 100,
+  cornerRadius: 100,
+  showGuides: false,
+  compact: true,
+  gravitation: 5,
+};
+
+const TagPage = () => {
+  const [datas, setDatas] = useState<tagType[]>([]);
+  const [userTag, setUserTag] = useState<tagType[]>([]);
   const [temp, setTemp] = useState(0);
+  const scrollRef = useRef<HTMLUListElement>(null);
   const navigate = useNavigate();
-  const scrollRef = useRef(null as any);
   const scrollToBottom = () => {
     scrollRef.current?.scrollTo({ left: scrollRef.current.scrollWidth });
   };
+
+  useEffect(() => {
+    fetchData.get('/api/v1/song/tag').then((res1) => {
+      fetchData.get('/api/v1/member/info').then((res2) => {
+        if (res2.data.memberTagList.length === 0) {
+          setDatas(res1.data);
+        } else {
+          setDatas(
+            res1.data.filter(
+              (item: tagType) =>
+                !res2.data.memberTagList
+                  .map((r: tagType) => r.tagId)
+                  .includes(item.tagId),
+            ),
+          );
+        }
+        setUserTag(res2.data.memberTagList);
+      });
+    });
+  }, []);
 
   useEffect(() => {
     scrollToBottom();
@@ -89,34 +73,45 @@ const TagPage = () => {
             className="child"
             key={i}
             onClick={() => {
-              setDatas(datas.filter((item) => item !== data));
+              setDatas(datas.filter((item) => item.tagId !== data.tagId));
               setUserTag([...userTag, data]);
               setTemp(temp + 1);
             }}>
-            #{data}
+            #{data.tagName}
           </div>
         ))}
       </BubbleUI>
       <MyTagList>
-        <p>내가 고른 태그</p>
+        <p>
+          내가 고른 태그<span>(5~10개)</span>
+        </p>
         <ul ref={scrollRef}>
           {userTag.map((data, i) => (
             <li
-              key={data}
+              key={data.tagId}
               onClick={() => {
                 setDatas([...datas, data]);
-                setUserTag(userTag.filter((item) => item !== data));
+                setUserTag(userTag.filter((item) => item.tagId !== data.tagId));
               }}>
-              #{data}
+              #{data.tagName}
             </li>
           ))}
         </ul>
       </MyTagList>
       <BtnBox>
         <button
-          disabled={userTag.length == 0 ? true : false}
+          disabled={userTag.length >= 5 && userTag.length <= 10 ? false : true}
           onClick={() => {
-            navigate('/voice');
+            if (userTag.length >= 5 && userTag.length <= 10) {
+              let list: Array<number> = [];
+              userTag.forEach((data) => {
+                list.push(data.tagId);
+              });
+              fetchData.patch('/api/v1/recommend/tag', { tagIdList: list });
+              navigate('/voice');
+            } else {
+              alert('태그는 5개 이상 10개 이하로 선택해주세요.');
+            }
           }}>
           다음 <BsArrowRight size={20} />
         </button>
@@ -141,10 +136,9 @@ const TagContainer = styled.div`
     height: 50%;
     border-radius: 50px;
     padding: 10px 0;
-    /* background: url('https://clouddevs.com/3dbay/files/preview/1280x1066/116312928305gazily43lrk8sqedqvrh8w02gojtsu7fi70s3qgroisr0dk4zn80uxdaep3pthggsnk5gzxe8cyuilrbnnvrvbv02dcv0mfrkkp.png')
-      no-repeat;
+    background: url('src/assets/images/singing.png') no-repeat;
     background-size: 100%;
-    background-position: center center; */
+    background-position: center center;
     .child {
       width: 100%;
       height: 100%;
@@ -213,6 +207,10 @@ const MyTagList = styled.div`
     color: #fff;
     padding-bottom: 10px;
     font-weight: 700;
+    & > span {
+      margin-left: 5px;
+      font-size: 14px;
+    }
   }
   ul {
     width: 100%;
@@ -250,13 +248,14 @@ const BtnBox = styled.div`
     border: none;
     width: 100px;
     height: 40px;
-    border-radius: 20px;
+    /* border-radius: 20px; */
     font-size: 16px;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 5px;
-    background-color: #fff;
+    /* background-color: #fff; */
+    background-color: transparent;
   }
 `;
 export default TagPage;
