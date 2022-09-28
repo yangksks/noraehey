@@ -47,6 +47,15 @@ public class ShortsController {
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "success"));
     }
 
+    // 노래 쇼츠 삭제
+    @DeleteMapping
+    public ResponseEntity<?> deleteShorts(@RequestParam("shortsId") Long shortsId, @ApiIgnore Authentication authentication) {
+        Member member = jwtAuthenticationUtil.jwtTokenAuth(authentication);
+
+        shortsService.deleteShorts(shortsId, member);
+        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "success"));
+    }
+
     // 노래 별 쇼츠 조회
     @GetMapping("/song/{songId}")
     public ResponseEntity<?> getShortsBySong(@PathVariable("songId") Long songId, @RequestParam("page") int page, @ApiIgnore Authentication authentication) {
