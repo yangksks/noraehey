@@ -60,6 +60,15 @@ public class ShortsServiceImpl implements ShortsService {
     }
 
     @Override
+    @Transactional
+    public void deleteShorts(Long shortsId, Member member) {
+        // 1. 쇼츠 찾기
+        Shorts shorts = shortsRepository.findByShortsIdAndAndMemberMemberId(shortsId, member.getMemberId()).orElseThrow(() -> new ShortsNotFoundException("shorts not found", ErrorCode.SHORTS_NOT_FOUND));
+        // 2. 쇼츠 삭제
+        shortsRepository.deleteByShortsId(shorts.getShortsId());
+    }
+
+    @Override
     public List<Shorts> getShortsListBySongId(Long songId, int page) {
         Pageable pageable = PageRequest.of(page, SIZE, Sort.by("shortsCreateTime").descending());
         List<Shorts> shortsList = shortsRepository.findAllBySongSongId(songId, pageable);
