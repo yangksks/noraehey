@@ -13,6 +13,8 @@ import java.util.Optional;
 public interface ShortsRepository extends JpaRepository<Shorts, Long> {
 
     Optional<Shorts> findByShortsId(Long shortsId);
+    Optional<Shorts> findByShortsIdAndAndMemberMemberId(Long shorts, Long memberId);
+    void deleteByShortsId(Long shortsId);
     List<Shorts> findAllBySongSongId(Long songId, Pageable pageable);
     List<Shorts> findAllByMemberMemberId(Long memberId, Pageable pageable);
 
