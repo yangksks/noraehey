@@ -77,7 +77,7 @@ const SongShortsList = styled.div`
     overflow: auto;
     padding-bottom: 15px;
 
-    .box::-webkit-scrollbar {
+    &::-webkit-scrollbar {
       display: none;
     }
   }
