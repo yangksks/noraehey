@@ -78,7 +78,7 @@ const TagPage = () => {
               setUserTag([...userTag, data]);
               setTemp(temp + 1);
             }}>
-            #{data.tagName}
+            {data.tagName}
           </div>
         ))}
       </BubbleUI>
