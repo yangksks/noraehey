@@ -2,8 +2,9 @@ import styled from 'styled-components';
 import coupleSinging from '../../assets/images/coupleSinging.png';
 import kakaoLogin from '../../assets/images/kakaoLogin.png';
 
+const BASE_URL = window.location.href.split('/')[2];
 const CLIENT_ID = '7751ec01f50361d6bce9db46f9383a9a';
-const REDIRECT_URL = 'http://localhost:3000/kakao/callback2';
+const REDIRECT_URL = `http://${BASE_URL}/kakao/callback`;
 const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URL}&response_type=code`;
 
 const LoginPage = () => {

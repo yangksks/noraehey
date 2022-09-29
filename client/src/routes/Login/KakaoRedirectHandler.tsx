@@ -3,7 +3,11 @@ import styled from 'styled-components';
 import { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-const REDIRECT_URL = 'https://j7a503.p.ssafy.io/api/v1/kakao/callback';
+const BASE_URL = window.location.href.split('/')[2];
+const REDIRECT_URL =
+  BASE_URL === 'localhost:3000'
+    ? 'https://j7a503.p.ssafy.io/api/v1/kakao/callback2'
+    : 'https://j7a503.p.ssafy.io/api/v1/kakao/callback';
 
 const KakaoRedirectHandler = () => {
   const location = useLocation();
