@@ -5,8 +5,7 @@ import styled, { css } from 'styled-components';
 import Container from '../../style/style';
 import { fetchData } from '../../utils/api/api';
 import LikeSongCard from '../Like/LikeSongCard';
-import SearchSingerPage from './SearchSingerPage';
-import SearchSongPage from './SearchSongPage';
+
 const SearchPage = () => {
   const [searchText, setSearchText] = useState('');
   const [searchList, setSearchList] = useState([]);
@@ -74,12 +73,6 @@ const SearchPage = () => {
           </NavStyle>
         </ul>
       </TabSection>
-      <ListArticle>
-        <Routes>
-          <Route path="songlist" element={<SearchSongPage />} />
-          <Route path="singerlist" element={<SearchSingerPage />} />
-        </Routes>
-      </ListArticle>
       <SearchResult>
         {searchList.length !== 0 ? (
           searchList.map((item, i) => (
@@ -117,10 +110,6 @@ const NavStyle = styled.li<{ active: boolean }>`
     `}
 `;
 
-const ListArticle = styled.article`
-  width: 100%;
-  padding: 0 20px;
-`;
 const SearchForm = styled.div`
   width: 100%;
   padding: 10px 0;
