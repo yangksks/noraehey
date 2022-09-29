@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import BubbleUI from 'react-bubble-ui';
 import 'react-bubble-ui/dist/index.css';
+import image from '../../assets/images/singing.png';
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BsArrowRight } from 'react-icons/bs';
@@ -61,7 +62,7 @@ const TagPage = () => {
   }, [temp]);
 
   return (
-    <TagContainer>
+    <TagContainer image={image}>
       <Title>
         <p>부르고 싶은</p>
         <p>음악의 분위기</p>
@@ -120,7 +121,7 @@ const TagPage = () => {
   );
 };
 
-const TagContainer = styled.div`
+const TagContainer = styled.div<{ image: string }>`
   position: relative;
   width: 100%;
   height: calc(var(--vh, 1vh) * 100);
@@ -136,7 +137,7 @@ const TagContainer = styled.div`
     height: 50%;
     border-radius: 50px;
     padding: 10px 0;
-    background: url('src/assets/images/singing.png') no-repeat;
+    background: url(${({ image }) => image}) no-repeat;
     background-size: 100%;
     background-position: center center;
     .child {
