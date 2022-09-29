@@ -1,16 +1,19 @@
 import styled from 'styled-components';
 import Mirt from 'react-mirt';
 import 'react-mirt/dist/css/react-mirt.css';
+import { ImArrowLeft2 } from 'react-icons/im';
 import { useState } from 'react';
 import ConvertAudio from './ConvertAudio';
 import { fetchData } from '../../utils/api/api';
 import SongBriefInfo from './SongBriefInfo';
+import { useNavigate } from 'react-router-dom';
 
 const ShortsCreatePage = () => {
   const [file, setFile] = useState(null as any);
   const [cmt, setCmt] = useState('');
   const [startPoint, setStartPoint] = useState(0);
   const [endPoint, setEndPoint] = useState(1);
+  const navigate = useNavigate();
 
   const getAudio = (input: any) => {
     const audioUrl = URL.createObjectURL(input[0]);
@@ -60,11 +63,27 @@ const ShortsCreatePage = () => {
 
   return (
     <CreateContainer>
+      <Title>
+        <TitleBox>
+          <ImArrowLeft2
+            size={30}
+            onClick={() => {
+              navigate(-1);
+            }}
+          />
+          <p>쇼츠등록</p>
+        </TitleBox>
+        <ConvertAudio
+          start={startPoint}
+          end={Math.floor(endPoint)}
+          m4a={file}
+        />
+      </Title>
+
       <CreateBox>
         <ShortsCard>
           <SongBriefInfo />
-          <input
-            type="text"
+          <textarea
             id="shortsComment"
             name="shortsComment"
             onChange={(e) => {
@@ -77,30 +96,33 @@ const ShortsCreatePage = () => {
           onChange={(e: any) => getTrimLocation(e)}
           options={{ fineTuningDelay: 0 }}
         />
-        <ButtonGroup>
-          <label className="shortsBtn" htmlFor="shortsAudioFile">
-            음성파일
-          </label>
-          <input
-            onChange={(e) => {
-              getAudio(e.target.files);
-            }}
-            type="file"
-            accept=".m4a"
-            name="shortsAudioFile"
-            id="shortsAudioFile"
-            style={{ display: 'none' }}
-          />
-          <ConvertAudio
-            start={startPoint}
-            end={Math.floor(endPoint)}
-            m4a={file}
-          />
-        </ButtonGroup>
+
+        <label className="shortsBtn" htmlFor="shortsAudioFile">
+          음성파일
+        </label>
+        <input
+          onChange={(e) => {
+            getAudio(e.target.files);
+          }}
+          type="file"
+          accept=".m4a"
+          name="shortsAudioFile"
+          id="shortsAudioFile"
+          style={{ display: 'none' }}
+        />
       </CreateBox>
     </CreateContainer>
   );
 };
+
+const SubtitleBox = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  background-color: tomato;
+`;
 
 const CreateContainer = styled.div`
   width: 100%;
@@ -110,6 +132,17 @@ const CreateContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  .shortsBtn {
+    padding: 10px 20px;
+    background-color: lavender;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+  }
 `;
 
 const CreateBox = styled.div`
@@ -141,31 +174,10 @@ const ShortsCard = styled.div`
   }
 `;
 
-const ButtonGroup = styled.div`
-  width: 100%;
-  height: 100%;
-  padding: 10px 0;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-
-  .shortsBtn {
-    padding: 10px 20px;
-    background-color: lavender;
-    border-radius: 5px;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-  }
-`;
-
 const MirtStyle = styled(Mirt)`
   width: 100%;
   touch-action: none;
-  --mirt-height: 100px;
+  --mirt-height: 50px;
   --mirt-playhead-width: 3px;
   --mirt-frame-color: #a793ff;
   --mirt-background-color: #a793ff;
@@ -177,4 +189,25 @@ const MirtStyle = styled(Mirt)`
   }
 `;
 
+const Title = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 10px 20px;
+
+  p {
+    padding-left: 25px;
+    font-size: 18px;
+    font-family: 'omni045';
+  }
+`;
+
+const TitleBox = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  align-items: center;
+`;
 export default ShortsCreatePage;

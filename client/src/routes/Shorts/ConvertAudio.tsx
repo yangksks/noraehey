@@ -1,4 +1,5 @@
 import { createFFmpeg } from '@ffmpeg/ffmpeg';
+import styled from 'styled-components';
 import { useRef, useState } from 'react';
 
 interface ConvertType {
@@ -49,7 +50,22 @@ const ConvertAudio = (props: ConvertType) => {
       setMessage('Can not Import. need file check. 😪');
     }
   };
-  return <div className='shortsBtn' onClick={doImport}>쇼츠등록</div>;
+  return (
+    <ConvertButton className="shortsBtn" onClick={doImport}>
+      쇼츠등록
+    </ConvertButton>
+  );
 };
+
+const ConvertButton = styled.div`
+  padding: 10px 20px;
+  background-color: lavender;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  cursor: poi;
+`;
 
 export default ConvertAudio;
