@@ -60,7 +60,29 @@ public class KakaoController {
                 .build();
 
         return ResponseEntity.status(200).body(memberTokenRes);
+    }
 
+    // 개발용
+    @GetMapping("/callback2")
+    public ResponseEntity<?> kakaoCallback2(@RequestParam String code) throws IOException {
+        String accessToken = kakaoService.getKakaoAccessToken2(code);
+        KakaoMemberInfo kakaoMemberInfo = kakaoService.getKakaoEmailAndKakaoId(accessToken);
+        Member member = memberService.getMemberByMemberEmail(kakaoMemberInfo.getEmail());
+        // DB에 이메일 없다면 회원가입
+        if (member == null) {
+            member = memberService.createMember(kakaoMemberInfo);
+        }
+        // accessToken, refreshToken 생성
+        Map<String, String> tokens = JwtTokenUtil.generateTokenSet(member.getMemberEmail());
 
+        // refreshToken DB에 초기화
+        memberService.saveRefreshToken(member, tokens.get("refreshToken"));
+
+        MemberTokenRes memberTokenRes = MemberTokenRes.builder()
+                .accessToken(tokens.get("accessToken"))
+                .refreshToken(tokens.get("refreshToken"))
+                .build();
+
+        return ResponseEntity.status(200).body(memberTokenRes);
     }
 }
