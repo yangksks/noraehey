@@ -36,6 +36,7 @@ const SongBriefInfo = () => {
 const SongInfoContainer = styled.div`
   width: 100%;
   padding: 20px;
+  border-radius: 10px;
   background-color: lavender;
   position: flex;
   flex: row;
