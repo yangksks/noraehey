@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import NavBarButton from './NavBarButton';
@@ -7,46 +7,33 @@ const MenuName = ['', 'like', 'shorts', 'search'];
 const MenuURL = ['', 'like/songlist', 'shorts/1', 'search'];
 
 const NavBar = () => {
-  const [urlNow, setUrlNow] = useState('none');
-  const [navStatus, setNavStatus] = useState(false);
   const url = useLocation().pathname.split('/')[1];
+  const [urlNow, setUrlNow] = useState(url);
 
-  useEffect(() => {
-    setUrlNow(url);
-    if (url === 'login' || url === 'tag' || url === 'voice') {
-      return setNavStatus(false);
-    } else {
-      setNavStatus(true);
-    }
-  });
-
-  const render = () => {
-    return (
-      <>
-        <Footer />
-        <Menu>
-          {MenuName.map((name, idx) => (
-            <Link to={`/${MenuURL[idx]}`} key={name}>
-              <NavBarButton
-                urlNow={urlNow === name}
-                change={() => {
-                  setUrlNow(name);
-                }}
-                name={name}
-              />
-            </Link>
-          ))}
-        </Menu>
-      </>
-    );
-  };
-
-  return <>{navStatus ? render() : ''}</>;
+  return (
+    <>
+      <Footer />
+      <Menu>
+        {MenuName.map((name, idx) => (
+          <Link to={`/${MenuURL[idx]}`} key={name}>
+            <NavBarButton
+              urlNow={urlNow === name}
+              change={() => {
+                setUrlNow(name);
+              }}
+              name={name}
+            />
+          </Link>
+        ))}
+      </Menu>
+    </>
+  );
 };
 
 const Menu = styled.nav`
   width: 100%;
   padding: 0 20px;
+  max-width: 420px;
   padding-bottom: 10px;
   position: fixed;
   bottom: 0;
