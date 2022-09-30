@@ -6,12 +6,12 @@ interface ConvertType {
   start: number;
   end: number;
   m4a: any;
+  getConvertAudio: Function;
 }
 
 const ConvertAudio = (props: ConvertType) => {
   const { start, end, m4a } = props;
   const [message, setMessage] = useState('Click Start to import');
-  const [downloadLink, setDownloadLink] = useState('');
   const ffmpeg = createFFmpeg({
     log: false,
   });
@@ -41,18 +41,17 @@ const ConvertAudio = (props: ConvertType) => {
       await ffmpeg.run(...args);
       setMessage('Complete Import');
       const data = ffmpeg.FS('readFile', 'output.m4a');
-      console.log(data);
-      URL.revokeObjectURL(downloadLink);
-      setDownloadLink(
-        URL.createObjectURL(new Blob([data.buffer], { type: 'audio' })),
-      );
+      const result = new File([data.buffer], 'output.m4a', {
+        type: 'audio/x-m4a',
+      });
+      props.getConvertAudio(result);
     } else {
       setMessage('Can not Import. need file check. 😪');
     }
   };
   return (
     <ConvertButton className="shortsBtn" onClick={doImport}>
-      쇼츠등록
+      업로드
     </ConvertButton>
   );
 };
@@ -65,7 +64,7 @@ const ConvertButton = styled.div`
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  cursor: poi;
+  cursor: pointer;
 `;
 
 export default ConvertAudio;
