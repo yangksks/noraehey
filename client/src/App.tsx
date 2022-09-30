@@ -1,8 +1,8 @@
 import { Helmet, HelmetProvider } from 'react-helmet-async';
-import GlobalStyle from './style/GlobalStyle';
-import './style/font.css';
-import Router from './Router';
 import { RecoilRoot } from 'recoil';
+import GlobalStyle from './style/GlobalStyle';
+import Router from './Router';
+import './style/font.css';
 
 const App = () => {
   return (
