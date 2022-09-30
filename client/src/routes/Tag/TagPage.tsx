@@ -6,7 +6,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BsArrowRight } from 'react-icons/bs';
 import { fetchData } from '../../utils/api/api';
-
+import { IoClose } from 'react-icons/io5';
 interface tagType {
   tagId: number;
   tagName: string;
@@ -31,6 +31,7 @@ const TagPage = () => {
   const [datas, setDatas] = useState<tagType[]>([]);
   const [userTag, setUserTag] = useState<tagType[]>([]);
   const [temp, setTemp] = useState(0);
+  const tagRef = useRef<HTMLLIElement>(null);
   const scrollRef = useRef<HTMLUListElement>(null);
   const navigate = useNavigate();
   const scrollToBottom = () => {
@@ -38,22 +39,11 @@ const TagPage = () => {
   };
 
   useEffect(() => {
-    fetchData.get('/api/v1/song/tag').then((res1) => {
-      fetchData.get('/api/v1/member/info').then((res2) => {
-        if (res2.data.memberTagList.length === 0) {
-          setDatas(res1.data);
-        } else {
-          setDatas(
-            res1.data.filter(
-              (item: tagType) =>
-                !res2.data.memberTagList
-                  .map((r: tagType) => r.tagId)
-                  .includes(item.tagId),
-            ),
-          );
-        }
-        setUserTag(res2.data.memberTagList);
-      });
+    fetchData.get('/api/v1/song/tag').then((res) => {
+      setDatas(res.data);
+    });
+    fetchData.get('/api/v1/member/info').then((res) => {
+      setUserTag(res.data.memberTagList);
     });
   }, []);
 
@@ -71,12 +61,19 @@ const TagPage = () => {
       <BubbleUI options={options} className="myBubbleUI">
         {datas.map((data, i) => (
           <div
-            className="child"
+            className={`child ${
+              userTag.map((r: tagType) => r.tagId).includes(data.tagId)
+                ? 'pick'
+                : ''
+            }`}
             key={i}
             onClick={() => {
-              setDatas(datas.filter((item) => item.tagId !== data.tagId));
-              setUserTag([...userTag, data]);
-              setTemp(temp + 1);
+              if (userTag.map((r: tagType) => r.tagId).includes(data.tagId)) {
+                setUserTag(userTag.filter((item) => item.tagId !== data.tagId));
+              } else {
+                setUserTag([...userTag, data]);
+                setTemp(temp + 1);
+              }
             }}>
             {data.tagName}
           </div>
@@ -91,10 +88,13 @@ const TagPage = () => {
             <li
               key={data.tagId}
               onClick={() => {
-                setDatas([...datas, data]);
-                setUserTag(userTag.filter((item) => item.tagId !== data.tagId));
+                setTimeout(() => {
+                  setUserTag(
+                    userTag.filter((item) => item.tagId !== data.tagId),
+                  );
+                }, 500);
               }}>
-              #{data.tagName}
+              #{data.tagName} <IoClose size={15} />
             </li>
           ))}
         </ul>
@@ -138,8 +138,9 @@ const TagContainer = styled.div<{ image: string }>`
     border-radius: 50px;
     padding: 10px 0;
     background: url(${({ image }) => image}) no-repeat;
-    background-size: 100%;
+    background-size: 400px;
     background-position: center center;
+
     .child {
       width: 100%;
       height: 100%;
@@ -154,6 +155,11 @@ const TagContainer = styled.div<{ image: string }>`
         linear-gradient(90deg, #c792ef 0%, #ef92c5 100%);
       background-origin: border-box;
       background-clip: padding-box, border-box;
+      opacity: 1;
+      transition: 0.5s;
+    }
+    .pick {
+      opacity: 0.5;
     }
   }
 `;
@@ -236,6 +242,14 @@ const MyTagList = styled.div`
       background-origin: border-box;
       background-clip: padding-box, border-box;
       flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      opacity: 0;
+      transition: 0.5s;
+    }
+    .check {
+      opacity: 1;
     }
   }
 `;
