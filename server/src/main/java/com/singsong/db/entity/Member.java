@@ -17,17 +17,28 @@ import javax.persistence.*;
 public class Member {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long memberId;
+    private Long memberId;
     @Column(length = 100)
-    String memberEmail;
+    private String memberEmail;
     @Column(length = 20)
-    String memberNickname;
+    private String memberNickname;
     @Column(length = 500)
-    String memberProfileUrl;
-    @Column(columnDefinition = "TINYINT", length=1)
-    int memberGender;
-    @Column(length = 500)
-    String memberTag;
+    private String memberProfileUrl;
     int memberHighPitch;
     int memberRole;
+
+
+    public void setMemberHighPitch(int highPitch) {
+        this.memberHighPitch = highPitch;
+    }
+
+    public void setMemberNickname(String nickname) {
+        this.memberNickname = nickname;
+    }
+
+    public void setMemberProfileUrl(String url) {
+        this.memberProfileUrl = url;
+    }
+
+    public void deleteMember() {this.memberRole = 0;}
 }

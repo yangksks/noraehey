@@ -1,7 +1,13 @@
 import styled from 'styled-components';
+import coupleSinging from '../../assets/images/coupleSinging.png';
+import kakaoLogin from '../../assets/images/kakaoLogin.png';
 
+const BASE_URL = window.location.href.split('/')[2];
 const CLIENT_ID = '7751ec01f50361d6bce9db46f9383a9a';
-const REDIRECT_URL = 'http://localhost:3000/kakao/callback';
+const REDIRECT_URL =
+  BASE_URL === 'localhost:3000'
+    ? 'http://localhost:3000/kakao/callback'
+    : 'https://j7a503.p.ssafy.io/kakao/callback';
 const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URL}&response_type=code`;
 
 const LoginPage = () => {
@@ -27,12 +33,12 @@ const LoginPage = () => {
             <br />
             찾아보세요
           </p>
-          <ImgBox src={'src/assets/images/coupleSinging.png'} />
+          <ImgBox src={coupleSinging} />
         </RightBox>
       </TitleBox>
       <LoginBox>
         <a href={KAKAO_AUTH_URL}>
-          <KakaoButton src={'src/assets/images/kakaoLogin.png'} />
+          <KakaoButton src={kakaoLogin} />
         </a>
         <p>체험하기</p>
       </LoginBox>
