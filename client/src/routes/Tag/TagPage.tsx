@@ -88,11 +88,7 @@ const TagPage = () => {
             <li
               key={data.tagId}
               onClick={() => {
-                setTimeout(() => {
-                  setUserTag(
-                    userTag.filter((item) => item.tagId !== data.tagId),
-                  );
-                }, 500);
+                setUserTag(userTag.filter((item) => item.tagId !== data.tagId));
               }}>
               #{data.tagName} <IoClose size={15} />
             </li>
@@ -245,11 +241,10 @@ const MyTagList = styled.div`
       display: flex;
       align-items: center;
       gap: 5px;
-      opacity: 0;
+
       transition: 0.5s;
     }
     .check {
-      opacity: 1;
     }
   }
 `;
