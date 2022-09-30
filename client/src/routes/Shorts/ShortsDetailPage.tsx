@@ -17,7 +17,7 @@ const ShortsDetailPage = () => {
           onSlideChange={() => console.log('slide change')}
           onSwiper={(swiper) => console.log(swiper)}>
           <SwiperSlide>
-            <SwiperSlide>
+            <SwiperSlide style={{ display: 'flex', justifyContent: 'center' }}>
               <ShortsCard>
                 <Profile>
                   <img
