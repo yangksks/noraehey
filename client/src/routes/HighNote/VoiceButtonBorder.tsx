@@ -36,6 +36,7 @@ const VoiceButtonBorder = () => {
 const VoiceBtnBorder = styled.div`
   position: absolute;
   animation: rotate 2s linear infinite;
+  z-index: 1;
   @keyframes rotate {
     100% {
       transform: rotate(1turn);
