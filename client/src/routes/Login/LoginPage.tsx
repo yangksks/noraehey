@@ -4,7 +4,10 @@ import kakaoLogin from '../../assets/images/kakaoLogin.png';
 
 const BASE_URL = window.location.href.split('/')[2];
 const CLIENT_ID = '7751ec01f50361d6bce9db46f9383a9a';
-const REDIRECT_URL = `http://${BASE_URL}/kakao/callback`;
+const REDIRECT_URL =
+  BASE_URL === 'localhost:3000'
+    ? 'http://localhost:3000/kakao/callback'
+    : 'https://j7a503.p.ssafy.io/kakao/callback';
 const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URL}&response_type=code`;
 
 const LoginPage = () => {
