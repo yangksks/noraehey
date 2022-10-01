@@ -1,5 +1,6 @@
 package com.singsong.api.controller;
 
+import com.singsong.api.request.TagPostReq;
 import com.singsong.api.response.MemberInfoRes;
 import com.singsong.api.response.MemberTokenRes;
 import com.singsong.api.response.MyInfoRes;
@@ -106,18 +107,10 @@ public class MemberController {
         return ResponseEntity.status(200).build();
     }
 
-    @PatchMapping("/tag/add")
-    public ResponseEntity<?> memberTagAdd(@RequestParam(value = "tag") Long tagId, @ApiIgnore Authentication authentication) {
+    @PatchMapping("/tag")
+    public ResponseEntity<?> memberTagAdd(@RequestBody TagPostReq tagPostReq, @ApiIgnore Authentication authentication) {
         Member member = jwtAuthenticationUtil.jwtTokenAuth(authentication);
-        tagService.addMemberTag(member, tagId);
-
-        return ResponseEntity.status(200).build();
-    }
-
-    @PatchMapping("/tag/delete")
-    public ResponseEntity<?> memberTagDelete(@RequestParam(value = "tag") Long tagId, @ApiIgnore Authentication authentication) {
-        Member member = jwtAuthenticationUtil.jwtTokenAuth(authentication);
-        tagService.removeMemberTag(member, tagId);
+        tagService.modifyMemberTags(member, tagPostReq.getTagIdList());
 
         return ResponseEntity.status(200).build();
     }
