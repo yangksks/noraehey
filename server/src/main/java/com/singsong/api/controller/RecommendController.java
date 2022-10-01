@@ -1,8 +1,6 @@
 package com.singsong.api.controller;
 
-import com.google.gson.JsonObject;
 import com.singsong.api.request.PyRecommendPostReq;
-import com.singsong.api.request.RecommendPostReq;
 import com.singsong.api.response.RecommendRes;
 import com.singsong.api.response.SongEntityRes;
 import com.singsong.api.service.SongService;
@@ -10,18 +8,15 @@ import com.singsong.api.service.TagService;
 import com.singsong.common.model.response.BaseResponseBody;
 import com.singsong.common.util.JwtAuthenticationUtil;
 import com.singsong.db.entity.Member;
-import com.singsong.db.entity.Song;
 import io.swagger.annotations.Api;
 import org.apache.http.client.HttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
-import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
@@ -46,10 +41,9 @@ public class RecommendController {
     @Autowired
     SongService songService;
 
-    @PatchMapping("/tag")
-    public ResponseEntity<?> recommendSongs(@RequestBody RecommendPostReq recommendPostReq, @ApiIgnore Authentication authentication) {
+    @GetMapping
+    public ResponseEntity<?> recommendSongs(@ApiIgnore Authentication authentication) {
         Member member = jwtAuthenticationUtil.jwtTokenAuth(authentication);
-        tagService.modifyMemberTags(member, recommendPostReq.getTagIdList());
 
         HashMap<String, Object> resultMap = new HashMap<>();
 
@@ -69,7 +63,7 @@ public class RecommendController {
 
         // HTTP Body로 들어갈 것들 만들기
 
-        List<String> tagNameList = tagService.getTagNameList(recommendPostReq.getTagIdList());
+        List<String> tagNameList = tagService.getTagNameList(member);
 
         PyRecommendPostReq pyRequest = PyRecommendPostReq.builder()
                 .memberId(member.getMemberId())
