@@ -5,6 +5,6 @@ import lombok.Getter;
 import java.util.List;
 
 @Getter
-public class RecommendPostReq {
+public class TagPostReq {
     List<Long> tagIdList;
 }

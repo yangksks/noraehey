@@ -63,11 +63,11 @@ public class TagServiceImpl implements TagService {
     }
 
     @Override
-    public List<String> getTagNameList(List<Long> tagIdList) {
+    public List<String> getTagNameList(Member member) {
+        List<MemberTag> memberTagList = memberTagRepository.findAllByMember(member);
         List<String> tagNameList = new ArrayList<>();
-        for(Long tagId : tagIdList){
-            String tagName = tagRepository.findByTagId(tagId).orElseThrow(()-> new TagNotFoundException("존재하지 않는 태그입니다.", ErrorCode.TAG_NOT_FOUND)).getTagName();
-            tagNameList.add(tagName);
+        for(MemberTag memberTag : memberTagList){
+            tagNameList.add(memberTag.getTag().getTagName());
         }
         return tagNameList;
     }
