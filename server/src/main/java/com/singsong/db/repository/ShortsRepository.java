@@ -18,7 +18,7 @@ public interface ShortsRepository extends JpaRepository<Shorts, Long> {
     List<Shorts> findAllBySongSongId(Long songId, Pageable pageable);
     List<Shorts> findAllByMemberMemberId(Long memberId, Pageable pageable);
 
-    @Query(value = "select * from shorts order by rand() limit 3", nativeQuery = true)
+    @Query(value = "select * from shorts order by rand() limit 30", nativeQuery = true)
     List<Shorts> findByRandom();
 
     @Query(value = "SELECT s.shorts_id, s.shorts_audio_url, s.shorts_comment, s.shorts_create_time, s.member_id, s.song_id FROM shorts_like l\n" +
