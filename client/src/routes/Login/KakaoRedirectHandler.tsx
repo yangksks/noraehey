@@ -1,5 +1,4 @@
 import axios from 'axios';
-import styled from 'styled-components';
 import { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
@@ -19,23 +18,13 @@ const KakaoRedirectHandler = () => {
     const { accessToken, refreshToken } = result.data;
     localStorage.setItem('refreshToken', refreshToken);
     sessionStorage.setItem('accessToken', accessToken);
-    console.log(result);
     navigate('/');
   };
 
   useEffect(() => {
     tokenRequest();
   }, []);
-  return <Container></Container>;
+  return <></>;
 };
-
-const Container = styled.div`
-  width: 100%;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`;
 
 export default KakaoRedirectHandler;
