@@ -1,33 +1,23 @@
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { fetchData } from '../../utils/api/api';
 import ShortsCard from './ShortsCard';
+interface shortsListType {}
 const LikeShortsPage = () => {
-  const songData = {
-    albumUrl:
-      'http://image.genie.co.kr/Y/IMAGE/IMG_ALBUM/080/414/439/80414439_1395973335427_1_600x600.JPG',
-    title: '야생화',
-    artist: '박효신',
-    tj: 23467,
-    ky: 65413,
-    key: 20,
-  };
-
+  const [songDatas, setSongDatas] = useState<[]>([]);
+  useEffect(() => {
+    fetchData.get('/api/v1/shorts/like?page=0').then((res) => {
+      // setSongDatas(res.data.songEntityResList);
+      console.log(res.data.shortsList);
+    });
+  }, []);
   const userInfo = {
     key: 19,
   };
 
   return (
     <ShortsList>
-      <ShortsCard albumUrl={songData.albumUrl}></ShortsCard>
-      <ShortsCard albumUrl={songData.albumUrl}></ShortsCard>
-      <ShortsCard albumUrl={songData.albumUrl}></ShortsCard>
-      <ShortsCard albumUrl={songData.albumUrl}></ShortsCard>
-      <ShortsCard albumUrl={songData.albumUrl}></ShortsCard>
-      <ShortsCard albumUrl={songData.albumUrl}></ShortsCard>
-      <ShortsCard albumUrl={songData.albumUrl}></ShortsCard>
-      <ShortsCard albumUrl={songData.albumUrl}></ShortsCard>
-      <ShortsCard albumUrl={songData.albumUrl}></ShortsCard>
-      <ShortsCard albumUrl={songData.albumUrl}></ShortsCard>
-      <ShortsCard albumUrl={songData.albumUrl}></ShortsCard>
+      {/* <ShortsCard songData={songData[0]}></ShortsCard> */}
     </ShortsList>
   );
 };
