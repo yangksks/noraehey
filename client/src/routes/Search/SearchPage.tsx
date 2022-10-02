@@ -13,19 +13,16 @@ const SearchPage = () => {
   const [prevText, setPrevText] = useState('');
   const navigate = useNavigate();
   useEffect(() => {
-    if (prevText !== searchText) {
-      fetchData
-        .get(`/api/v1/song/search?key=${nowTab}&word=${searchText}&page=0`)
-        .then((res) => {
-          setSearchList(res.data.songEntityResList);
-          setPrevText(searchText);
-        });
-      navigate({
-        pathname: '/search',
-        search: `?key=${nowTab}&word=${searchText}`,
+    fetchData
+      .get(`/api/v1/song/search?key=${nowTab}&word=${searchText}&page=0`)
+      .then((res) => {
+        setSearchList(res.data.songEntityResList);
+        // console.log('검색함');
       });
-      console.log('검색함');
-    }
+    navigate({
+      pathname: '/search',
+      search: `?key=${nowTab}&word=${searchText}`,
+    });
   }, [nowTab]);
 
   return (
