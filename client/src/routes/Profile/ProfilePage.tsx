@@ -1,90 +1,204 @@
-import { useEffect, useState } from 'react';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { ImArrowLeft2 } from 'react-icons/im';
+import { Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
-import { myshortsListState, userInfoState } from '../../Atom';
+import { userInfoState } from '../../Atom';
 import Container from '../../style/style';
+import { FiSettings } from 'react-icons/fi';
+import { RiPencilFill } from 'react-icons/ri';
+import { useEffect, useState } from 'react';
 import { fetchData } from '../../utils/api/api';
-import SubTitle from '../Common/SubTitle';
-import ShortsCard from '../Like/ShortsCard';
 const ProfilePage = () => {
   const user = useRecoilValue(userInfoState);
-  const [shortsList, setShortsList] = useRecoilState(myshortsListState);
-  const [loading, setLoading] = useState(true);
-  const [page, setPage] = useState(0);
-  const [hasMore, setHasMore] = useState('');
+  const url = useLocation().pathname.split('/')[3];
+  const [settingNow, setSettingNow] = useState(url);
+  const [nameEdit, setNameEdit] = useState(false);
+  const [nickName, setNickName] = useState(user.nickName);
+  const navigate = useNavigate();
 
-  const getMyShortsList = async (page: number) => {
-    const URL = `/api/v1/shorts/member/${user.memberId}?page=${page}`;
+  useEffect(() => {
+    setSettingNow(url);
+  }, [url]);
+
+  const updateNickname = async () => {
+    const URL = '/api/v1/member/nickname';
     try {
-      const result = await fetchData.get(URL);
-      console.log(result);
-      setShortsList(result.data.shortsList);
-      setHasMore(result.data.hasMore);
+      const result = await fetchData.patch(URL, { nickName: nickName });
+      return console.log(result);
     } catch (err: any) {
       console.log(err);
     }
   };
 
-  useEffect(() => {
-    getMyShortsList(0);
-    setTimeout(() => {
-      setLoading(false);
-    }, 400);
-  }, []);
-
-  const render = () => {
-    return shortsList.map((short, idx) => {
-      return <ShortsCard key={idx} albumUrl={short.songImageUrl}></ShortsCard>;
-    });
+  const ChangeName = () => {
+    if (nameEdit) {
+      updateNickname();
+    }
+    setNameEdit(!nameEdit);
   };
 
   return (
     <Container>
-      <SubTitle title=""></SubTitle>
+      <TitleBox>
+        <Title>
+          <ImArrowLeft2
+            size={30}
+            onClick={() => {
+              navigate(-1);
+            }}
+          />
+        </Title>
+        {settingNow !== 'setting' ? (
+          <SettingButton
+            onClick={() => {
+              navigate('setting');
+            }}>
+            <FiSettings />
+          </SettingButton>
+        ) : null}
+      </TitleBox>
       <Profile>
-        <img src={user.profileUrl} alt="" />
-        <p>{user.nickName}</p>
+        <PicBox>
+          <img src={user.profileUrl} alt="" />
+          {settingNow !== 'setting' ? null : (
+            <PicEdit>
+              <p>수정</p>
+              <RiPencilFill />
+            </PicEdit>
+          )}
+        </PicBox>
+        <NameBox>
+          {nameEdit ? (
+            <textarea
+              onChange={(e) => {
+                setNickName(e.target.value);
+              }}>
+              {user.nickName}
+            </textarea>
+          ) : (
+            <p>{user.nickName}</p>
+          )}
+          {settingNow !== 'setting' ? null : (
+            <RiPencilFill
+              onClick={() => {
+                settingNow !== 'setting' ? null : ChangeName();
+              }}
+            />
+          )}
+        </NameBox>
       </Profile>
-      <ShortsTitle>Hey Shorts</ShortsTitle>
-      <ShortsList>{loading ? null : render()}</ShortsList>
+      <Outlet></Outlet>
     </Container>
   );
 };
 
 const Profile = styled.div`
   width: 100%;
+  height: 50%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 30px;
-  gap: 10px;
-  img {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    border: #b6b3c0 solid 1px;
-  }
+  margin-bottom: 40px;
+  gap: 20px;
+  z-index: 1;
 `;
-const ShortsTitle = styled.div`
-  width: 100%;
-  padding: 0 20px;
 
-  &::after {
-    display: block;
-    content: '';
-    width: 100%;
-    height: 2px;
-    margin-top: 10px;
-    background-color: ${(props) => props.theme.colors.lineGray};
+const PicBox = styled.div`
+  position: relative;
+  width: 120px;
+  height: 120px;
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  align-items: center;
+  border-radius: 50%;
+  border: #b6b3c0 solid 1px;
+  overflow: hidden;
+  z-index: 3;
+
+  img {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    z-index: 1;
   }
 `;
-const ShortsList = styled.div`
-  width: 100%;
-  padding: 10px 20px 0;
-  display: grid;
+
+const PicEdit = styled.div`
+  position: absolute;
+  display: flex;
   justify-content: center;
-  grid-template-columns: repeat(3, minmax(auto, 300px));
-  grid-template-rows: repeat(auto-fill, 1fr);
-  gap: 10px;
+  flex-direction: row;
+  align-items: center;
+  width: 120px;
+  height: 40px;
+  z-index: 2;
+  background-color: rgba(221, 221, 221, 0.588);
+  svg {
+    font-size: 18px;
+    padding-bottom: 3px;
+  }
+`;
+
+const NameBox = styled.div`
+  padding: 5px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  p {
+    font-size: 18px;
+  }
+
+  textarea {
+    width: 100%;
+    padding: 13px;
+    font-size: 18px;
+    resize: none;
+  }
+
+  svg {
+    font-size: 18px;
+    padding-bottom: 3px;
+    padding-left: 3px;
+  }
+`;
+
+const TitleBox = styled.div`
+  width: 100%;
+  height: 10%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px 20px;
+`;
+
+const Title = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  svg {
+    cursor: pointer;
+  }
+
+  p {
+    flex-shrink: 1;
+    width: 100%;
+    padding-left: 25px;
+    font-size: 18px;
+    font-weight: 700;
+  }
+`;
+
+const SettingButton = styled.div`
+  font-size: 26px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  color: #3e3e3e;
 `;
 export default ProfilePage;

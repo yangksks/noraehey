@@ -29,9 +29,6 @@ const MusicCardSwiper = () => {
         <SwiperSlide>
           <MusicListCard />
         </SwiperSlide>
-        <SwiperSlide>
-          <MusicListCard />
-        </SwiperSlide>
       </Swiper>
     </CardContainer>
   );

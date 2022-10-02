@@ -21,6 +21,7 @@ import LoggedInProtection from './routes/Common/LoggedInProtection';
 import ShortsCreatePage from './routes/Shorts/ShortsCreatePage';
 import LoadingSpinner from './routes/Common/LoadingSpinner';
 import TagVoiceProtection from './routes/Common/TagVoiceProtection';
+import UserShorts from './routes/Profile/UserShorts';
 
 const Router = () => {
   return (
@@ -44,6 +45,7 @@ const Router = () => {
             />
             <Route path="/search/*" element={<SearchPage />} />
             <Route path="/profile/:userId" element={<ProfilePage />}>
+              <Route path="" element={<UserShorts />} />
               <Route path="setting" element={<SettingPage />} />
             </Route>
             <Route path="/songs/:songId" element={<SongsDetailPage />} />

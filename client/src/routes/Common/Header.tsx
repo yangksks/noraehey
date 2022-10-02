@@ -17,7 +17,10 @@ const Header = () => {
   return (
     <HeaderContainer>
       <HeaderTop infoBar={infoBar === true}>
-        <TopBox>
+        <TopBox
+          onClick={() => {
+            setInfoBar(!infoBar);
+          }}>
           <Link to="/">
             <Logo>
               <p style={{ color: '#FFC34E' }}>NORAE</p>
@@ -26,9 +29,6 @@ const Header = () => {
           </Link>
           <ProfileImg
             src={user.profileUrl}
-            onClick={() => {
-              setInfoBar(!infoBar);
-            }}
           />
         </TopBox>
         <UserInfo />

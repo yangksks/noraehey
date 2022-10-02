@@ -3,8 +3,10 @@ import { Outlet } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
 import {
+  reccommendSongsState,
   shortsListLengthState,
   shortsListState,
+  tagListState,
   userInfoState,
 } from '../../Atom';
 import { fetchData } from '../../utils/api/api';
@@ -16,13 +18,28 @@ const LoadingSpinner = () => {
   const [userInfo, setUserInfo] = useRecoilState(userInfoState);
   const [shortsList, setShortsList] = useRecoilState(shortsListState);
   const [shortsLength, setShortsLength] = useRecoilState(shortsListLengthState);
+  const [reccommendSongs, setReccommendSongs] =
+    useRecoilState(reccommendSongsState);
+  const [tagList, setTagList] = useRecoilState(tagListState);
   const [loading, setLoading] = useState(true);
 
   const getUserInfo = async () => {
     const URL = '/api/v1/member/info';
     try {
       const result = await fetchData.get(URL);
-      setUserInfo(result.data);
+      setUserInfo(() => result.data);
+      return console.log(result.data);
+    } catch (err: any) {
+      console.log(err);
+    }
+  };
+
+  const getTags = async () => {
+    const URL = '/api/v1/song/tag';
+    try {
+      const result = await fetchData.get(URL);
+      setTagList(() => result.data);
+      return console.log(result.data);
     } catch (err: any) {
       console.log(err);
     }
@@ -32,30 +49,34 @@ const LoadingSpinner = () => {
     const URL = '/api/v1/shorts/random';
     try {
       const result = await fetchData.get(URL);
-      setShortsList(result.data);
-      setShortsLength(result.data.length);
+      setShortsList(() => result.data);
+      setShortsLength(() => result.data.length);
+      return console.log(result.data);
     } catch (err: any) {
       console.log(err);
     }
   };
 
   const getReccomendList = async () => {
-    const URL = '/api/v1/shorts/random';
+    const URL = '/api/v1/recommend';
     try {
       const result = await fetchData.get(URL);
-      setShortsList(result.data);
-      setShortsLength(result.data.length);
+      setReccommendSongs(() => result.data);
+      return console.log(result.data);
     } catch (err: any) {
       console.log(err);
     }
   };
 
   useEffect(() => {
-    getUserInfo();
-    getShortsList();
-    setTimeout(() => {
+    const syncFunc = async () => {
+      await getUserInfo();
+      await getShortsList();
+      await getReccomendList();
+      await getTags();
       setLoading(false);
-    }, 1000);
+    };
+    syncFunc();
   }, []);
 
   const loadingSpinner = () => {

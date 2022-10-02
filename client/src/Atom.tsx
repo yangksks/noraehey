@@ -64,3 +64,28 @@ export const userInfoState = atom({
     songHighPitch: 0,
   },
 });
+
+export const userTagListState = atom({
+  key: 'userTagList',
+  default: [
+    {
+      tagId: -1,
+      tagName: '',
+    },
+  ],
+});
+
+export const tagListState = atom({
+  key: 'tagList',
+  default: [
+    {
+      tagId: -1,
+      tagName: '',
+    },
+  ],
+});
+
+export const reccommendSongsState = atom({
+  key: 'reccommendSongs',
+  default: [],
+});
