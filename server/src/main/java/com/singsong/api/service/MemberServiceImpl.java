@@ -46,8 +46,7 @@ public class MemberServiceImpl implements MemberService {
         Member member = Member.builder()
                 .memberEmail(kakaoMemberInfo.getEmail())
                 .memberNickname("노래쟁이 #" + kakaoMemberInfo.getId())
-                // TODO: S3에 저장된 기본 프로필 이미지
-                .memberProfileUrl(null)
+                .memberProfileUrl("https://s3.ap-northeast-2.amazonaws.com/noraehey/member/0/default_image.png")
                 .memberHighPitch(0)
                 .memberRole(1)
                 .build();
