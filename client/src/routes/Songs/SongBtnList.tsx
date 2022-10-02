@@ -132,6 +132,7 @@ const Evaluation = styled.div<{ evalToggle: boolean; eval: number }>`
       gap: 2px;
       p {
         font-size: 14px;
+      }
     }
   }
 `;
