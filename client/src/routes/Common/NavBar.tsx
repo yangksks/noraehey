@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import NavBarButton from './NavBarButton';
@@ -9,6 +9,10 @@ const MenuURL = ['', 'like/songlist', 'shorts/1', 'search'];
 const NavBar = () => {
   const url = useLocation().pathname.split('/')[1];
   const [urlNow, setUrlNow] = useState(url);
+
+  useEffect(() => {
+    setUrlNow(url);
+  }, [url]);
 
   return (
     <>

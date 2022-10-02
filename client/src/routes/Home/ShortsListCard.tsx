@@ -1,31 +1,56 @@
+import { useRecoilValue } from 'recoil';
+import { shortsListState, userInfoState } from '../../Atom';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 
-const ShortsListCard = () => {
+interface shortsType {
+  idx: number;
+}
+
+const ShortsListCard = (props: shortsType) => {
+  const user = useRecoilValue(userInfoState);
+  const shorts = useRecoilValue(shortsListState)[props.idx];
+  const userName = user.nickName.split('#')[0];
   const songData = {
-    URL: 'http://image.genie.co.kr/Y/IMAGE/IMG_ALBUM/082/586/132/82586132_1647227017471_1_600x600.JPG',
-    title: 'Tomboy',
-    artist: '여자아이들',
+    URL: shorts.songImageUrl,
+    title: shorts.songTitle,
+    artist: shorts.songSinger,
   };
+  const navigate = useNavigate();
 
-  const userInfo = {
-    name: '원재호짱짱맨',
-    profile: '',
-    createdTime: '13분전',
+  const getCreatedTime = () => {
+    const timeDiff = shorts.shortsCreateTime;
+    const convertTime = new Date(timeDiff);
+    const CurrntTime = new Date();
+    const diffDate = CurrntTime.getTime() - convertTime.getTime();
+    const result = Math.abs(diffDate / (1000 * 60 * 60 * 24));
+    if (result > 1) {
+      return Math.floor(result) + '일 전';
+    } else if (result * 24 >= 1) {
+      return Math.floor(result * 24) + '시간 전';
+    } else if (result * 24 * 60 >= 1) {
+      return Math.floor(result * 24 * 60) + '분 전';
+    } else {
+      return Math.floor(result * 24 * 60 * 60) + '초 전';
+    }
   };
 
   return (
-    <ShortsBox album={songData.URL}>
+    <ShortsBox
+      album={songData.URL}
+      onClick={() => {
+        navigate(`/shorts/${shorts.shortsId}`);
+      }}>
       <HeadAndFoot />
       <Description>
-        톰보이가 되겠어
-        <br />
-        예암 빠킹 퇌보이~
+        <p>{shorts.shortsComment}</p>
       </Description>
       <HeadAndFoot>
-        {songData.title} - {songData.artist}
+        <p className="title">{songData.title}</p>
+        <p className="title">{songData.artist}</p>
         <User>
-          <div>{userInfo.name}</div>
-          <p>{userInfo.createdTime}</p>
+          <p>{userName}</p>
+          <p>{getCreatedTime()}</p>
         </User>
       </HeadAndFoot>
     </ShortsBox>
@@ -48,15 +73,24 @@ const HeadAndFoot = styled.div`
   position: relative;
   width: 100%;
   height: 25%;
-  padding: 10px;
+  padding: 0 10px;
+  gap: 3px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: start;
   align-items: start;
   font-size: 11px;
   color: #ffffff;
   font-family: 'omni025';
   box-sizing: border-box;
+  .title,
+  .singer {
+    width: 100%;
+    text-align: start;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
 `;
 
 const Description = styled.div`

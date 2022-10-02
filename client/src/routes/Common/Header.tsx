@@ -1,19 +1,18 @@
 import styled from 'styled-components';
-import { CgProfile } from 'react-icons/cg';
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import UserInfo from './UserInfo';
+import { useRecoilValue } from 'recoil';
+import { userInfoState } from '../../Atom';
 
 const Header = () => {
   const [infoBar, setInfoBar] = useState(false);
-  const navigate = useNavigate();
+  const url = useLocation().pathname.split('/')[1];
+  const user = useRecoilValue(userInfoState);
 
-  const logout = () => {
-    sessionStorage.removeItem('accessToken');
-    localStorage.removeItem('refreshToken');
-    navigate('/login');
-  };
+  useEffect(() => {
+    setInfoBar(false);
+  }, [url]);
 
   return (
     <HeaderContainer>
@@ -25,13 +24,8 @@ const Header = () => {
               <p style={{ color: 'white' }}>HEY</p>
             </Logo>
           </Link>
-          <button
-            onClick={() => {
-              logout();
-            }}>
-            로그아웃
-          </button>
           <ProfileImg
+            src={user.profileUrl}
             onClick={() => {
               setInfoBar(!infoBar);
             }}
@@ -71,7 +65,7 @@ const HeaderBottom = styled.div`
 const HeaderTop = styled.div<{ infoBar: boolean }>`
   width: 100%;
   padding: 20px;
-  height: ${({ infoBar }) => (infoBar ? '230px' : '80px')};
+  height: ${({ infoBar }) => (infoBar ? '250px' : '80px')};
   display: flex;
   flex-direction: column;
   justify-content: start;
@@ -112,7 +106,7 @@ const Logo = styled.div`
   cursor: pointer;
 `;
 
-const ProfileImg = styled(CgProfile)`
+const ProfileImg = styled.img`
   width: 40px;
   height: 40px;
   color: #ffffff;

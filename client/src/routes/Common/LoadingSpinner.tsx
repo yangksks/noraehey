@@ -2,14 +2,20 @@ import { useEffect, useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
-import { userInfoState } from '../../Atom';
+import {
+  shortsListLengthState,
+  shortsListState,
+  userInfoState,
+} from '../../Atom';
 import { fetchData } from '../../utils/api/api';
 import VoiceButtonBorder from '../HighNote/VoiceButtonBorder';
 import CoupleSinging from '../../assets/images/coupleSinging.png';
 import Singing from '../../assets/images/singing.png';
 
-const LoadingSpiner = () => {
+const LoadingSpinner = () => {
   const [userInfo, setUserInfo] = useRecoilState(userInfoState);
+  const [shortsList, setShortsList] = useRecoilState(shortsListState);
+  const [shortsLength, setShortsLength] = useRecoilState(shortsListLengthState);
   const [loading, setLoading] = useState(true);
 
   const getUserInfo = async () => {
@@ -17,7 +23,28 @@ const LoadingSpiner = () => {
     try {
       const result = await fetchData.get(URL);
       setUserInfo(result.data);
-      console.log('spiner launched');
+    } catch (err: any) {
+      console.log(err);
+    }
+  };
+
+  const getShortsList = async () => {
+    const URL = '/api/v1/shorts/random';
+    try {
+      const result = await fetchData.get(URL);
+      setShortsList(result.data);
+      setShortsLength(result.data.length);
+    } catch (err: any) {
+      console.log(err);
+    }
+  };
+
+  const getReccomendList = async () => {
+    const URL = '/api/v1/shorts/random';
+    try {
+      const result = await fetchData.get(URL);
+      setShortsList(result.data);
+      setShortsLength(result.data.length);
     } catch (err: any) {
       console.log(err);
     }
@@ -25,12 +52,13 @@ const LoadingSpiner = () => {
 
   useEffect(() => {
     getUserInfo();
+    getShortsList();
     setTimeout(() => {
       setLoading(false);
     }, 1000);
   }, []);
 
-  const loadingSpiner = () => {
+  const loadingSpinner = () => {
     return (
       <LoadingSpinerBox>
         <ImgBox src={Singing} />
@@ -43,7 +71,7 @@ const LoadingSpiner = () => {
     );
   };
 
-  return <>{loading ? loadingSpiner() : <Outlet></Outlet>}</>;
+  return <>{loading ? loadingSpinner() : <Outlet></Outlet>}</>;
 };
 
 const LoadingSpinerBox = styled.div`
@@ -81,4 +109,4 @@ const ImgBox2 = styled.img`
   opacity: 0.3;
   z-index: 0;
 `;
-export default LoadingSpiner;
+export default LoadingSpinner;

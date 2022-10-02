@@ -13,13 +13,13 @@ const SongCard = (props: songProps) => {
       }}>
       <AlbumArt url={props.songData.URL}></AlbumArt>
       <SongInfo>
-        <h1>{props.songData.title}</h1>
-        <p>{props.songData.artist}</p>
-        <a>{'1key UP'}</a>
+        <p className="title">{props.songData.title}</p>
+        <p className="artist">{props.songData.artist}</p>
+        <p className="key">{'1key UP'}</p>
       </SongInfo>
       <KaraokeInfo>
-        <h2>TJ {props.songData.tj}</h2>
-        <h3>KY {props.songData.ky}</h3>
+        <p className="tj">TJ {props.songData.tj}</p>
+        <p className="ky">KY {props.songData.ky}</p>
       </KaraokeInfo>
     </SongBox>
   );
@@ -54,18 +54,18 @@ const SongInfo = styled.div`
   align-items: start;
   gap: 5px;
 
-  h1 {
+  .title {
     font-size: 14px;
     font-family: 'omni035';
   }
 
-  p {
+  .artist {
     font-size: 10px;
     font-family: 'omni035';
     color: #9278ff;
   }
 
-  a {
+  .key {
     font-size: 10px;
     font-family: 'omni045';
     color: #c40f0f;
@@ -73,30 +73,32 @@ const SongInfo = styled.div`
 `;
 
 const KaraokeInfo = styled.div`
-  width: 30%;
+  width: 25%;
   height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: end;
-  gap: 5px;
+  gap: 10px;
 
-  h2 {
+  .tj {
+    width: 100%;
     display: inline;
     font-size: 9px;
-    font-family: 'omni045';
+    font-family: 'omni035';
     color: white;
     background-color: #9278ff;
-    padding: 4px 10px;
+    padding: 4px;
     border-radius: 10px;
   }
 
-  h3 {
+  .ky {
+    width: 100%;
     font-size: 9px;
-    font-family: 'omni045';
+    font-family: 'omni035';
     color: white;
     background-color: #c792ef;
-    padding: 3px 10px;
+    padding: 4px;
     border-radius: 10px;
   }
 `;

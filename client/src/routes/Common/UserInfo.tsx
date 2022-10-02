@@ -1,17 +1,20 @@
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 import { userInfoState } from '../../Atom';
+import HeaderButtons from './HeaderButtons';
 
 const UserInfo = () => {
-  const test = useRecoilValue(userInfoState);
-  console.log(test);
+  const user = useRecoilValue(userInfoState);
+  const userName = user.nickName.split('#')[0];
 
   return (
     <InfoBox>
       <InfoBoxLeft></InfoBoxLeft>
       <InfoBoxRight>
+        <p>{userName} 님</p>
         <p>노래HEY와 함께</p>
         <p>노래방 달려볼까요?</p>
+        <HeaderButtons />
       </InfoBoxRight>
     </InfoBox>
   );
@@ -19,7 +22,7 @@ const UserInfo = () => {
 
 const InfoBox = styled.div`
   width: 100%;
-  height: 100%;
+  height: 70%;
   margin-top: 20px;
   display: flex;
   flex-direction: row;

@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
-import { Navigate, Outlet, useLocation } from 'react-router-dom';
+import { Navigate, Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
+import { userInfoState } from '../../Atom';
 import Header from './Header';
 import NavBar from './NavBar';
 
@@ -9,6 +11,7 @@ const Protection = () => {
   const url = useLocation().pathname.split('/')[1];
   const [headerStatus, setHeaderStatus] = useState(false);
   const [navStatus, setNavStatus] = useState(false);
+  const user = useRecoilValue(userInfoState);
 
   useEffect(() => {
     if (url === 'tag' || url === 'voice' || url === 'shorts') {
@@ -24,7 +27,11 @@ const Protection = () => {
     }
   }, [url]);
 
-  if (!loggedData) {
+  if (user.memberTagList.length === -1) {
+    return <Navigate to="/tag" replace />;
+  } else if (user.songHighPitch === -1) {
+    return <Navigate to="/voice" replace />;
+  } else if (!loggedData) {
     return <Navigate to="/login" replace />;
   } else {
     return (

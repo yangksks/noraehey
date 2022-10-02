@@ -70,7 +70,6 @@ const VoiceButton = (props: VoiceBtnType) => {
 
   const start = async () => {
     const input = await getMicInput();
-
     if (audioCtx.state === 'suspended') {
       await audioCtx.resume();
     }
@@ -127,6 +126,7 @@ const StartBtn = styled.div<{ status: boolean }>`
   font-size: 60px;
   box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.2);
   animation: ${({ status }) => (status ? '' : 'bounce 1.5s linear infinite')};
+  z-index: 100;
 
   p {
     font-size: 12px;

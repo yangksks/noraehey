@@ -19,7 +19,8 @@ import KakaoRedirectHandler from './routes/Login/KakaoRedirectHandler';
 import Protection from './routes/Common/Protection';
 import LoggedInProtection from './routes/Common/LoggedInProtection';
 import ShortsCreatePage from './routes/Shorts/ShortsCreatePage';
-import LoadingSpiner from './routes/Common/LoadingSpiner';
+import LoadingSpinner from './routes/Common/LoadingSpinner';
+import TagVoiceProtection from './routes/Common/TagVoiceProtection';
 
 const Router = () => {
   return (
@@ -29,11 +30,13 @@ const Router = () => {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/kakao/callback" element={<KakaoRedirectHandler />} />
         </Route>
-        <Route element={<LoadingSpiner />}>
+        <Route element={<TagVoiceProtection />}>
+          <Route path="/tag" element={<TagPage />} />
+          <Route path="/voice" element={<HighNotePage />} />
+        </Route>
+        <Route element={<LoadingSpinner />}>
           <Route element={<Protection />}>
             <Route path="/" element={<HomePage />} />
-            <Route path="/tag" element={<TagPage />} />
-            <Route path="/voice" element={<HighNotePage />} />
             <Route path="/shorts/:shortsId" element={<ShortsDetailPage />} />
             <Route
               path="/create/shorts/:songsId"
