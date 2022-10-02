@@ -36,9 +36,9 @@ public class KakaoServiceImpl implements KakaoService {
 
         sb.append("grant_type=authorization_code");
         sb.append("&client_id=" + kakaoRestKey);
-       sb.append("&redirect_uri=https://j7a503.p.ssafy.io/kakao/callback");
+        sb.append("&redirect_uri=https://j7a503.p.ssafy.io/kakao/callback");
 //        sb.append("&redirect_uri=http://localhost:3000/kakao/callback"); // TODO: 인가코드 받은 redirect_uri 입력
-        // sb.append("&redirect_uri=http://localhost:8081/api/v1/kakao/callback");
+//        sb.append("&redirect_uri=http://localhost:8081/api/v1/kakao/callback");
         sb.append("&code=" + code);
         bw.write(sb.toString());
         bw.flush();
@@ -167,8 +167,6 @@ public class KakaoServiceImpl implements KakaoService {
         System.out.println("email : " + email);
 
         br.close();
-
-        // TODO: 사용자 정보 받아온 후 카카오 로그아웃 할지 말지 정하기
         
         // 1. 이메일이 DB에 있는지 없는지 검색
         // 2-1. 이미 존재하는 이메일 (이미 가입된 회원) -> accessToken, refreshToken 생성 후 전달
