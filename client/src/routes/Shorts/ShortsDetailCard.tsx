@@ -2,6 +2,7 @@ import styled, { css } from 'styled-components';
 import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
 import { useEffect, useState } from 'react';
 import { fetchData } from '../../utils/api/api';
+import React from 'react';
 export interface shortsDetailType {
   shortsId: number;
   shortsComment: string;

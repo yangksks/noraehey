@@ -28,6 +28,10 @@ const Title = styled.div`
   width: 100%;
   padding: 0 20px 10px;
 
+  svg {
+    cursor: pointer;
+  }
+
   p {
     flex-shrink: 1;
     width: 100%;

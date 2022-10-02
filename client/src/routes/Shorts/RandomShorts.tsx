@@ -5,11 +5,12 @@ import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import { useEffect, useState } from 'react';
-import ShortsDetailCard from './ShortsDetailCard';
 import { useRecoilValue } from 'recoil';
 import { shortsListState } from '../../Atom';
 import { fetchData } from '../../utils/api/api';
+import React from 'react';
 import { shortsDetailType } from './ShortsDetailCard';
+import ShortsDetailCard from './ShortsDetailCard';
 
 const RandomShorts = () => {
   const [shortsDatas, setShortsDatas] = useState<shortsDetailType[]>([]);
