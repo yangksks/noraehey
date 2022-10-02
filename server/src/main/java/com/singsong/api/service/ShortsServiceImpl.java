@@ -31,7 +31,7 @@ import java.util.List;
 @Service
 public class ShortsServiceImpl implements ShortsService {
 
-    static final int SIZE = 2;
+    static final int SIZE = 20;
     @Autowired
     ShortsRepository shortsRepository;
     @Autowired
