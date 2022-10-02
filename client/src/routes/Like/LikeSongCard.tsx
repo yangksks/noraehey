@@ -56,6 +56,7 @@ const SongBox = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    flex-shrink: 0;
     gap: 5px;
     & > p {
       width: 100%;

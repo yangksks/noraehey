@@ -1,15 +1,15 @@
 import styled from 'styled-components';
 
-interface ShortsCardType {
-  albumUrl: string;
-}
+// interface ShortsCardType {
+//   albumUrl: string;
+// }
 
-const ShortsCard = (props: ShortsCardType) => {
-  const { albumUrl } = props;
+const ShortsCard = (props: any) => {
+  const { shortsData } = props;
   // return <ShortsBox albumUrl={albumUrl}></ShortsBox>;
   return (
     <ShortsBox>
-      <img src={albumUrl} alt="" />
+      <img src={shortsData.albumUrl} alt="" />
     </ShortsBox>
   );
 };
