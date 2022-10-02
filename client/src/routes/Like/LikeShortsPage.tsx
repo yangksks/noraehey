@@ -1,23 +1,29 @@
-import { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { fetchData } from '../../utils/api/api';
 import ShortsCard from './ShortsCard';
-interface shortsListType {}
+import { useEffect, useState } from 'react';
+import { fetchData } from '../../utils/api/api';
+
+interface shortsListType {
+  email: string;
+  memberId: number;
+  nickName: string;
+  profileUrl: string;
+  songHighPitch: number;
+}
 const LikeShortsPage = () => {
-  const [songDatas, setSongDatas] = useState<[]>([]);
+  const [shortsDatas, setShortsDatas] = useState<shortsListType[]>([]);
   useEffect(() => {
     fetchData.get('/api/v1/shorts/like?page=0').then((res) => {
-      // setSongDatas(res.data.songEntityResList);
-      console.log(res.data.shortsList);
+      setShortsDatas(res.data.shortsList);
     });
   }, []);
-  const userInfo = {
-    key: 19,
-  };
 
   return (
     <ShortsList>
-      {/* <ShortsCard songData={songData[0]}></ShortsCard> */}
+      {shortsDatas.length != 0 &&
+        shortsDatas.map((item, i) => (
+          <ShortsCard key={i} songData={item}></ShortsCard>
+        ))}
     </ShortsList>
   );
 };
