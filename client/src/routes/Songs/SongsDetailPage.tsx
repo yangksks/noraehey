@@ -45,6 +45,12 @@ const SongsDetailPage = () => {
     window.scrollTo(0, 0);
   }, [pathname]);
 
+  const refetchFunc = () => {
+    fetchData.get(`/api/v1/song/info/${songId}`).then((res) => {
+      setSongData(res.data);
+      console.log(res.data);
+    });
+  };
   return (
     <>
       <Helmet>
@@ -60,7 +66,9 @@ const SongsDetailPage = () => {
           songLikeCount={songData.songLikeCount}></AlbumImage>
         <SongLyrics lyrics={songData.songLyrics}></SongLyrics>
         <SongInfo songData={songData}></SongInfo>
-        <SongBtnList></SongBtnList>
+        <SongBtnList
+          myEval={songData.myEval}
+          refetchFunc={refetchFunc}></SongBtnList>
         <SongDetailShorts></SongDetailShorts>
       </Container>
     </>
