@@ -42,8 +42,8 @@ public class MagazineController {
     }
 
     // 매거진 조회
-    @GetMapping
-    public ResponseEntity<?> getMagazine(@RequestParam("magazineId") Long magazineId) {
+    @GetMapping("/{magazineId}")
+    public ResponseEntity<?> getMagazine(@PathVariable("magazineId") Long magazineId) {
         return ResponseEntity.status(200).body(magazineService.getMagazine(magazineId));
     }
 

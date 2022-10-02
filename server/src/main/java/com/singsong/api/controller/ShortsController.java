@@ -100,8 +100,8 @@ public class ShortsController {
     }
 
     // 쇼츠 상세 조회
-    @GetMapping
-    public ResponseEntity<?> getShortsDetail(@RequestParam("shortsId") Long shortsId, @ApiIgnore Authentication authentication) {
+    @GetMapping("/{shortsId}")
+    public ResponseEntity<?> getShortsDetail(@PathVariable("shortsId") Long shortsId, @ApiIgnore Authentication authentication) {
         Member member = jwtAuthenticationUtil.jwtTokenAuth(authentication);
         ShortsEntityRes shortsEntityRes = shortsService.getShortsDetailByShortsId(shortsId, member);
         return ResponseEntity.status(200).body(shortsEntityRes);
