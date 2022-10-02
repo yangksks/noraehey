@@ -1,4 +1,4 @@
-import { NavLink, Route, Routes } from 'react-router-dom';
+import { NavLink, Outlet, Route, Routes } from 'react-router-dom';
 import styled from 'styled-components';
 import Container from '../../style/style';
 import LikeShortsPage from './LikeShortsPage';
@@ -18,8 +18,7 @@ const LikePage = () => {
       </TabSection>
       <ListArticle>
         <Routes>
-          <Route path="songlist" element={<LikeSongPage />} />
-          <Route path="shortslist" element={<LikeShortsPage />} />
+          <Outlet></Outlet>
         </Routes>
       </ListArticle>
     </Container>
