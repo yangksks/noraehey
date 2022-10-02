@@ -22,6 +22,7 @@ const ProfilePage = () => {
 
   const updateNickname = async () => {
     const URL = '/api/v1/member/nickname';
+    console.log(nickName);
     try {
       const result = await fetchData.patch(URL, { nickName: nickName });
       return console.log(result);
