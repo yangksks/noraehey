@@ -1,11 +1,12 @@
 import styled from 'styled-components';
 import BubbleUI from 'react-bubble-ui';
 import 'react-bubble-ui/dist/index.css';
+import image from '../../assets/images/singing.png';
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BsArrowRight } from 'react-icons/bs';
 import { fetchData } from '../../utils/api/api';
-
+import { IoClose } from 'react-icons/io5';
 interface tagType {
   tagId: number;
   tagName: string;
@@ -30,6 +31,7 @@ const TagPage = () => {
   const [datas, setDatas] = useState<tagType[]>([]);
   const [userTag, setUserTag] = useState<tagType[]>([]);
   const [temp, setTemp] = useState(0);
+  const tagRef = useRef<HTMLLIElement>(null);
   const scrollRef = useRef<HTMLUListElement>(null);
   const navigate = useNavigate();
   const scrollToBottom = () => {
@@ -37,22 +39,11 @@ const TagPage = () => {
   };
 
   useEffect(() => {
-    fetchData.get('/api/v1/song/tag').then((res1) => {
-      fetchData.get('/api/v1/member/info').then((res2) => {
-        if (res2.data.memberTagList.length === 0) {
-          setDatas(res1.data);
-        } else {
-          setDatas(
-            res1.data.filter(
-              (item: tagType) =>
-                !res2.data.memberTagList
-                  .map((r: tagType) => r.tagId)
-                  .includes(item.tagId),
-            ),
-          );
-        }
-        setUserTag(res2.data.memberTagList);
-      });
+    fetchData.get('/api/v1/song/tag').then((res) => {
+      setDatas(res.data);
+    });
+    fetchData.get('/api/v1/member/info').then((res) => {
+      setUserTag(res.data.memberTagList);
     });
   }, []);
 
@@ -61,7 +52,7 @@ const TagPage = () => {
   }, [temp]);
 
   return (
-    <TagContainer>
+    <TagContainer image={image}>
       <Title>
         <p>부르고 싶은</p>
         <p>음악의 분위기</p>
@@ -70,14 +61,21 @@ const TagPage = () => {
       <BubbleUI options={options} className="myBubbleUI">
         {datas.map((data, i) => (
           <div
-            className="child"
+            className={`child ${
+              userTag.map((r: tagType) => r.tagId).includes(data.tagId)
+                ? 'pick'
+                : ''
+            }`}
             key={i}
             onClick={() => {
-              setDatas(datas.filter((item) => item.tagId !== data.tagId));
-              setUserTag([...userTag, data]);
-              setTemp(temp + 1);
+              if (userTag.map((r: tagType) => r.tagId).includes(data.tagId)) {
+                setUserTag(userTag.filter((item) => item.tagId !== data.tagId));
+              } else {
+                setUserTag([...userTag, data]);
+                setTemp(temp + 1);
+              }
             }}>
-            #{data.tagName}
+            {data.tagName}
           </div>
         ))}
       </BubbleUI>
@@ -90,10 +88,9 @@ const TagPage = () => {
             <li
               key={data.tagId}
               onClick={() => {
-                setDatas([...datas, data]);
                 setUserTag(userTag.filter((item) => item.tagId !== data.tagId));
               }}>
-              #{data.tagName}
+              #{data.tagName} <IoClose size={15} />
             </li>
           ))}
         </ul>
@@ -120,7 +117,7 @@ const TagPage = () => {
   );
 };
 
-const TagContainer = styled.div`
+const TagContainer = styled.div<{ image: string }>`
   position: relative;
   width: 100%;
   height: calc(var(--vh, 1vh) * 100);
@@ -136,9 +133,10 @@ const TagContainer = styled.div`
     height: 50%;
     border-radius: 50px;
     padding: 10px 0;
-    background: url('src/assets/images/singing.png') no-repeat;
-    background-size: 100%;
+    background: url(${({ image }) => image}) no-repeat;
+    background-size: 400px;
     background-position: center center;
+
     .child {
       width: 100%;
       height: 100%;
@@ -153,6 +151,11 @@ const TagContainer = styled.div`
         linear-gradient(90deg, #c792ef 0%, #ef92c5 100%);
       background-origin: border-box;
       background-clip: padding-box, border-box;
+      opacity: 1;
+      transition: 0.5s;
+    }
+    .pick {
+      opacity: 0.5;
     }
   }
 `;
@@ -235,6 +238,13 @@ const MyTagList = styled.div`
       background-origin: border-box;
       background-clip: padding-box, border-box;
       flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+
+      transition: 0.5s;
+    }
+    .check {
     }
   }
 `;
