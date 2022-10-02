@@ -7,6 +7,8 @@ import { useNavigate } from 'react-router-dom';
 import { BsArrowRight } from 'react-icons/bs';
 import { fetchData } from '../../utils/api/api';
 import { IoClose } from 'react-icons/io5';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { tagListState, userInfoState, userTagListState } from '../../Atom';
 interface tagType {
   tagId: number;
   tagName: string;
@@ -28,8 +30,8 @@ const options = {
 };
 
 const TagPage = () => {
-  const [datas, setDatas] = useState<tagType[]>([]);
-  const [userTag, setUserTag] = useState<tagType[]>([]);
+  const [datas, setDatas] = useRecoilState(tagListState);
+  const [userTag, setUserTag] = useRecoilState(userTagListState);
   const [temp, setTemp] = useState(0);
   const tagRef = useRef<HTMLLIElement>(null);
   const scrollRef = useRef<HTMLUListElement>(null);
@@ -39,80 +41,85 @@ const TagPage = () => {
   };
 
   useEffect(() => {
-    fetchData.get('/api/v1/song/tag').then((res) => {
-      setDatas(res.data);
-    });
-    fetchData.get('/api/v1/member/info').then((res) => {
-      setUserTag(res.data.memberTagList);
-    });
-  }, []);
-
-  useEffect(() => {
     scrollToBottom();
   }, [temp]);
 
+  const updateTags = () => {
+    if (userTag.length >= 5 && userTag.length <= 10) {
+      let list: Array<number> = [];
+      userTag.forEach((data) => {
+        list.push(data.tagId);
+      });
+      fetchData.patch('/api/v1/recommend/tag', { tagIdList: list });
+      navigate('/voice');
+    } else {
+      alert('태그는 5개 이상 10개 이하로 선택해주세요.');
+    }
+  };
+
+  const getTagButtons = () => {
+    return datas.map((data, i) => (
+      <div
+        className={`child ${
+          userTag.map((r: tagType) => r.tagId).includes(data.tagId)
+            ? 'pick'
+            : ''
+        }`}
+        key={i}
+        onClick={() => {
+          if (userTag.map((r: tagType) => r.tagId).includes(data.tagId)) {
+            setUserTag(userTag.filter((item) => item.tagId !== data.tagId));
+          } else {
+            setUserTag([...userTag, data]);
+            setTemp(temp + 1);
+          }
+        }}>
+        {data.tagName}
+      </div>
+    ));
+  };
+
+  const getSelectedTags = () => {
+    return userTag.map((data, i) => (
+      <li
+        key={data.tagId}
+        onClick={() => {
+          setUserTag(userTag.filter((item) => item.tagId !== data.tagId));
+        }}>
+        #{data.tagName} <IoClose size={15} color={'#fff'} />
+      </li>
+    ));
+  };
+
   return (
     <TagContainer image={image}>
-      <BtnBox>
-        <button
-          disabled={userTag.length >= 5 && userTag.length <= 10 ? false : true}
-          onClick={() => {
-            if (userTag.length >= 5 && userTag.length <= 10) {
-              let list: Array<number> = [];
-              userTag.forEach((data) => {
-                list.push(data.tagId);
-              });
-              fetchData.patch('/api/v1/recommend/tag', { tagIdList: list });
-              navigate('/voice');
-            } else {
-              alert('태그는 5개 이상 10개 이하로 선택해주세요.');
+      <>
+        <BtnBox>
+          <button
+            disabled={
+              userTag.length >= 5 && userTag.length <= 10 ? false : true
             }
-          }}>
-          다음 <BsArrowRight size={20} />
-        </button>
-      </BtnBox>
-      <Title>
-        <p>부르고 싶은</p>
-        <p>음악의 분위기</p>
-        <p>를 골라주세요</p>
-      </Title>
-      <BubbleUI options={options} className="myBubbleUI">
-        {datas.map((data, i) => (
-          <div
-            className={`child ${
-              userTag.map((r: tagType) => r.tagId).includes(data.tagId)
-                ? 'pick'
-                : ''
-            }`}
-            key={i}
             onClick={() => {
-              if (userTag.map((r: tagType) => r.tagId).includes(data.tagId)) {
-                setUserTag(userTag.filter((item) => item.tagId !== data.tagId));
-              } else {
-                setUserTag([...userTag, data]);
-                setTemp(temp + 1);
-              }
+              updateTags();
             }}>
-            {data.tagName}
-          </div>
-        ))}
-      </BubbleUI>
-      <MyTagList>
-        <p>
-          내가 고른 태그<span>(5~10개)</span>
-        </p>
-        <ul ref={scrollRef}>
-          {userTag.map((data, i) => (
-            <li
-              key={data.tagId}
-              onClick={() => {
-                setUserTag(userTag.filter((item) => item.tagId !== data.tagId));
-              }}>
-              #{data.tagName} <IoClose size={15} color={'#fff'} />
-            </li>
-          ))}
-        </ul>
-      </MyTagList>
+            다음 <BsArrowRight size={20} />
+          </button>
+        </BtnBox>
+        <Title>
+          <p>부르고 싶은</p>
+          <p>음악의 분위기</p>
+          <p>를 골라주세요</p>
+        </Title>
+        <BubbleUI options={options} className="myBubbleUI">
+          {getTagButtons()}
+        </BubbleUI>
+        <MyTagList>
+          <p>
+            내가 고른 태그<span>(5~10개)</span>
+          </p>
+          <ul ref={scrollRef}>{getSelectedTags()}</ul>
+        </MyTagList>
+      </>
     </TagContainer>
   );
 };
@@ -135,7 +142,7 @@ const TagContainer = styled.div<{ image: string }>`
     /* height: 300px; */
     max-width: 1000px;
     /* flex-shrink: 1; */
-    border-radius: 50px;
+    border-radius: 100px;
     padding-top: 10px;
     background: url(${({ image }) => image}) no-repeat;
     background-size: 400px;
@@ -143,6 +150,7 @@ const TagContainer = styled.div<{ image: string }>`
     /* margin: 80px 0; */
     /* border: 10px solid black; */
     overflow: hidden;
+
     .child {
       width: 100%;
       height: 100%;
@@ -275,9 +283,10 @@ const MyTagList = styled.div`
 const BtnBox = styled.div`
   display: flex;
   width: 100%;
-  height: 5%;
+  height: 10%;
   padding: 5px;
   justify-content: flex-end;
+  align-items: end;
   button {
     border: none;
     width: 100px;
