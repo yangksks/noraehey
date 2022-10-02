@@ -29,10 +29,9 @@ public class S3Util {
         long size = multipartFile.getSize(); // 파일 크기
         String extension = originalName.substring(originalName.lastIndexOf("."));
 
-        // TODO: 주석 풀기
-//        if (!(extension.equals(".mp3") || extension.equals(".MP3") || extension.equals(".m4a") || extension.equals(".M4A"))) {
-//            throw new FileUploadExtensionException("not allowed file extension", ErrorCode.FILE_UPLOAD_EXTENSION);
-//        }
+        if (!(extension.equals(".mp3") || extension.equals(".MP3") || extension.equals(".m4a") || extension.equals(".M4A"))) {
+            throw new FileUploadExtensionException("not allowed file extension", ErrorCode.FILE_UPLOAD_EXTENSION);
+        }
 
         ObjectMetadata objectMetaData = new ObjectMetadata();
         objectMetaData.setContentType(multipartFile.getContentType());
