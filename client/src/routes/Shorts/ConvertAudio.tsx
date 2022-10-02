@@ -18,35 +18,40 @@ const ConvertAudio = (props: ConvertType) => {
 
   const doImport = async () => {
     setMessage('Loading ffmpeg-core.js');
-    await ffmpeg.load();
-    if (m4a) {
-      console.log(m4a);
-      ffmpeg.FS(
-        'writeFile',
-        'test.m4a',
-        new Uint8Array(await m4a.arrayBuffer()),
-      );
-      setMessage('Start Import');
-      const args = [
-        '-ss',
-        `${start}ms`,
-        '-i',
-        'test.m4a',
-        '-t',
-        `${end - start}ms`,
-        '-acodec',
-        'copy',
-        'output.m4a',
-      ];
-      await ffmpeg.run(...args);
-      setMessage('Complete Import');
-      const data = ffmpeg.FS('readFile', 'output.m4a');
-      const result = new File([data.buffer], 'output.m4a', {
-        type: 'audio/x-m4a',
-      });
-      props.getConvertAudio(result);
-    } else {
-      setMessage('Can not Import. need file check. 😪');
+    try {
+      await ffmpeg.load();
+      if (m4a) {
+        console.log(m4a);
+        ffmpeg.FS(
+          'writeFile',
+          'test.m4a',
+          new Uint8Array(await m4a.arrayBuffer()),
+        );
+        setMessage('Start Import');
+        const args = [
+          '-ss',
+          `${start}ms`,
+          '-i',
+          'test.m4a',
+          '-t',
+          `${end - start}ms`,
+          '-acodec',
+          'copy',
+          'output.m4a',
+        ];
+        await ffmpeg.run(...args);
+        setMessage('Complete Import');
+        const data = ffmpeg.FS('readFile', 'output.m4a');
+        const result = new File([data.buffer], 'output.m4a', {
+          type: 'audio/x-m4a',
+        });
+        props.getConvertAudio(result);
+      } else {
+        setMessage('Can not Import. need file check. 😪');
+      }
+    } catch {
+      alert('iOS 기기는 편집기능이 제공되지 않습니다. 원본이 업로드됩니다')
+      props.getConvertAudio(m4a);
     }
   };
   return (

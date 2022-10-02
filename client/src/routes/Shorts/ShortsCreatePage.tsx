@@ -66,6 +66,7 @@ const ShortsCreatePage = () => {
       const result = await fetchData.post(URL, formData, option);
       console.log(result);
       setConvertFile(null);
+      navigate('/');
     } catch (err: any) {
       console.log(err);
     }
