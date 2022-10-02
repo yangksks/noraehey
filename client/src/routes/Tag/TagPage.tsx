@@ -97,7 +97,7 @@ const TagPage = () => {
           </div>
         ))}
       </BubbleUI>
-      {/* <MyTagList>
+      <MyTagList>
         <p>
           내가 고른 태그<span>(5~10개)</span>
         </p>
@@ -112,7 +112,7 @@ const TagPage = () => {
             </li>
           ))}
         </ul>
-      </MyTagList> */}
+      </MyTagList>
     </TagContainer>
   );
 };
