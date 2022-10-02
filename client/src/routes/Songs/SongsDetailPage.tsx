@@ -11,38 +11,39 @@ import SongDetailShorts from './SongDetailShorts';
 import SongInfo from './SongInfo';
 import { useParams } from 'react-router-dom';
 import { useLocation } from 'react-router';
-export type SongType = {
+import { fetchData } from '../../utils/api/api';
+interface SongType {
   songId: number;
-  songName: string;
-};
+  songTitle: string;
+  songSinger: string;
+  songHighPitch: number;
+  songGenre: string;
+  songAlbum: string;
+  songImageUrl: string;
+  songTj: string;
+  songKy: string;
+  songLikeCount: number;
+  liked: boolean;
+  songLevel: number;
+  songEvalCount: number;
+  myEval: number;
+  songLyrics: string;
+}
 const SongsDetailPage = () => {
   const { songId } = useParams();
   const { pathname } = useLocation();
+  const [songData, setSongData] = useState({} as SongType);
+
+  useEffect(() => {
+    fetchData.get(`/api/v1/song/info/${songId}`).then((res) => {
+      setSongData(res.data);
+      console.log(res.data);
+    });
+  }, []);
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [pathname]);
-  const [songData, setSongData] = useState({
-    songTitle: '눈의 꽃',
-    songSinger: '박효신',
-    songAlbum: '미안하다 사랑한다 ost',
-    songHighPitch: '2옥 시',
-    songGenre: '국내드라마',
-    songImageUrl:
-      'https://cdnimg.melon.co.kr/cm/album/images/000/43/841/43841_500.jpg/melon/resize/282/quality/80/optimize',
-    songTj: 12345,
-    songKy: 67890,
-    isLiked: false,
-    songLevel: 2,
-    songLikeCount: 12311,
-    songEvalCount: 52,
-    songLyrics:
-      '어느새 길어진 그림자를 따라서\n땅거미진 어둠 속을\n그대와 걷고 있네요\n어느새 길어진 그림자를 따라서\n땅거미진 어둠 속을\n그대와 걷고 있네요\n어느새 길어진 그림자를 따라서\n땅거미진 어둠 속을\n그대와 걷고 있네요\n어느새 길어진 그림자를 따라서\n땅거미진 어둠 속을\n그대와 걷고 있네요\n어느새 길어진 그림자를 따라서\n땅거미진 어둠 속을\n그대와 걷고 있네요\n어느새 길어진 그림자를 따라서\n땅거미진 어둠 속을\n그대와 걷고 있네요\n어느새 길어진 그림자를 따라서\n땅거미진 어둠 속을\n그대와 걷고 있네요\n어느새 길어진 그림자를 따라서\n땅거미진 어둠 속을\n그대와 걷고 있네요\n어느새 길어진 그림자를 따라서\n땅거미진 어둠 속을\n그대와 걷고 있네요\n어느새 길어진 그림자를 따라서\n땅거미진 어둠 속을\n그대와 걷고 있네요\n',
-  });
-
-  // fetchData.get('api/').then((data:any)=>{
-  //   console.log(data)
-  // })
 
   return (
     <>
@@ -55,7 +56,8 @@ const SongsDetailPage = () => {
           url={songData.songImageUrl}
           songTj={songData.songTj}
           songKy={songData.songKy}
-          isLiked={songData.isLiked}></AlbumImage>
+          liked={songData.liked}
+          songLikeCount={songData.songLikeCount}></AlbumImage>
         <SongLyrics lyrics={songData.songLyrics}></SongLyrics>
         <SongInfo songData={songData}></SongInfo>
         <SongBtnList></SongBtnList>

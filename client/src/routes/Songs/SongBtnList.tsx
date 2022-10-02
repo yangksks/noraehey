@@ -1,9 +1,9 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 const SongBtnList = () => {
-  const navigate = useNavigate();
+  const { songId } = useParams();
   const [evalToggle, setEvalToggle] = useState(false);
   return (
     <>
@@ -15,7 +15,7 @@ const SongBtnList = () => {
           평가
         </button>
         <button>
-          <Link to="/create/shorts/:songsId">쇼츠 등록</Link>
+          <Link to={`/create/shorts/${songId}`}>쇼츠 등록</Link>
         </button>
       </BtnList>
       <Evaluation evalToggle={evalToggle}></Evaluation>

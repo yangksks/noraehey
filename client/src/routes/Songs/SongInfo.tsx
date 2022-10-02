@@ -1,8 +1,15 @@
 import styled from 'styled-components';
 import { IoMdArrowDropup, IoMdArrowDropdown } from 'react-icons/io';
 import { BiSmile } from 'react-icons/bi';
+import { keyList } from '../../utils/constants/constants';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { userInfoState } from '../../Atom';
+import { userType } from '../../Atom';
+
 const SongInfo = (props: any) => {
   const { songData } = props;
+  const userInfo: userType = useRecoilValue(userInfoState);
+
   return (
     <SongData>
       <Song>
@@ -11,17 +18,34 @@ const SongInfo = (props: any) => {
         <p className="album">{songData.songAlbum}</p>
       </Song>
       <Key>
-        <p className="highPitch">{songData.songHighPitch}</p>
+        <p className="highPitch">{keyList[songData.songHighPitch]}</p>
         <p className="keyUpDown">
-          <span>1key</span>
-          <IoMdArrowDropup size={20} />
+          {songData.songHighPitch - userInfo.songHighPitch > 0 ? (
+            <>
+              <span style={{ color: 'red' }}>
+                {songData.songHighPitch - userInfo.songHighPitch} Key
+              </span>
+              <IoMdArrowDropup size={20} color={'red'} />
+            </>
+          ) : songData.songHighPitch - userInfo.songHighPitch < 0 ? (
+            <>
+              <span style={{ color: 'blue' }}>
+                {Math.abs(songData.songHighPitch - userInfo.songHighPitch)} Key
+              </span>
+              <IoMdArrowDropdown size={20} color={'blue'} />
+            </>
+          ) : (
+            <>
+              <span style={{ color: 'green' }}>-</span>
+            </>
+          )}
         </p>
       </Key>
       <Level>
         <BiSmile size={40} />
         {/* <p className="songLevel">{songData.songLevel}</p> */}
         <p className="songLevel">SoSo</p>
-        <p className="songLevelCount">52명의 평가</p>
+        <p className="songLevelCount">{songData.songEvalCount}명의 평가</p>
       </Level>
     </SongData>
   );
@@ -63,6 +87,7 @@ const Key = styled.div`
   .keyUpDown {
     display: flex;
     align-items: center;
+    font-size: 12px;
   }
 `;
 const Level = styled.div`
