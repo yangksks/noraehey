@@ -11,7 +11,7 @@ import java.util.List;
 public class MyInfoRes {
     private Long memberId;
     private String memberEmail;
-    private String memberNickName;
+    private String memberNickname;
     private String memberProfileUrl;
     private int memberHighPitch;
     private List<Tag> memberTagList;
