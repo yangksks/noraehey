@@ -70,8 +70,8 @@ public class ShortsServiceImpl implements ShortsService {
 
     @Override
     public List<Shorts> getShortsListBySongId(Long songId, int page) {
-        Pageable pageable = PageRequest.of(page, SIZE, Sort.by("shortsCreateTime").descending());
-        List<Shorts> shortsList = shortsRepository.findAllBySongSongId(songId, pageable);
+        Pageable pageable = PageRequest.of(page, 10);
+        List<Shorts> shortsList = shortsRepository.findBySongIdOrderByLike(songId, pageable);
         return shortsList;
     }
 
