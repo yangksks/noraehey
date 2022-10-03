@@ -7,7 +7,7 @@ import { userInfoState } from '../../Atom';
 import {
   MdOutlineSentimentVerySatisfied,
   MdOutlineSentimentSatisfied,
-  MdOutlineSentimentNeutral,
+  MdOutlineSentimentDissatisfied,
   MdOutlineSentimentVeryDissatisfied,
 } from 'react-icons/md';
 const SongInfo = (props: any) => {
@@ -26,13 +26,13 @@ const SongInfo = (props: any) => {
       return (
         <>
           <MdOutlineSentimentSatisfied size={40} color={'yellowgreen'} />
-          <p className="songLevel">SoSo</p>
+          <p className="songLevel">Good</p>
         </>
       );
     } else if (songData.songLevel == 3) {
       return (
         <>
-          <MdOutlineSentimentNeutral size={40} color={'orange'} />
+          <MdOutlineSentimentDissatisfied size={40} color={'orange'} />
           <p className="songLevel">Hard</p>
         </>
       );
@@ -63,14 +63,16 @@ const SongInfo = (props: any) => {
       <Key>
         <p className="highPitch">{keyList[songData.songHighPitch]}</p>
         <p className="keyUpDown">
-          {songData.songHighPitch - userInfo.memberHighPitch > 0 ? (
+          {songData.songHighPitch != 0 &&
+          songData.songHighPitch - userInfo.memberHighPitch > 0 ? (
             <>
               <span style={{ color: 'red' }}>
                 {songData.songHighPitch - userInfo.memberHighPitch} Key
               </span>
               <IoMdArrowDropup size={20} color={'red'} />
             </>
-          ) : songData.songHighPitch - userInfo.memberHighPitch < 0 ? (
+          ) : songData.songHighPitch != 0 &&
+            songData.songHighPitch - userInfo.memberHighPitch < 0 ? (
             <>
               <span style={{ color: 'blue' }}>
                 {Math.abs(songData.songHighPitch - userInfo.memberHighPitch)}{' '}
@@ -124,6 +126,7 @@ const Key = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  flex-shrink: 0;
   .highPitch {
   }
   .keyUpDown {
@@ -137,6 +140,7 @@ const Level = styled.div<{ level: number }>`
   display: flex;
   flex-direction: column;
   align-items: center;
+  flex-shrink: 0;
   gap: 2px;
   .songLevel {
     font-size: 12px;
