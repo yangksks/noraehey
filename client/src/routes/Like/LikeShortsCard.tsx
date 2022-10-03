@@ -1,25 +1,19 @@
 import { useNavigate } from 'react-router';
 import styled from 'styled-components';
 
-// interface ShortsCardType {
-//   albumUrl: string;
-// }
-
 const ShortsCard = (props: any) => {
-  const { shorts } = props;
+  const { shortsData } = props;
   const navigate = useNavigate();
-  // return <ShortsBox albumUrl={albumUrl}></ShortsBox>;
   return (
     <ShortsBox
-      albumUrl={shorts.songImageUrl}
+      albumUrl={shortsData.songImageUrl}
       onClick={() => {
-        navigate(`/shorts/${shorts.shortsId}`);
+        navigate(`/shorts/${shortsData.shortsId}`);
       }}
     />
   );
 };
 
-// const ShortsBox = styled.div<{ albumUrl: string }>`
 const ShortsBox = styled.div<{ albumUrl: string }>`
   height: 100%;
   border: lightgrey 1px solid;
