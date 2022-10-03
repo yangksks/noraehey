@@ -29,7 +29,7 @@ const Protection = () => {
 
   if (user.memberTagList.length === -1) {
     return <Navigate to="/tag" replace />;
-  } else if (user.songHighPitch === -1) {
+  } else if (user.memberHighPitch === -1) {
     return <Navigate to="/voice" replace />;
   } else if (!loggedData) {
     return <Navigate to="/login" replace />;

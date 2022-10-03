@@ -63,17 +63,18 @@ const SongInfo = (props: any) => {
       <Key>
         <p className="highPitch">{keyList[songData.songHighPitch]}</p>
         <p className="keyUpDown">
-          {songData.songHighPitch - userInfo.songHighPitch > 0 ? (
+          {songData.songHighPitch - userInfo.memberHighPitch > 0 ? (
             <>
               <span style={{ color: 'red' }}>
-                {songData.songHighPitch - userInfo.songHighPitch} Key
+                {songData.songHighPitch - userInfo.memberHighPitch} Key
               </span>
               <IoMdArrowDropup size={20} color={'red'} />
             </>
-          ) : songData.songHighPitch - userInfo.songHighPitch < 0 ? (
+          ) : songData.songHighPitch - userInfo.memberHighPitch < 0 ? (
             <>
               <span style={{ color: 'blue' }}>
-                {Math.abs(songData.songHighPitch - userInfo.songHighPitch)} Key
+                {Math.abs(songData.songHighPitch - userInfo.memberHighPitch)}{' '}
+                Key
               </span>
               <IoMdArrowDropdown size={20} color={'blue'} />
             </>

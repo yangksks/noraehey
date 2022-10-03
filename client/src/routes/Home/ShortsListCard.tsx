@@ -10,7 +10,7 @@ interface shortsType {
 const ShortsListCard = (props: shortsType) => {
   const user = useRecoilValue(userInfoState);
   const shorts = useRecoilValue(shortsListState)[props.idx];
-  const userName = user.nickName;
+  const userName = user.memberNickname;
   const songData = {
     URL: shorts.songImageUrl,
     title: shorts.songTitle,
