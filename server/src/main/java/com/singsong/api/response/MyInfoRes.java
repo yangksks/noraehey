@@ -10,9 +10,9 @@ import java.util.List;
 @Builder
 public class MyInfoRes {
     private Long memberId;
-    private String email;
-    private String nickName;
-    private String profileUrl;
-    private int songHighPitch;
+    private String memberEmail;
+    private String memberNickname;
+    private String memberProfileUrl;
+    private int memberHighPitch;
     private List<Tag> memberTagList;
 }

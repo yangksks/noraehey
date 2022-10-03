@@ -98,18 +98,17 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public void modifyNickName(Member member, String nickname) {
         member.setMemberNickname(nickname);
-        System.out.println(member);
         memberRepository.save(member);
     }
 
     @Override
     public void getMemberByNickname(String nickname) {
 
-        if (nickname.length() > 20)
+        if (nickname.length() > 6)
             throw new MemberNicknameValidateException("닉네임 길이가 너무 깁니다.",ErrorCode.NICKNAME_LENGTH_ERROR);
 
         if (memberRepository.findByMemberNickname(nickname).isPresent())
-            throw new MemberNicknameValidateException("닉네임 길이가 너무 깁니다.",ErrorCode.NICKNAME_DUPLICATION);
+            throw new MemberNicknameValidateException("닉네임이 중복됩니다.",ErrorCode.NICKNAME_DUPLICATION);
 
     }
 
