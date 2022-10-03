@@ -61,7 +61,7 @@ public class MemberController {
         MyInfoRes myInfoRes = MyInfoRes.builder()
                 .memberId(member.getMemberId())
                 .memberEmail(member.getMemberEmail())
-                .memberNickName(member.getMemberNickname())
+                .memberNickname(member.getMemberNickname())
                 .memberHighPitch(member.getMemberHighPitch())
                 .memberProfileUrl(member.getMemberProfileUrl())
                 .memberTagList(tags)
