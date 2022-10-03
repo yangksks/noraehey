@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 import MusicListCard from './MusicListCard';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import 'swiper/css';
 import { useEffect, useState } from 'react';
+import 'swiper/css';
 
 const MusicCardSwiper = () => {
   const [loading, setLoading] = useState(true);
@@ -11,7 +11,7 @@ const MusicCardSwiper = () => {
     setTimeout(() => {
       setLoading(false);
     }, 300);
-  });
+  }, []);
 
   return (
     <CardContainer status={loading}>
@@ -21,16 +21,13 @@ const MusicCardSwiper = () => {
         spaceBetween={30}
         className="mySwiper">
         <SwiperSlide>
-          <MusicListCard />
+          <MusicListCard type={'fitList'}/>
         </SwiperSlide>
         <SwiperSlide>
-          <MusicListCard />
+          <MusicListCard type={'lowList'}/>
         </SwiperSlide>
         <SwiperSlide>
-          <MusicListCard />
-        </SwiperSlide>
-        <SwiperSlide>
-          <MusicListCard />
+          <MusicListCard type={'highList'}/>
         </SwiperSlide>
       </Swiper>
     </CardContainer>

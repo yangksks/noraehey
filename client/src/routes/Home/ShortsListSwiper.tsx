@@ -2,10 +2,13 @@ import styled from 'styled-components';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import ShortsListCard from './ShortsListCard';
-
-const shorts = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+import { useRecoilValue } from 'recoil';
+import { shortsListLengthState, shortsListState } from '../../Atom';
 
 const ShortsCardSwiper = () => {
+  const shortsLength = useRecoilValue(shortsListLengthState);
+  const arr = Array.from({ length: shortsLength }, () => 0);
+
   return (
     <CardContainer>
       <Swiper
@@ -14,9 +17,9 @@ const ShortsCardSwiper = () => {
         slidesPerView={2.3}
         spaceBetween={10}
         className="mySwiper">
-        {shorts.map((short, idx) => (
+        {arr.map((a, idx) => (
           <SwiperSlide key={idx}>
-            <ShortsListCard />
+            <ShortsListCard idx={idx} />
           </SwiperSlide>
         ))}
       </Swiper>

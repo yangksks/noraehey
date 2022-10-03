@@ -22,11 +22,9 @@ export const removeAccessToken = () => {
 };
 
 const getNewAccessToken = () => {
-  return instance.get('/api/member/refresh', {
+  return instance.get('/api/v1/member/refresh', {
     headers: {
-      Authorization: '',
-      'ACCESS-TOKEN': `Bearer ${getAccessToken()}`,
-      'REFRESH-TOKEN': `Bearer ${getLocalRefreshToken()}`,
+      'REFRESH-TOKEN': `${getLocalRefreshToken()}`,
     },
   });
 };

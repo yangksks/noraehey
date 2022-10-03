@@ -1,10 +1,36 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-const SongBtnList = () => {
-  const navigate = useNavigate();
+import {
+  MdOutlineSentimentVerySatisfied,
+  MdOutlineSentimentSatisfied,
+  MdOutlineSentimentDissatisfied,
+  MdOutlineSentimentVeryDissatisfied,
+} from 'react-icons/md';
+import { fetchData } from '../../utils/api/api';
+
+const SongBtnList = (props: any) => {
+  const { myEval, refetchFunc } = props;
+  const { songId } = useParams();
   const [evalToggle, setEvalToggle] = useState(false);
+  const [nowEval, setNowEval] = useState(0);
+  useEffect(() => {
+    setNowEval(myEval);
+  }, [props]);
+  const evalFnc = (num: number) => {
+    fetchData
+      .post('/api/v1/song/level', {
+        songId: songId,
+        songLevel: num,
+      })
+      .then(() => {
+        fetchData.get(`/api/v1/song/info/${songId}`).then((res) => {
+          setNowEval(res.data.myEval);
+          refetchFunc();
+        });
+      });
+  };
   return (
     <>
       <BtnList>
@@ -15,10 +41,53 @@ const SongBtnList = () => {
           평가
         </button>
         <button>
-          <Link to="/create/shorts/:songsId">쇼츠 등록</Link>
+          <Link to={`/create/shorts/${songId}`}>쇼츠 등록</Link>
         </button>
       </BtnList>
-      <Evaluation evalToggle={evalToggle}></Evaluation>
+      <Evaluation evalToggle={evalToggle} eval={nowEval}>
+        <ul>
+          <li
+            onClick={() => {
+              evalFnc(1);
+            }}>
+            <MdOutlineSentimentVerySatisfied
+              size={40}
+              color={nowEval == 1 ? 'green' : 'gray'}
+            />
+            <p style={{ color: nowEval == 1 ? 'green' : 'gray' }}>Easy</p>
+          </li>
+          <li
+            onClick={() => {
+              evalFnc(2);
+            }}>
+            <MdOutlineSentimentSatisfied
+              size={40}
+              color={nowEval == 2 ? 'yellowgreen' : 'gray'}
+            />
+            <p style={{ color: nowEval == 2 ? 'yellowgreen' : 'gray' }}>Good</p>
+          </li>
+          <li
+            onClick={() => {
+              evalFnc(3);
+            }}>
+            <MdOutlineSentimentDissatisfied
+              size={40}
+              color={nowEval == 3 ? 'orange' : 'gray'}
+            />
+            <p style={{ color: nowEval == 3 ? 'orange' : 'gray' }}>Hard</p>
+          </li>
+          <li
+            onClick={() => {
+              evalFnc(4);
+            }}>
+            <MdOutlineSentimentVeryDissatisfied
+              size={40}
+              color={nowEval == 4 ? 'red' : 'gray'}
+            />
+            <p style={{ color: nowEval == 4 ? 'red' : 'gray' }}>Hell</p>
+          </li>
+        </ul>
+      </Evaluation>
     </>
   );
 };
@@ -46,9 +115,25 @@ const BtnList = styled.div`
   }
 `;
 
-const Evaluation = styled.div<{ evalToggle: boolean }>`
+const Evaluation = styled.div<{ evalToggle: boolean; eval: number }>`
   height: ${(props) => (props.evalToggle ? '100px' : '0px')};
   overflow: hidden;
   transition: 0.5s;
+  width: 100%;
+  padding: 0 20px;
+  ul {
+    display: flex;
+    justify-content: space-around;
+    li {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      cursor: pointer;
+      gap: 2px;
+      p {
+        font-size: 14px;
+      }
+    }
+  }
 `;
 export default SongBtnList;

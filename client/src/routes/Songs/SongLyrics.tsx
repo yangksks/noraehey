@@ -7,7 +7,7 @@ interface songLyricsType {
 
 const SongLyrics = (props: songLyricsType) => {
   const { lyrics } = props;
-  const printLyrics = lyrics.replace(/\n/gi, '<br />');
+  const printLyrics = lyrics;
   const [lyricsToggle, setLyricsToggle] = useState(false);
   return (
     <>
@@ -17,9 +17,13 @@ const SongLyrics = (props: songLyricsType) => {
         }}>
         {lyricsToggle ? '가사접기' : '가사보기'}
       </LyricsBtn>
-      <LyricsText
-        dangerouslySetInnerHTML={{ __html: printLyrics }}
-        lyricsToggle={lyricsToggle}></LyricsText>
+      {lyrics && (
+        <LyricsText
+          dangerouslySetInnerHTML={{
+            __html: printLyrics.replace(/\n/gi, '<br />'),
+          }}
+          lyricsToggle={lyricsToggle}></LyricsText>
+      )}
     </>
   );
 };

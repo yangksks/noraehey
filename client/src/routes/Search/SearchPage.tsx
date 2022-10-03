@@ -5,8 +5,7 @@ import styled, { css } from 'styled-components';
 import Container from '../../style/style';
 import { fetchData } from '../../utils/api/api';
 import LikeSongCard from '../Like/LikeSongCard';
-import SearchSingerPage from './SearchSingerPage';
-import SearchSongPage from './SearchSongPage';
+
 const SearchPage = () => {
   const [searchText, setSearchText] = useState('');
   const [searchList, setSearchList] = useState([]);
@@ -14,19 +13,16 @@ const SearchPage = () => {
   const [prevText, setPrevText] = useState('');
   const navigate = useNavigate();
   useEffect(() => {
-    if (prevText !== searchText) {
-      fetchData
-        .get(`/api/v1/song/search?key=${nowTab}&word=${searchText}&page=0`)
-        .then((res) => {
-          setSearchList(res.data.songEntityResList);
-          setPrevText(searchText);
-        });
-      navigate({
-        pathname: '/search',
-        search: `?key=${nowTab}&word=${searchText}`,
+    fetchData
+      .get(`/api/v1/song/search?key=${nowTab}&word=${searchText}&page=0`)
+      .then((res) => {
+        setSearchList(res.data.songEntityResList);
+        // console.log('검색함');
       });
-      console.log('검색함');
-    }
+    navigate({
+      pathname: '/search',
+      search: `?key=${nowTab}&word=${searchText}`,
+    });
   }, [nowTab]);
 
   return (
@@ -74,12 +70,6 @@ const SearchPage = () => {
           </NavStyle>
         </ul>
       </TabSection>
-      <ListArticle>
-        <Routes>
-          <Route path="songlist" element={<SearchSongPage />} />
-          <Route path="singerlist" element={<SearchSingerPage />} />
-        </Routes>
-      </ListArticle>
       <SearchResult>
         {searchList.length !== 0 ? (
           searchList.map((item, i) => (
@@ -109,7 +99,7 @@ const TabSection = styled.section`
 const NavStyle = styled.li<{ active: boolean }>`
   display: block;
   padding: 10px 0;
-
+  cursor: pointer;
   ${(props) =>
     props.active &&
     css`
@@ -117,10 +107,6 @@ const NavStyle = styled.li<{ active: boolean }>`
     `}
 `;
 
-const ListArticle = styled.article`
-  width: 100%;
-  padding: 0 20px;
-`;
 const SearchForm = styled.div`
   width: 100%;
   padding: 10px 0;

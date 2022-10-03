@@ -15,59 +15,73 @@ import SettingPage from './routes/Profile/SettingPage';
 import LikePage from './routes/Like/LikePage';
 import LikeShortsPage from './routes/Like/LikeShortsPage';
 import LikeSongPage from './routes/Like/LikeSongPage';
-import NavBar from './routes/Common/NavBar';
-import Header from './routes/Common/Header';
 import KakaoRedirectHandler from './routes/Login/KakaoRedirectHandler';
 import Protection from './routes/Common/Protection';
 import LoggedInProtection from './routes/Common/LoggedInProtection';
 import ShortsCreatePage from './routes/Shorts/ShortsCreatePage';
-
+import LoadingSpinner from './routes/Common/LoadingSpinner';
+import TagVoiceProtection from './routes/Common/TagVoiceProtection';
+import UserShorts from './routes/Profile/UserShorts';
+import RecommendSongsPage from './routes/Home/RecommendSongsPage';
+import VoiceResultPage from './routes/HighNote/VoiceResultPage';
+import RandomShorts from './routes/Shorts/RandomShorts';
 const Router = () => {
   return (
     <BrowserRouter>
-      <Header />
       <Routes>
         <Route element={<LoggedInProtection />}>
           <Route path="/login" element={<LoginPage />} />
           <Route path="/kakao/callback" element={<KakaoRedirectHandler />} />
         </Route>
-        <Route element={<Protection />}>
-          <Route path="/" element={<HomePage />} />
+        <Route element={<TagVoiceProtection />}>
           <Route path="/tag" element={<TagPage />} />
           <Route path="/voice" element={<HighNotePage />} />
-          <Route path="/shorts/:shortsId" element={<ShortsDetailPage />} />
-          <Route
-            path="/create/shorts/:songsId"
-            element={<ShortsCreatePage />}
-          />
-          <Route path="/search" element={<SearchPage />} />
-          <Route path="/profile/:userId" element={<ProfilePage />}>
-            <Route path="setting" element={<SettingPage />} />
-          </Route>
-          <Route path="/songs/:songId" element={<SongsDetailPage />} />
-          <Route path="/like/*" element={<LikePage />}>
-            <Route path="songlist" element={<LikeSongPage />} />
-            <Route path="shortslist" element={<LikeShortsPage />} />
-          </Route>
-          <Route
-            path="/magazine/:magazineId"
-            element={<MagazineDetailPage />}
-          />
-          <Route path="/admin" element={<AdminPage />}>
-            <Route path="magazine/create" element={<MagazineCreatePage />} />
+          <Route path="/voice/result" element={<VoiceResultPage />} />
+        </Route>
+        <Route element={<LoadingSpinner />}>
+          <Route element={<Protection />}>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/shorts/random" element={<RandomShorts />} />
             <Route
-              path="magazine/:magazineId"
+              path="/recommend/:listName"
+              element={<RecommendSongsPage />}
+            />
+            <Route path="/shorts/:shortsId" element={<ShortsDetailPage />} />
+            <Route
+              path="/create/shorts/:songsId"
+              element={<ShortsCreatePage />}
+            />
+
+            <Route path="/search/*" element={<SearchPage />} />
+            <Route path="/profile/:userId" element={<ProfilePage />}>
+              <Route path="" element={<UserShorts />} />
+              <Route path="setting" element={<SettingPage />} />
+            </Route>
+            <Route path="/songs/:songId" element={<SongsDetailPage />} />
+            <Route path="/like/*" element={<LikePage />}>
+              <Route path="songlist" element={<LikeSongPage />} />
+              <Route path="shortslist" element={<LikeShortsPage />} />
+            </Route>
+            <Route
+              path="/magazine/:magazineId"
               element={<MagazineDetailPage />}
             />
-            <Route
-              path="magazine/:magazineId/update"
-              element={<MagazineUpdatePage />}
-            />
+            <Route path="/admin" element={<AdminPage />}>
+              <Route path="magazine/create" element={<MagazineCreatePage />} />
+              <Route
+                path="magazine/:magazineId"
+                element={<MagazineDetailPage />}
+              />
+              <Route
+                path="magazine/:magazineId/update"
+                element={<MagazineUpdatePage />}
+              />
+            </Route>
           </Route>
         </Route>
       </Routes>
-      <NavBar />
     </BrowserRouter>
   );
 };
+
 export default Router;
