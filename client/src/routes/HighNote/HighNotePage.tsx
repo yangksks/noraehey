@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { fetchData } from '../../utils/api/api';
 import VoiceButton from './VoiceButton';
 
 const setScreenSize = () => {
@@ -11,13 +13,13 @@ window.addEventListener('resize', () => setScreenSize());
 
 const HighNotePage = () => {
   const reset = Array.from({ length: 100 }, () => 0);
-  const [pitchNum, setPitchNum] = useState(0);
+  const [pitchNum, setPitchNum] = useState(1);
   const [started, setGetStarted] = useState(false);
   const [maxNote, setMaxNote] = useState('');
   const [pitchList, setPitchList] = useState(reset);
+  const navigate = useNavigate();
 
   const getPitch = (note: number) => {
-    setPitchNum(note);
     const newList = pitchList;
     newList[note] += 1;
     setPitchList(newList);
@@ -37,6 +39,23 @@ const HighNotePage = () => {
     );
   };
 
+  const updateUserPitch = async (pitch: number) => {
+    const URL = `/api/v1/member/highpitch?highpitch=${pitch}`;
+    try {
+      const result = await fetchData.patch(URL);
+      return () => {
+        console.log(result.data);
+      };
+    } catch (err: any) {
+      console.log(err);
+    }
+  };
+
+  const finish = async () => {
+    await updateUserPitch(pitchNum);
+    navigate('/voice/result');
+  };
+
   const getHighestNote = () => {
     const noteStrings = [
       '도',
@@ -52,11 +71,12 @@ const HighNotePage = () => {
       '라#',
       '시',
     ];
-    for (let i = 99; i >= 0; i--) {
+    for (let i = 99; i >= 48; i--) {
       if (pitchList[i] > 100) {
         let sym = noteStrings[i % 12];
         let scl = Math.floor(i / 12) - 3;
         setMaxNote(`${sym} ${scl} 옥타브`);
+        setPitchNum(i - 47);
         break;
       }
     }
@@ -79,7 +99,11 @@ const HighNotePage = () => {
       )}
 
       <ButtonContainer>
-        <VoiceButton getStarted={getStarted} getPitch={getPitch} />
+        <VoiceButton
+          getStarted={getStarted}
+          getPitch={getPitch}
+          finish={finish}
+        />
       </ButtonContainer>
       {started ? (
         getResult()

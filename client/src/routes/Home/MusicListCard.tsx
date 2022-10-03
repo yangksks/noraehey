@@ -1,29 +1,37 @@
+import { Navigate, useNavigate } from 'react-router-dom';
+import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
+import { reccommendSongsState, userInfoState } from '../../Atom';
 import SongCard from './SongCard';
 
-const songData = {
-  URL: 'http://image.genie.co.kr/Y/IMAGE/IMG_ALBUM/080/414/439/80414439_1395973335427_1_600x600.JPG',
-  title: '야생화',
-  artist: '박효신',
-  tj: 23467,
-  ky: 65413,
-  key: 20,
-};
+interface recommendType {
+  type: any;
+}
 
-const userInfo = {
-  key: 19,
-};
-
-const MusicListCard = () => {
+const MusicListCard = (props: recommendType) => {
+  const user = useRecoilValue(userInfoState);
+  const type = props.type;
+  const reccomendSongs = useRecoilValue(reccommendSongsState);
+  const songList = reccomendSongs[type].slice(0, 5);
+  const userKey = user.memberHighPitch;
+  const BoxTitle =
+    (type === 'fitList' && '내 고음에 맞는 추천곡') ||
+    (type === 'highList' && '도전해 볼만한 추천곡') ||
+    (type === 'lowList' && '편하게 부를수 있는 추천곡');
+  const navigate = useNavigate();
   return (
     <MusicBox>
-      <BoxHeader>음악 추천 리스트</BoxHeader>
+      <BoxHeader
+        onClick={() => {
+          navigate(`/recommend/${type}`);
+        }}>
+        {BoxTitle}
+        <p>+ 더보기</p>
+      </BoxHeader>
       <BoxSongs>
-        <SongCard songData={songData} userInfo={userInfo} />
-        <SongCard songData={songData} userInfo={userInfo} />
-        <SongCard songData={songData} userInfo={userInfo} />
-        <SongCard songData={songData} userInfo={userInfo} />
-        <SongCard songData={songData} userInfo={userInfo} />
+        {songList.map((song: any, idx: number) => {
+          return <SongCard key={idx} songData={song} userInfo={userKey} />;
+        })}
       </BoxSongs>
     </MusicBox>
   );
@@ -35,12 +43,17 @@ const BoxHeader = styled.div`
   height: 10%;
   padding: 10px;
   display: flex;
-  flex-direction: column;
-  justify-content: start;
-  align-items: start;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
   font-size: 18px;
   font-family: 'omni035';
   box-sizing: border-box;
+
+  p {
+    font-size: 10px;
+    color: #929292
+  }
 `;
 
 const BoxSongs = styled.div`
@@ -49,7 +62,7 @@ const BoxSongs = styled.div`
   height: 90%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: start;
   align-items: start;
   border-radius: 20px;
   font-family: 'omni025';
