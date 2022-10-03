@@ -17,6 +17,7 @@ import springfox.documentation.annotations.ApiIgnore;
 import javax.transaction.Transactional;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/magazine")
@@ -42,16 +43,17 @@ public class MagazineController {
     }
 
     // 매거진 조회
-    @GetMapping
-    public ResponseEntity<?> getMagazine(@RequestParam("magazineId") Long magazineId) {
+    @GetMapping("/{magazineId}")
+    public ResponseEntity<?> getMagazine(@PathVariable("magazineId") Long magazineId) {
         return ResponseEntity.status(200).body(magazineService.getMagazine(magazineId));
     }
 
     // 매거진 삭제
     @DeleteMapping
     @Transactional
-    public ResponseEntity<?> deleteMagazine(@RequestParam("magazineId") Long magazineId, @ApiIgnore Authentication authentication) {
+    public ResponseEntity<?> deleteMagazine(@RequestBody Map<String, Long> req, @ApiIgnore Authentication authentication) {
         Member member = jwtAuthenticationUtil.jwtTokenAuth(authentication);
+        Long magazineId = req.get("magazineId");
         if (member.getMemberRole() != 2) throw new MemberUnauthorizedException("member unauthorized", ErrorCode.Member_Unauthorized);
         magazineService.deleteMagazine(magazineId);
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "success"));
