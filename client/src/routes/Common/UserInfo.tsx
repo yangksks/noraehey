@@ -10,7 +10,6 @@ const UserInfo = () => {
   const userName = user.memberNickname;
   const levelFnc = () => {
     const n = user.memberHighPitch % 12;
-    console.log(n);
 
     if (n == 1 || n == 2) return 'red';
     else if (n == 3 || n == 4) return 'orange';

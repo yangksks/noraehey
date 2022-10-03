@@ -1,25 +1,57 @@
 import styled from 'styled-components';
+import {
+  MdOutlineKeyboardArrowDown,
+  MdOutlineKeyboardArrowUp,
+} from 'react-icons/md';
+import { BsDash } from 'react-icons/bs';
+import { useNavigate } from 'react-router-dom';
+
+interface songsType {
+  songHighPitch: 0;
+  songId: -1;
+  songImageUrl: '';
+  songKy: '';
+  songSinger: '';
+  songTitle: '';
+  songTj: '';
+}
 
 interface songProps {
-  songData: any;
-  userInfo: any;
+  songData: songsType;
+  userInfo: number;
 }
 
 const SongCard = (props: songProps) => {
+  const diff = props.songData.songHighPitch - props.userInfo;
+  const navigate = useNavigate();
+  const myKey =
+    (diff < 0 && `${-diff} Key`) ||
+    (diff === 0 && `Perfect Key`) ||
+    (diff > 0 && `${diff} Key`);
+
+  const keyColor =
+    (diff < 0 && '#5ca535') ||
+    (diff === 0 && '#5574c4') ||
+    (diff > 0 && '#d53958');
   return (
     <SongBox
       onClick={() => {
-        alert('곡정보 상세보기');
+        navigate(`/songs/${props.songData.songId}`);
       }}>
-      <AlbumArt url={props.songData.URL}></AlbumArt>
+      <AlbumArt url={props.songData.songImageUrl}></AlbumArt>
       <SongInfo>
-        <p className="title">{props.songData.title}</p>
-        <p className="artist">{props.songData.artist}</p>
-        <p className="key">{'1key UP'}</p>
+        <p className="title">{props.songData.songTitle}</p>
+        <p className="artist">{props.songData.songSinger}</p>
+        <p className="key" style={{ color: `${keyColor}` }}>
+          {myKey}
+          {(diff < 0 && <MdOutlineKeyboardArrowDown />) ||
+            (diff === 0 && <BsDash />) ||
+            (diff > 0 && <MdOutlineKeyboardArrowUp />)}
+        </p>
       </SongInfo>
       <KaraokeInfo>
-        <p className="tj">TJ {props.songData.tj}</p>
-        <p className="ky">KY {props.songData.ky}</p>
+        <p className="tj">TJ {props.songData.songTj}</p>
+        <p className="ky">KY {props.songData.songKy}</p>
       </KaraokeInfo>
     </SongBox>
   );
@@ -30,8 +62,8 @@ const SongBox = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: start;
-  align-items: start;
-  padding: 5px 0;
+  align-items: center;
+  padding: 8px 1px;
   border-top: solid 1px #a0a0a0;
 `;
 
@@ -45,7 +77,7 @@ const AlbumArt = styled.div<{ url: string }>`
 `;
 
 const SongInfo = styled.div`
-  width: 45%;
+  width: 50%;
   height: 100%;
   display: flex;
   margin-left: 10px;
@@ -55,20 +87,46 @@ const SongInfo = styled.div`
   gap: 5px;
 
   .title {
-    font-size: 14px;
+    width: 100%;
+    font-size: 12px;
     font-family: 'omni035';
+    text-align: start;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-wrap: break-word;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
   }
 
   .artist {
     font-size: 10px;
     font-family: 'omni035';
     color: #9278ff;
+    text-align: start;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-wrap: break-word;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
   }
 
   .key {
+    height: 14px;
+    padding: 0;
+    margin: 0;
     font-size: 10px;
     font-family: 'omni045';
-    color: #c40f0f;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    svg {
+      position: relative;
+      font-size: 22px;
+      margin-bottom: 1px;
+    }
   }
 `;
 
@@ -76,30 +134,33 @@ const KaraokeInfo = styled.div`
   width: 25%;
   height: 100%;
   display: flex;
+  margin-left: 10px;
   flex-direction: column;
   justify-content: center;
   align-items: end;
   gap: 10px;
 
   .tj {
-    width: 100%;
+    width: 70px;
     display: inline;
-    font-size: 9px;
+    font-size: 10px;
     font-family: 'omni035';
     color: white;
     background-color: #9278ff;
     padding: 4px;
     border-radius: 10px;
+    text-align: center;
   }
 
   .ky {
-    width: 100%;
-    font-size: 9px;
+    width: 70px;
+    font-size: 10px;
     font-family: 'omni035';
     color: white;
     background-color: #c792ef;
     padding: 4px;
     border-radius: 10px;
+    text-align: center;
   }
 `;
 

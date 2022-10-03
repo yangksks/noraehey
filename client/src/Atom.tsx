@@ -85,7 +85,25 @@ export const tagListState = atom({
   ],
 });
 
-export const reccommendSongsState = atom({
+interface songsType {
+  songHighPitch: 0;
+  songId: -1;
+  songImageUrl: '';
+  songKy: '';
+  songSinger: '';
+  songTitle: '';
+  songTj: '';
+}
+
+interface userType {
+  [key: string]: Array<songsType>;
+}
+
+export const reccommendSongsState = atom<userType>({
   key: 'reccommendSongs',
-  default: [],
+  default: {
+    lowList: [],
+    fitList: [],
+    highList: [],
+  },
 });

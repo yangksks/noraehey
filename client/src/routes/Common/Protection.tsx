@@ -27,9 +27,9 @@ const Protection = () => {
     }
   }, [url]);
 
-  if (user.memberTagList.length === -1) {
+  if (user.memberTagList.length === 0) {
     return <Navigate to="/tag" replace />;
-  } else if (user.memberHighPitch === -1) {
+  } else if (user.memberHighPitch === 0) {
     return <Navigate to="/voice" replace />;
   } else if (!loggedData) {
     return <Navigate to="/login" replace />;
