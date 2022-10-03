@@ -1,7 +1,9 @@
 package com.singsong.common.exception.member;
 
 import com.singsong.common.exception.code.ErrorCode;
+import lombok.Getter;
 
+@Getter
 public class MemberNicknameValidateException extends RuntimeException{
     private ErrorCode errorCode;
 
