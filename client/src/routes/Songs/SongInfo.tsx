@@ -4,7 +4,6 @@ import { AiOutlineQuestionCircle } from 'react-icons/ai';
 import { keyList } from '../../utils/constants/constants';
 import { useRecoilValue } from 'recoil';
 import { userInfoState } from '../../Atom';
-import { userType } from '../../Atom';
 import {
   MdOutlineSentimentVerySatisfied,
   MdOutlineSentimentSatisfied,
@@ -13,7 +12,7 @@ import {
 } from 'react-icons/md';
 const SongInfo = (props: any) => {
   const { songData } = props;
-  const userInfo: userType = useRecoilValue(userInfoState);
+  const userInfo = useRecoilValue(userInfoState);
 
   const evalInfoFnc = () => {
     if (songData.songLevel == 1) {
