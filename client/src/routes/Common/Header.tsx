@@ -28,7 +28,7 @@ const Header = () => {
             </Logo>
           </Link>
           <ProfileImg
-            src={user.profileUrl}
+            src={user.memberProfileUrl}
           />
         </TopBox>
         <UserInfo />
