@@ -4,3 +4,4 @@ mysqlclient
 pandas
 numpy
 openpyxl
+scikit-surprise
