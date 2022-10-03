@@ -13,18 +13,18 @@ import { shortsDetailType } from './ShortsDetailCard';
 import ShortsDetailCard from './ShortsDetailCard';
 
 const RandomShorts = () => {
-  const [shortsDatas, setShortsDatas] = useState<shortsDetailType[]>([]);
+  // const [shortsDatas, setShortsDatas] = useState<shortsDetailType[]>([]);
   const [nowIndex, setNowIndex] = useState(-1);
-  // const shortsDatas = useRecoilValue(shortsListState);
+  const shortsDatas = useRecoilValue(shortsListState);
   const [audio, setAudio] = useState(new Audio());
   const [play, setPlay] = useState(false);
 
-  useEffect(() => {
-    fetchData.get('/api/v1/shorts/random').then((res) => {
-      setShortsDatas(res.data);
-      setNowIndex(0);
-    });
-  }, []);
+  // useEffect(() => {
+  //   fetchData.get('/api/v1/shorts/random').then((res) => {
+  //     setShortsDatas(res.data);
+  //     setNowIndex(0);
+  //   });
+  // }, []);
 
   useEffect(() => {
     if (nowIndex != -1) {
@@ -43,6 +43,8 @@ const RandomShorts = () => {
           slidesPerView={1}
           onActiveIndexChange={(swiper) => {
             setNowIndex(swiper.realIndex);
+            audio.pause();
+            setPlay(false);
           }}>
           {shortsDatas.map((item, i) => (
             <SwiperSlide

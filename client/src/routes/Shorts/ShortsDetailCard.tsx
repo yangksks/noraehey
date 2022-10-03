@@ -70,7 +70,11 @@ const ShortsDetailCard = (props: any) => {
               color={'#f47b73'}
               onClick={() => {
                 fetchData
-                  .delete(`/api/v1/shorts/like?shortsId=${shortsData.shortsId}`)
+                  .delete(`/api/v1/shorts/like`, {
+                    data: {
+                      shortsId: shortsData.shortsId,
+                    },
+                  })
                   .then((res) => {
                     setLikeCount(res.data.likeCount);
                     setLiked(res.data.liked);
@@ -83,7 +87,9 @@ const ShortsDetailCard = (props: any) => {
               color={'#f47b73'}
               onClick={() => {
                 fetchData
-                  .post(`/api/v1/shorts/like?shortsId=${shortsData.shortsId}`)
+                  .post(`/api/v1/shorts/like`, {
+                    shortsId: shortsData.shortsId,
+                  })
                   .then((res) => {
                     setLikeCount(res.data.likeCount);
                     setLiked(res.data.liked);

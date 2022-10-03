@@ -2,6 +2,7 @@ import styled, { css } from 'styled-components';
 import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
 import { useEffect, useState } from 'react';
 import { fetchData } from '../../utils/api/api';
+
 export interface shortsDetailType {
   shortsId: number;
   shortsComment: string;
@@ -21,90 +22,91 @@ export interface shortsDetailType {
   isLiked: boolean;
 }
 
-const ShortsDetailCard = (props: any) => {
+const ShortsModalCard = (props: any) => {
   const { shortsData } = props;
-  // const [audio, setAudio] = useState(new Audio());
+  const [audio, setAudio] = useState(new Audio());
   const [play, setPlay] = useState(false);
   const [likeCount, setLikeCount] = useState(0);
   const [liked, setLiked] = useState(false);
 
   useEffect(() => {
-    // setAudio(new Audio(shortsData.shortsAudioUrl));
+    setAudio(new Audio(shortsData.shortsAudioUrl));
     setLikeCount(shortsData.likeCount);
     setLiked(shortsData.liked);
   }, [props]);
 
-  // useEffect(() => {
-  //   play ? audio.play() : audio.pause();
-  // }, [play]);
+  useEffect(() => {
+    play ? audio.play() : audio.pause();
+  }, [play]);
   return (
-    <ShortsCard>
-      <Profile>
-        <img src={shortsData.memberProfileUrl} alt="" />
-        <div>
-          <p>{shortsData.memberNickname}</p>
-          <span>{shortsData.shortsCreateTime}</span>
-        </div>
-      </Profile>
-      <Album
-        play={play}
-        onClick={() => {
-          setPlay(!play);
-        }}>
-        <div>
-          <i></i>
-          <img src={shortsData.songImageUrl} alt="" />
-        </div>
-      </Album>
-      <SongInfo>
-        <p>{shortsData.songTitle}</p>
-        <p>{shortsData.songSinger}</p>
-      </SongInfo>
-      <Content>{shortsData.shortsComment}</Content>
-      <LikeHeart>
-        <div>
-          {liked ? (
-            <AiFillHeart
-              size={30}
-              color={'#f47b73'}
-              onClick={() => {
-                fetchData
-                  .delete(`/api/v1/shorts/like?shortsId=${shortsData.shortsId}`)
-                  .then((res) => {
-                    setLikeCount(res.data.likeCount);
-                    setLiked(res.data.liked);
-                  });
-              }}
-            />
-          ) : (
-            <AiOutlineHeart
-              size={30}
-              color={'#f47b73'}
-              onClick={() => {
-                fetchData
-                  .post(`/api/v1/shorts/like?shortsId=${shortsData.shortsId}`)
-                  .then((res) => {
-                    setLikeCount(res.data.likeCount);
-                    setLiked(res.data.liked);
-                  });
-              }}
-            />
-          )}
+    <>
+      <ShortsCard>
+        <Profile>
+          <img src={shortsData.memberProfileUrl} alt="" />
+          <div>
+            <p>{shortsData.memberNickname}</p>
+            <span>{shortsData.shortsCreateTime}</span>
+          </div>
+        </Profile>
+        <Album
+          play={play}
+          onClick={() => {
+            setPlay(!play);
+          }}>
+          <div>
+            <i></i>
+            <img src={shortsData.songImageUrl} alt="" />
+          </div>
+        </Album>
+        <SongInfo>
+          <p>{shortsData.songTitle}</p>
+          <p>{shortsData.songSinger}</p>
+        </SongInfo>
+        <Content>{shortsData.shortsComment}</Content>
+        <LikeHeart>
+          <div>
+            {liked ? (
+              <AiFillHeart
+                size={30}
+                color={'#f47b73'}
+                onClick={() => {
+                  fetchData
+                    .delete(`/api/v1/shorts/like`, {
+                      data: {
+                        shortsId: shortsData.shortsId,
+                      },
+                    })
+                    .then((res) => {
+                      setLikeCount(res.data.likeCount);
+                      setLiked(res.data.liked);
+                    });
+                }}
+              />
+            ) : (
+              <AiOutlineHeart
+                size={30}
+                color={'#f47b73'}
+                onClick={() => {
+                  fetchData
+                    .post(`/api/v1/shorts/like`, {
+                      shortsId: shortsData.shortsId,
+                    })
+                    .then((res) => {
+                      setLikeCount(res.data.likeCount);
+                      setLiked(res.data.liked);
+                    });
+                }}
+              />
+            )}
 
-          <p>{likeCount}</p>
-        </div>
-      </LikeHeart>
-    </ShortsCard>
+            <p>{likeCount}</p>
+          </div>
+        </LikeHeart>
+      </ShortsCard>
+    </>
   );
 };
 
-const Shorts = styled.div`
-  width: 100%;
-  background-color: #242424;
-  padding: 20px 0;
-  display: flex;
-  justify-content: center;
-`;
 const ShortsCard = styled.div`
   width: 90%;
   padding: 20px;
@@ -250,4 +252,4 @@ const LikeHeart = styled.div`
     }
   }
 `;
-export default ShortsDetailCard;
+export default ShortsModalCard;
