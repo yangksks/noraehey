@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import NavBarButton from './NavBarButton';
 
 const MenuName = ['', 'like', 'shorts', 'search'];
-const MenuURL = ['', 'like/songlist', 'shorts/1', 'search'];
+const MenuURL = ['', 'like/songlist', 'shorts/random', 'search'];
 
 const NavBar = () => {
   const url = useLocation().pathname.split('/')[1];

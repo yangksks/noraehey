@@ -41,7 +41,6 @@ const SongBox = styled.div`
     gap: 3px;
     .songTitle {
       font-size: 16px;
-      font-weight: 600;
     }
     .songSinger {
       color: ${(props) => props.theme.colors.mainPurple};

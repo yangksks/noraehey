@@ -22,7 +22,7 @@ import ShortsCreatePage from './routes/Shorts/ShortsCreatePage';
 import LoadingSpinner from './routes/Common/LoadingSpinner';
 import TagVoiceProtection from './routes/Common/TagVoiceProtection';
 import UserShorts from './routes/Profile/UserShorts';
-
+import RandomShorts from './routes/Shorts/RandomShorts';
 const Router = () => {
   return (
     <BrowserRouter>
@@ -38,11 +38,15 @@ const Router = () => {
         <Route element={<LoadingSpinner />}>
           <Route element={<Protection />}>
             <Route path="/" element={<HomePage />} />
+            <Route path="/tag" element={<TagPage />} />
+            <Route path="/voice" element={<HighNotePage />} />
+            <Route path="/shorts/random" element={<RandomShorts />} />
             <Route path="/shorts/:shortsId" element={<ShortsDetailPage />} />
             <Route
               path="/create/shorts/:songsId"
               element={<ShortsCreatePage />}
             />
+
             <Route path="/search/*" element={<SearchPage />} />
             <Route path="/profile/:userId" element={<ProfilePage />}>
               <Route path="" element={<UserShorts />} />

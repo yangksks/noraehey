@@ -34,7 +34,7 @@ const UserShorts = () => {
 
   const render = () => {
     return shortsList.map((short, idx) => {
-      return <ShortsCard key={idx} albumUrl={short.songImageUrl}></ShortsCard>;
+      return <ShortsCard key={idx} shorts={short}></ShortsCard>;
     });
   };
 

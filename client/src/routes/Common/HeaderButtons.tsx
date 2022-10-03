@@ -34,12 +34,20 @@ const HeaderButtons = () => {
 
 const HeaderButtonsBox = styled.div`
   width: 100%;
-  background-color: yellow;
+  /* background-color: yellow; */
   display: flex;
   flex-direction: row;
   justify-content: end;
   align-items: center;
   gap: 10px;
+  padding: 10px 0;
+  button {
+    background-color: #fff;
+    padding: 5px;
+    border: none;
+    border-radius: 5px;
+    font-size: 12px;
+  }
 `;
 
 export default HeaderButtons;
