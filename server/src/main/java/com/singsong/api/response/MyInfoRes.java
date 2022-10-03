@@ -13,6 +13,6 @@ public class MyInfoRes {
     private String memberEmail;
     private String memberNickName;
     private String memberProfileUrl;
-    private int songHighPitch;
+    private int memberHighPitch;
     private List<Tag> memberTagList;
 }

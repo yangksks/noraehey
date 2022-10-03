@@ -62,7 +62,7 @@ public class MemberController {
                 .memberId(member.getMemberId())
                 .memberEmail(member.getMemberEmail())
                 .memberNickName(member.getMemberNickname())
-                .songHighPitch(member.getMemberHighPitch())
+                .memberHighPitch(member.getMemberHighPitch())
                 .memberProfileUrl(member.getMemberProfileUrl())
                 .memberTagList(tags)
                 .build();
