@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import BubbleUI from 'react-bubble-ui';
 import 'react-bubble-ui/dist/index.css';
 import image from '../../assets/images/singing.png';
@@ -7,6 +7,8 @@ import { useNavigate } from 'react-router-dom';
 import { BsArrowRight } from 'react-icons/bs';
 import { fetchData } from '../../utils/api/api';
 import { IoClose } from 'react-icons/io5';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { tagListState, userInfoState, userTagListState } from '../../Atom';
 interface tagType {
   tagId: number;
   tagName: string;
@@ -28,91 +30,96 @@ const options = {
 };
 
 const TagPage = () => {
-  const [datas, setDatas] = useState<tagType[]>([]);
-  const [userTag, setUserTag] = useState<tagType[]>([]);
+  const [datas, setDatas] = useRecoilState(tagListState);
+  const [userTag, setUserTag] = useRecoilState(userTagListState);
   const [temp, setTemp] = useState(0);
   const tagRef = useRef<HTMLLIElement>(null);
   const scrollRef = useRef<HTMLUListElement>(null);
   const navigate = useNavigate();
   const scrollToBottom = () => {
-    scrollRef.current?.scrollTo({ left: scrollRef.current.scrollWidth });
+    scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight });
   };
-
-  useEffect(() => {
-    fetchData.get('/api/v1/song/tag').then((res) => {
-      setDatas(res.data);
-    });
-    fetchData.get('/api/v1/member/info').then((res) => {
-      setUserTag(res.data.memberTagList);
-    });
-  }, []);
 
   useEffect(() => {
     scrollToBottom();
   }, [temp]);
 
+  const updateTags = () => {
+    if (userTag.length >= 5 && userTag.length <= 10) {
+      let list: Array<number> = [];
+      userTag.forEach((data) => {
+        list.push(data.tagId);
+      });
+      fetchData.patch('/api/v1/member/tag', { tagIdList: list });
+      navigate('/');
+    } else {
+      alert('태그는 5개 이상 10개 이하로 선택해주세요.');
+    }
+  };
+
+  const getTagButtons = () => {
+    return datas.map((data, i) => (
+      <div
+        className={`child ${
+          userTag.map((r: tagType) => r.tagId).includes(data.tagId)
+            ? 'pick'
+            : ''
+        }`}
+        key={i}
+        onClick={() => {
+          if (userTag.map((r: tagType) => r.tagId).includes(data.tagId)) {
+            setUserTag(userTag.filter((item) => item.tagId !== data.tagId));
+          } else {
+            setUserTag([...userTag, data]);
+            setTemp(temp + 1);
+          }
+        }}>
+        {data.tagName}
+      </div>
+    ));
+  };
+
+  const getSelectedTags = () => {
+    return userTag.map((data, i) => (
+      <li
+        key={data.tagId}
+        onClick={() => {
+          setUserTag(userTag.filter((item) => item.tagId !== data.tagId));
+        }}>
+        #{data.tagName} <IoClose size={15} color={'#fff'} />
+      </li>
+    ));
+  };
+
   return (
     <TagContainer image={image}>
-      <Title>
-        <p>부르고 싶은</p>
-        <p>음악의 분위기</p>
-        <p>를 골라주세요</p>
-      </Title>
-      <BubbleUI options={options} className="myBubbleUI">
-        {datas.map((data, i) => (
-          <div
-            className={`child ${
-              userTag.map((r: tagType) => r.tagId).includes(data.tagId)
-                ? 'pick'
-                : ''
-            }`}
-            key={i}
-            onClick={() => {
-              if (userTag.map((r: tagType) => r.tagId).includes(data.tagId)) {
-                setUserTag(userTag.filter((item) => item.tagId !== data.tagId));
-              } else {
-                setUserTag([...userTag, data]);
-                setTemp(temp + 1);
-              }
-            }}>
-            {data.tagName}
-          </div>
-        ))}
-      </BubbleUI>
-      <MyTagList>
-        <p>
-          내가 고른 태그<span>(5~10개)</span>
-        </p>
-        <ul ref={scrollRef}>
-          {userTag.map((data, i) => (
-            <li
-              key={data.tagId}
-              onClick={() => {
-                setUserTag(userTag.filter((item) => item.tagId !== data.tagId));
-              }}>
-              #{data.tagName} <IoClose size={15} />
-            </li>
-          ))}
-        </ul>
-      </MyTagList>
-      <BtnBox>
-        <button
-          disabled={userTag.length >= 5 && userTag.length <= 10 ? false : true}
-          onClick={() => {
-            if (userTag.length >= 5 && userTag.length <= 10) {
-              let list: Array<number> = [];
-              userTag.forEach((data) => {
-                list.push(data.tagId);
-              });
-              fetchData.patch('/api/v1/recommend/tag', { tagIdList: list });
-              navigate('/voice');
-            } else {
-              alert('태그는 5개 이상 10개 이하로 선택해주세요.');
+      <>
+        <BtnBox>
+          <button
+            disabled={
+              userTag.length >= 5 && userTag.length <= 10 ? false : true
             }
-          }}>
-          다음 <BsArrowRight size={20} />
-        </button>
-      </BtnBox>
+            onClick={() => {
+              updateTags();
+            }}>
+            다음 <BsArrowRight size={20} />
+          </button>
+        </BtnBox>
+        <Title>
+          <p>부르고 싶은</p>
+          <p>음악의 분위기</p>
+          <p>를 골라주세요</p>
+        </Title>
+        <BubbleUI options={options} className="myBubbleUI">
+          {getTagButtons()}
+        </BubbleUI>
+        <MyTagList>
+          <p>
+            내가 고른 태그<span>(5~10개)</span>
+          </p>
+          <ul ref={scrollRef}>{getSelectedTags()}</ul>
+        </MyTagList>
+      </>
     </TagContainer>
   );
 };
@@ -129,13 +136,20 @@ const TagContainer = styled.div<{ image: string }>`
 
   .myBubbleUI {
     width: 100%;
-    max-width: 1000px;
     height: 50%;
-    border-radius: 50px;
-    padding: 10px 0;
+    /* border-radius: 150px; */
+    /* width: 300px; */
+    /* height: 300px; */
+    max-width: 1000px;
+    /* flex-shrink: 1; */
+    border-radius: 100px;
+    padding-top: 10px;
     background: url(${({ image }) => image}) no-repeat;
     background-size: 400px;
     background-position: center center;
+    /* margin: 80px 0; */
+    /* border: 10px solid black; */
+    overflow: hidden;
 
     .child {
       width: 100%;
@@ -146,7 +160,7 @@ const TagContainer = styled.div<{ image: string }>`
       align-items: center;
       justify-content: center;
       position: relative;
-      border: 2px solid transparent;
+      border: 4px solid transparent;
       background-image: linear-gradient(#fff, #fff),
         linear-gradient(90deg, #c792ef 0%, #ef92c5 100%);
       background-origin: border-box;
@@ -162,7 +176,7 @@ const TagContainer = styled.div<{ image: string }>`
 
 const Title = styled.div`
   position: relative;
-  height: 25%;
+  height: 15%;
   max-width: 420px;
   font-size: 20px;
   font-family: 'omni035';
@@ -198,9 +212,19 @@ const Title = styled.div`
     }
   }
 `;
+
+const boxFade = keyframes`
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+`;
+
 const MyTagList = styled.div`
   width: 100%;
-  height: 20%;
+  height: 25%;
   padding: 20px;
   display: flex;
   flex-direction: column;
@@ -218,7 +242,7 @@ const MyTagList = styled.div`
   ul {
     width: 100%;
     display: flex;
-    /* flex-wrap: wrap; */
+    flex-wrap: wrap;
     gap: 10px;
     overflow: auto;
     padding-bottom: 15px;
@@ -229,7 +253,7 @@ const MyTagList = styled.div`
     li {
       font-size: 14px;
       position: relative;
-      height: 40px;
+      height: 30px;
       padding: 10px;
       border: 2px solid transparent;
       border-radius: 15px;
@@ -241,20 +265,29 @@ const MyTagList = styled.div`
       display: flex;
       align-items: center;
       gap: 5px;
-
-      transition: 0.5s;
-    }
-    .check {
+      animation: ${boxFade} 0.5s;
+      margin-top: 6px;
+      svg {
+        position: absolute;
+        right: -6px;
+        top: -6px;
+        overflow: visible;
+        background-color: #f47373;
+        /* border: 1px solid red; */
+        border-radius: 50%;
+        padding: 2px;
+      }
     }
   }
 `;
 const BtnBox = styled.div`
   display: flex;
   width: 100%;
-  padding: 0 20px 20px;
+  height: 10%;
+  padding: 5px;
   justify-content: flex-end;
+  align-items: end;
   button {
-    padding: 10px;
     border: none;
     width: 100px;
     height: 40px;

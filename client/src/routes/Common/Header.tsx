@@ -1,81 +1,44 @@
 import styled from 'styled-components';
-import { CgProfile } from 'react-icons/cg';
 import { useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { fetchData } from '../../utils/api/api';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
+import UserInfo from './UserInfo';
+import { useRecoilValue } from 'recoil';
+import { userInfoState } from '../../Atom';
 
 const Header = () => {
   const [infoBar, setInfoBar] = useState(false);
-  const [urlNow, setUrlNow] = useState('none');
-  const [navStatus, setNavStatus] = useState(false);
-  const [user, setUser] = useState({} as any);
   const url = useLocation().pathname.split('/')[1];
-  const navigate = useNavigate();
-
-  const getUserInfo = async () => {
-    const URL = '/api/v1/member/info';
-    try {
-      const result = await fetchData.get(URL);
-      setUser(result.data);
-    } catch (err: any) {
-      console.log(err);
-    }
-  };
-
-  const logout = () => {
-    sessionStorage.removeItem('accessToken');
-    localStorage.removeItem('refreshToken');
-    setNavStatus(false);
-    navigate('/login');
-  };
+  const user = useRecoilValue(userInfoState);
 
   useEffect(() => {
-    setUrlNow(url);
-    if (
-      url === 'login' ||
-      url === 'tag' ||
-      url === 'voice' ||
-      url === 'shorts'
-    ) {
-      return setNavStatus(false);
-    } else {
-      getUserInfo();
-      setNavStatus(true);
-    }
+    setInfoBar(false);
   }, [url]);
 
-  const render = () => {
-    return (
-      <HeaderContainer>
-        <HeaderTop infoBar={infoBar === true}>
-          <TopBox>
-            <Link to="/">
-              <Logo>
-                <p style={{ color: '#FFC34E' }}>NORAE</p>
-                <p style={{ color: 'white' }}>HEY</p>
-              </Logo>
-            </Link>
-            <ProfileImg
-              onClick={() => {
-                setInfoBar(!infoBar);
-              }}
-            />
-          </TopBox>
-          <InfoBox>
-            <p>{user.nickName}님 어서오세요</p>
-            <button onClick={logout}>Logout</button>
-          </InfoBox>
-        </HeaderTop>
-        <HeaderBottom>
-          <BottomBox />
-          <BottomBox2 />
-        </HeaderBottom>
-      </HeaderContainer>
-    );
-  };
-
-  return <>{navStatus ? render() : ''}</>;
+  return (
+    <HeaderContainer>
+      <HeaderTop infoBar={infoBar === true}>
+        <TopBox
+          onClick={() => {
+            setInfoBar(!infoBar);
+          }}>
+          <Link to="/">
+            <Logo>
+              <p style={{ color: '#FFC34E' }}>NORAE</p>
+              <p style={{ color: 'white' }}>HEY</p>
+            </Logo>
+          </Link>
+          <ProfileImg
+            src={user.memberProfileUrl}
+          />
+        </TopBox>
+        <UserInfo />
+      </HeaderTop>
+      <HeaderBottom>
+        <BottomBox />
+        <BottomBox2 />
+      </HeaderBottom>
+    </HeaderContainer>
+  );
 };
 
 const HeaderContainer = styled.header`
@@ -102,7 +65,7 @@ const HeaderBottom = styled.div`
 const HeaderTop = styled.div<{ infoBar: boolean }>`
   width: 100%;
   padding: 20px;
-  height: ${({ infoBar }) => (infoBar ? '230px' : '80px')};
+  height: ${({ infoBar }) => (infoBar ? '250px' : '80px')};
   display: flex;
   flex-direction: column;
   justify-content: start;
@@ -143,25 +106,12 @@ const Logo = styled.div`
   cursor: pointer;
 `;
 
-const ProfileImg = styled(CgProfile)`
+const ProfileImg = styled.img`
   width: 40px;
   height: 40px;
   color: #ffffff;
   border-radius: 50px;
   cursor: pointer;
-`;
-
-const InfoBox = styled.div`
-  width: 100%;
-  height: 100%;
-  margin-top: 20px;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  background-color: tomato;
-  box-sizing: border-box;
-  overflow: hidden;
 `;
 
 export default Header;

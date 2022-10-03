@@ -41,7 +41,6 @@ const SongBox = styled.div`
     gap: 3px;
     .songTitle {
       font-size: 16px;
-      font-weight: 600;
     }
     .songSinger {
       color: ${(props) => props.theme.colors.mainPurple};
@@ -56,6 +55,7 @@ const SongBox = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    flex-shrink: 0;
     gap: 5px;
     & > p {
       width: 100%;

@@ -1,15 +1,28 @@
 import styled from 'styled-components';
 import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
 import { IoIosHeartEmpty } from 'react-icons/io';
+import { fetchData } from '../../utils/api/api';
+import { useParams } from 'react-router';
+import { useEffect, useState } from 'react';
 export type albumType = {
   url: string;
-  songTj: number;
-  songKy: number;
-  isLiked: boolean;
+  songTj: string;
+  songKy: string;
+  liked: boolean;
+  songLikeCount: number;
 };
 
 const AlbumImage = (props: albumType) => {
-  const { url, songTj, songKy, isLiked } = props;
+  const { songId } = useParams();
+  const { url, songTj, songKy } = props;
+  const [myLike, setMyLike] = useState(false);
+  const [likeCount, setLikeCount] = useState(0);
+
+  useEffect(() => {
+    setMyLike(props.liked);
+    setLikeCount(props.songLikeCount);
+  }, [props]);
+
   return (
     <AlbumBox url={url}>
       <NumAndLike>
@@ -17,11 +30,42 @@ const AlbumImage = (props: albumType) => {
           <p className="TJ">TJ {songTj}</p>
           <p className="KY">KY {songKy}</p>
         </div>
-        {isLiked ? (
-          <AiFillHeart size={35} color={'#f47b73'} />
-        ) : (
-          <AiOutlineHeart size={35} color={'#f47b73'} />
-        )}
+        <div className="like">
+          {myLike ? (
+            <AiFillHeart
+              size={35}
+              color={'#f47b73'}
+              onClick={() => {
+                fetchData
+                  .delete('/api/v1/song/like', {
+                    data: { songId: songId },
+                  })
+                  .then(() => {
+                    fetchData.get(`/api/v1/song/info/${songId}`).then((res) => {
+                      setLikeCount(res.data.songLikeCount);
+                      setMyLike(res.data.liked);
+                    });
+                  });
+              }}
+            />
+          ) : (
+            <AiOutlineHeart
+              size={35}
+              color={'#f47b73'}
+              onClick={() => {
+                fetchData
+                  .post('/api/v1/song/like', { songId: songId })
+                  .then(() => {
+                    fetchData.get(`/api/v1/song/info/${songId}`).then((res) => {
+                      setLikeCount(res.data.songLikeCount);
+                      setMyLike(res.data.liked);
+                    });
+                  });
+              }}
+            />
+          )}
+          <span>{likeCount}</span>
+        </div>
       </NumAndLike>
     </AlbumBox>
   );
@@ -52,7 +96,17 @@ const NumAndLike = styled.div`
     border-radius: 5px;
     color: white;
   }
-
+  .like {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2px;
+    span {
+      display: block;
+      font-size: 10px;
+    }
+  }
   .TJ {
     background-color: #9278ff;
     margin-bottom: 5px;
