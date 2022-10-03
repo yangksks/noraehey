@@ -21,13 +21,13 @@ const MusicCardSwiper = () => {
         spaceBetween={30}
         className="mySwiper">
         <SwiperSlide>
-          <MusicListCard />
+          <MusicListCard type={'fitList'}/>
         </SwiperSlide>
         <SwiperSlide>
-          <MusicListCard />
+          <MusicListCard type={'lowList'}/>
         </SwiperSlide>
         <SwiperSlide>
-          <MusicListCard />
+          <MusicListCard type={'highList'}/>
         </SwiperSlide>
       </Swiper>
     </CardContainer>

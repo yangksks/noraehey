@@ -1,8 +1,12 @@
 import { useNavigate } from 'react-router-dom';
+import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
+import { userInfoState } from '../../Atom';
+import { keyList } from '../../utils/constants/constants';
 
 const SettingPage = () => {
   const navigate = useNavigate();
+  const user = useRecoilValue(userInfoState);
   return (
     <SettingContainer>
       <ShortsTitle>Setting</ShortsTitle>
@@ -11,14 +15,14 @@ const SettingPage = () => {
           navigate('/voice');
         }}>
         <p>최고음 측정</p>
-        <p className="description">도# 3옥타브</p>
+        <p className="description">{keyList[user.memberHighPitch]}</p>
       </SettingCard>
       <SettingCard
         onClick={() => {
           navigate('/tag');
         }}>
         <p>태그 선택</p>
-        <p className="description">7개</p>
+        <p className="description">{user.memberTagList.length}개</p>
       </SettingCard>
       <SettingCard
         onClick={() => {

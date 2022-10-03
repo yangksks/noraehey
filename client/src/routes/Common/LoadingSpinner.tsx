@@ -13,6 +13,7 @@ import { fetchData } from '../../utils/api/api';
 import VoiceButtonBorder from '../HighNote/VoiceButtonBorder';
 import CoupleSinging from '../../assets/images/coupleSinging.png';
 import Singing from '../../assets/images/singing.png';
+import _ from 'lodash';
 
 const LoadingSpinner = () => {
   const [userInfo, setUserInfo] = useRecoilState(userInfoState);
@@ -61,6 +62,9 @@ const LoadingSpinner = () => {
     const URL = '/api/v1/recommend';
     try {
       const result = await fetchData.get(URL);
+      result.data['lowList'] = _.shuffle(result.data['lowList']);
+      result.data['fitList'] = _.shuffle(result.data['fitList']);
+      result.data['highList'] = _.shuffle(result.data['highList']);
       setReccommendSongs(() => result.data);
       return console.log(result.data);
     } catch (err: any) {
