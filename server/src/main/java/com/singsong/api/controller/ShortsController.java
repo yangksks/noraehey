@@ -57,7 +57,7 @@ public class ShortsController {
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "success"));
     }
 
-    // 노래 별 쇼츠 조회
+    // 노래 별 쇼츠 조회 (인기순)
     @GetMapping("/song/{songId}")
     public ResponseEntity<?> getShortsBySong(@PathVariable("songId") Long songId, @RequestParam("page") int page, @ApiIgnore Authentication authentication) {
         Member member = jwtAuthenticationUtil.jwtTokenAuth(authentication);
