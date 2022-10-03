@@ -1,6 +1,6 @@
 import { ImArrowLeft2 } from 'react-icons/im';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
-import { useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 import { userInfoState } from '../../Atom';
 import Container from '../../style/style';
@@ -9,33 +9,73 @@ import { RiPencilFill } from 'react-icons/ri';
 import { useEffect, useState } from 'react';
 import { fetchData } from '../../utils/api/api';
 const ProfilePage = () => {
-  const user = useRecoilValue(userInfoState);
   const url = useLocation().pathname.split('/')[3];
   const [settingNow, setSettingNow] = useState(url);
   const [nameEdit, setNameEdit] = useState(false);
-  const [nickName, setNickName] = useState(user.nickName);
+  const [user, setUser] = useRecoilState(userInfoState);
+  const [nickname, setNickname] = useState(user.memberNickname);
   const navigate = useNavigate();
 
   useEffect(() => {
     setSettingNow(url);
+    setNameEdit(false);
+    updateUserInfo();
   }, [url]);
 
   const updateNickname = async () => {
     const URL = '/api/v1/member/nickname';
-    console.log(nickName);
     try {
-      const result = await fetchData.patch(URL, { nickName: nickName });
+      const result = await fetchData.patch(URL, { nickname: nickname });
       return console.log(result);
     } catch (err: any) {
       console.log(err);
     }
   };
 
-  const ChangeName = () => {
-    if (nameEdit) {
-      updateNickname();
+  const updateUserInfo = async () => {
+    const URL = '/api/v1/member/info';
+    try {
+      const result = await fetchData.get(URL);
+      setUser(() => result.data);
+      return console.log(result.data);
+    } catch (err: any) {
+      console.log(err);
     }
+  };
+
+  const updateUserImage = async (profileImg: any) => {
+    const option = {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    };
+    console.log(profileImg);
+    let formData = new FormData();
+    const URL = '/api/v1/member/profileimg';
+    formData.append('profileImg', profileImg);
+    try {
+      const result = await fetchData.patch(URL, formData, option);
+      return console.log(result.data);
+    } catch (err: any) {
+      console.log(err);
+    }
+  };
+
+  const ChangeName = () => {
+    const syncFunc = async () => {
+      await updateNickname();
+      await updateUserInfo();
+    };
+    syncFunc();
     setNameEdit(!nameEdit);
+  };
+
+  const getImage = (input: any) => {
+    const syncFunc = async () => {
+      await updateUserImage(input[0]);
+      await updateUserInfo();
+    };
+    syncFunc();
   };
 
   return (
@@ -60,11 +100,22 @@ const ProfilePage = () => {
       </TitleBox>
       <Profile>
         <PicBox>
-          <img src={user.profileUrl} alt="" />
+          <img src={user.memberProfileUrl} alt="" />
           {settingNow !== 'setting' ? null : (
             <PicEdit>
+              <label className="profileImageBtn" htmlFor="profileImage" />
               <p>수정</p>
               <RiPencilFill />
+              <input
+                type="file"
+                name="profileImage"
+                id="profileImage"
+                accept="image/*"
+                onChange={(e) => {
+                  getImage(e.target.files);
+                }}
+                style={{ display: 'none' }}
+              />
             </PicEdit>
           )}
         </PicBox>
@@ -72,12 +123,11 @@ const ProfilePage = () => {
           {nameEdit ? (
             <textarea
               onChange={(e) => {
-                setNickName(e.target.value);
-              }}>
-              {user.nickName}
-            </textarea>
+                setNickname(e.target.value);
+              }}
+              defaultValue={user.memberNickname}></textarea>
           ) : (
-            <p>{user.nickName}</p>
+            <p>{user.memberNickname}</p>
           )}
           {settingNow !== 'setting' ? null : (
             <RiPencilFill
@@ -95,7 +145,8 @@ const ProfilePage = () => {
 
 const Profile = styled.div`
   width: 100%;
-  height: 50%;
+  height: 210px;
+  padding: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -139,6 +190,12 @@ const PicEdit = styled.div`
     font-size: 18px;
     padding-bottom: 3px;
   }
+  .profileImageBtn {
+    position: absolute;
+    width: 100%;
+    height: 500%;
+    cursor: pointer;
+  }
 `;
 
 const NameBox = styled.div`
@@ -152,8 +209,8 @@ const NameBox = styled.div`
   }
 
   textarea {
-    width: 100%;
-    padding: 13px;
+    height: 40px;
+    padding: 5px;
     font-size: 18px;
     resize: none;
   }

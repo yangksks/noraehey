@@ -56,12 +56,12 @@ export const myshortsListState = atom({
 export const userInfoState = atom({
   key: 'userInfo',
   default: {
-    email: '',
+    memberEmail: '',
     memberId: -1,
     memberTagList: [],
-    nickName: '',
-    profileUrl: '',
-    songHighPitch: 0,
+    memberNickname: '',
+    memberProfileUrl: '',
+    memberHighPitch: 0,
   },
 });
 

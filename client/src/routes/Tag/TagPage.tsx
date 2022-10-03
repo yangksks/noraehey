@@ -50,7 +50,7 @@ const TagPage = () => {
       userTag.forEach((data) => {
         list.push(data.tagId);
       });
-      fetchData.patch('/api/v1/recommend/tag', { tagIdList: list });
+      fetchData.patch('/api/v1/member/tag', { tagIdList: list });
       navigate('/voice');
     } else {
       alert('태그는 5개 이상 10개 이하로 선택해주세요.');

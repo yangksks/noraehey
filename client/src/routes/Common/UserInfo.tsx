@@ -5,7 +5,7 @@ import HeaderButtons from './HeaderButtons';
 
 const UserInfo = () => {
   const user = useRecoilValue(userInfoState);
-  const userName = user.nickName;
+  const userName = user.memberNickname;
 
   return (
     <InfoBox>
