@@ -4,6 +4,7 @@ import com.singsong.common.exception.code.ErrorCode;
 import com.singsong.common.exception.file.FileUploadExtensionException;
 import com.singsong.common.exception.magazine.MagazineNotFoundException;
 import com.singsong.common.exception.member.MemberImageNotFoundException;
+import com.singsong.common.exception.member.MemberNicknameValidateException;
 import com.singsong.common.exception.member.MemberNotFoundException;
 import com.singsong.common.exception.member.MemberUnauthorizedException;
 import com.singsong.common.exception.response.ErrorResponse;
@@ -59,6 +60,13 @@ public class GlobalControllerAdvice {
     @ExceptionHandler(TagDuplicationException.class)
     public ResponseEntity<ErrorResponse> handleTagDuplicationException(TagDuplicationException e) {
         log.error("handleTagDuplicationException", e);
+        ErrorResponse response = new ErrorResponse(e.getErrorCode());
+        return new ResponseEntity<>(response, HttpStatus.valueOf(e.getErrorCode().getStatus()));
+    }
+
+    @ExceptionHandler(MemberNicknameValidateException.class)
+    public ResponseEntity<ErrorResponse> handleMemberNicknameValidateException(MemberNicknameValidateException e) {
+        log.error("handleMemberNicknameValidateException", e);
         ErrorResponse response = new ErrorResponse(e.getErrorCode());
         return new ResponseEntity<>(response, HttpStatus.valueOf(e.getErrorCode().getStatus()));
     }
