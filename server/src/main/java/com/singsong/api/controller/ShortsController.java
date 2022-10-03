@@ -22,6 +22,7 @@ import springfox.documentation.annotations.ApiIgnore;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 
 @RestController
@@ -49,9 +50,9 @@ public class ShortsController {
 
     // 노래 쇼츠 삭제
     @DeleteMapping
-    public ResponseEntity<?> deleteShorts(@RequestParam("shortsId") Long shortsId, @ApiIgnore Authentication authentication) {
+    public ResponseEntity<?> deleteShorts(@RequestBody Map<String, Long> req, @ApiIgnore Authentication authentication) {
         Member member = jwtAuthenticationUtil.jwtTokenAuth(authentication);
-
+        Long shortsId = req.get("shortsId");
         shortsService.deleteShorts(shortsId, member);
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "success"));
     }
@@ -110,8 +111,9 @@ public class ShortsController {
 
     // 쇼츠 좋아요 추가
     @PostMapping("/like")
-    public ResponseEntity<?> addShortsLike(@RequestParam("shortsId") Long shortsId, @ApiIgnore Authentication authentication) {
+    public ResponseEntity<?> addShortsLike(@RequestBody Map<String, Long> req, @ApiIgnore Authentication authentication) {
         Member member = jwtAuthenticationUtil.jwtTokenAuth(authentication);
+        Long shortsId = req.get("shortsId");
         shortsService.addShortsLike(member, shortsId);
         int likeCount = shortsService.countShortsLike(shortsId);
         return ResponseEntity.status(200).body(ShortsLikeRes.of(shortsId, likeCount, true));
@@ -119,8 +121,9 @@ public class ShortsController {
 
     // 쇼츠 좋아요 삭제
     @DeleteMapping("/like")
-    public ResponseEntity<?> deleteShortsLike(@RequestParam("shortsId") Long shortsId, @ApiIgnore Authentication authentication) {
+    public ResponseEntity<?> deleteShortsLike(@RequestBody Map<String, Long> req, @ApiIgnore Authentication authentication) {
         Member member = jwtAuthenticationUtil.jwtTokenAuth(authentication);
+        Long shortsId = req.get("shortsId");
         shortsService.deleteShortsLike(member, shortsId);
         int likeCount = shortsService.countShortsLike(shortsId);
         return ResponseEntity.status(200).body(ShortsLikeRes.of(shortsId, likeCount, false));
