@@ -14,10 +14,17 @@ import ShortsDetailCard from './ShortsDetailCard';
 
 const RandomShorts = () => {
   // const [shortsDatas, setShortsDatas] = useState<shortsDetailType[]>([]);
-  const [nowIndex, setNowIndex] = useState(-1);
+  const [nowIndex, setNowIndex] = useState(0);
   const shortsDatas = useRecoilValue(shortsListState);
   const [audio, setAudio] = useState(new Audio());
   const [play, setPlay] = useState(false);
+
+  const setScreenSize = () => {
+    let vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty('--vh', `${vh}px`);
+  };
+  setScreenSize();
+  window.addEventListener('resize', () => setScreenSize());
 
   // useEffect(() => {
   //   fetchData.get('/api/v1/shorts/random').then((res) => {
@@ -33,8 +40,17 @@ const RandomShorts = () => {
   }, [nowIndex]);
 
   useEffect(() => {
+    audio.loop = true;
+    if (play) {
+      audio.play();
+      setPlay(true);
+    }
+  }, [audio]);
+
+  useEffect(() => {
     play ? audio.play() : audio.pause();
   }, [play]);
+
   return (
     <Container>
       <Shorts>
@@ -44,7 +60,6 @@ const RandomShorts = () => {
           onActiveIndexChange={(swiper) => {
             setNowIndex(swiper.realIndex);
             audio.pause();
-            setPlay(false);
           }}>
           {shortsDatas.map((item, i) => (
             <SwiperSlide
@@ -66,6 +81,7 @@ const RandomShorts = () => {
 
 const Shorts = styled.div`
   width: 100%;
+  height: calc(var(--vh, 1vh) * 100);
   background-color: #242424;
   padding: 20px 0;
   display: flex;

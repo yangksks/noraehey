@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import {
   MdOutlineSentimentVerySatisfied,
   MdOutlineSentimentSatisfied,
-  MdOutlineSentimentNeutral,
+  MdOutlineSentimentDissatisfied,
   MdOutlineSentimentVeryDissatisfied,
 } from 'react-icons/md';
 import { fetchData } from '../../utils/api/api';
@@ -64,13 +64,13 @@ const SongBtnList = (props: any) => {
               size={40}
               color={nowEval == 2 ? 'yellowgreen' : 'gray'}
             />
-            <p style={{ color: nowEval == 2 ? 'yellowgreen' : 'gray' }}>SoSo</p>
+            <p style={{ color: nowEval == 2 ? 'yellowgreen' : 'gray' }}>Good</p>
           </li>
           <li
             onClick={() => {
               evalFnc(3);
             }}>
-            <MdOutlineSentimentNeutral
+            <MdOutlineSentimentDissatisfied
               size={40}
               color={nowEval == 3 ? 'orange' : 'gray'}
             />

@@ -99,7 +99,7 @@ const TabSection = styled.section`
 const NavStyle = styled.li<{ active: boolean }>`
   display: block;
   padding: 10px 0;
-
+  cursor: pointer;
   ${(props) =>
     props.active &&
     css`

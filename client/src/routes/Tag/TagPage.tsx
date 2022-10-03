@@ -37,7 +37,7 @@ const TagPage = () => {
   const scrollRef = useRef<HTMLUListElement>(null);
   const navigate = useNavigate();
   const scrollToBottom = () => {
-    scrollRef.current?.scrollTo({ left: scrollRef.current.scrollWidth });
+    scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight });
   };
 
   useEffect(() => {
@@ -136,7 +136,7 @@ const TagContainer = styled.div<{ image: string }>`
 
   .myBubbleUI {
     width: 100%;
-    height: 75%;
+    height: 50%;
     /* border-radius: 150px; */
     /* width: 300px; */
     /* height: 300px; */
@@ -176,7 +176,7 @@ const TagContainer = styled.div<{ image: string }>`
 
 const Title = styled.div`
   position: relative;
-  height: 20%;
+  height: 15%;
   max-width: 420px;
   font-size: 20px;
   font-family: 'omni035';
@@ -224,7 +224,7 @@ const boxFade = keyframes`
 
 const MyTagList = styled.div`
   width: 100%;
-  height: 20%;
+  height: 25%;
   padding: 20px;
   display: flex;
   flex-direction: column;

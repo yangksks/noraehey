@@ -36,6 +36,10 @@ const ShortsModalCard = (props: any) => {
   }, [props]);
 
   useEffect(() => {
+    audio.loop = true;
+  }, [audio]);
+
+  useEffect(() => {
     play ? audio.play() : audio.pause();
   }, [play]);
   return (
@@ -109,10 +113,12 @@ const ShortsModalCard = (props: any) => {
 
 const ShortsCard = styled.div`
   width: 90%;
+  min-height: 500px;
+  height: 82%;
   padding: 20px;
   display: flex;
+  justify-content: space-between;
   flex-direction: column;
-  justify-content: center;
   position: relative;
   border-radius: 20px;
   background: linear-gradient(
