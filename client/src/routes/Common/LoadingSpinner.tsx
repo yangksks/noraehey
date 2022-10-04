@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { Outlet, useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
 import {
@@ -11,9 +10,10 @@ import {
 } from '../../Atom';
 import { fetchData, removeAccessToken } from '../../utils/api/api';
 import VoiceButtonBorder from '../HighNote/VoiceButtonBorder';
-import CoupleSinging from '../../assets/images/coupleSinging.png';
-import Singing from '../../assets/images/singing.png';
 import _ from 'lodash';
+import Header from './Header';
+import NavBar from './NavBar';
+import { Outlet } from 'react-router-dom';
 
 const LoadingSpinner = () => {
   const [userInfo, setUserInfo] = useRecoilState(userInfoState);
@@ -87,12 +87,16 @@ const LoadingSpinner = () => {
   const loadingSpinner = () => {
     return (
       <LoadingSpinerBox>
-        <ImgBox src={Singing} />
-        <VoiceButtonBorder />
-        <LoadingSign>
-          <p>Loading</p>
-        </LoadingSign>
-        <ImgBox2 src={CoupleSinging} />
+        <InnerBox>
+          <Header />
+          <div>
+            <VoiceButtonBorder />
+            <LoadingSign>
+              <p>Loading</p>
+            </LoadingSign>
+          </div>
+          <NavBar></NavBar>
+        </InnerBox>
       </LoadingSpinerBox>
     );
   };
@@ -103,11 +107,27 @@ const LoadingSpinner = () => {
 const LoadingSpinerBox = styled.div`
   width: 100%;
   height: calc(var(--vh, 1vh) * 100);
-  background: ${(props) => props.theme.colors.gradientPurpleToYellow};
+  // background: ${(props) => props.theme.colors.gradientPurpleToYellow};
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+`;
+
+const InnerBox = styled.div`
+  width: 100%;
+  max-width: 420px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  & > div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
 `;
 
 const LoadingSign = styled.div`
@@ -118,21 +138,5 @@ const LoadingSign = styled.div`
   p {
     text-shadow: 0px 0px 6px rgba(0, 1, 0, 0.6);
   }
-`;
-
-const ImgBox = styled.img`
-  position: absolute;
-  top: -20px;
-  height: 35%;
-  opacity: 0.3;
-  z-index: 0;
-`;
-
-const ImgBox2 = styled.img`
-  position: absolute;
-  bottom: 0;
-  height: 35%;
-  opacity: 0.3;
-  z-index: 0;
 `;
 export default LoadingSpinner;
