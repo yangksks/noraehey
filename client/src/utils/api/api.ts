@@ -32,7 +32,7 @@ const getNewAccessToken = async () => {
   const baseURL = import.meta.env.VITE_BASE_URL;
   const refreshtoken = getLocalRefreshToken();
   console.log('getNewAccessToken');
-  const result = await axios.get(`${baseURL}api/v1/member/refresh`, {
+  const result = await axios.get(`${baseURL}/api/v1/member/refresh`, {
     headers: {
       'REFRESH-TOKEN': `${refreshtoken}`,
     },
@@ -83,10 +83,10 @@ instance.interceptors.response.use(
           console.log('int2try');
           const response = await getNewAccessToken();
           console.log('int3try');
-          console.log(response);
           const { accessToken, refreshToken } = response.data;
           sessionStorage.setItem('accessToken', accessToken);
           setRefreshToken(refreshToken);
+          console.log(accessToken, refreshToken);
           console.log('int4try');
           instance.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
           return instance(originalConfig);
@@ -100,7 +100,7 @@ instance.interceptors.response.use(
             removeRefreshToken();
             setTimeout(() => {
               window.location.href = '/login';
-            }, 2000);
+            }, 100);
             return;
           }
           return Promise.reject(err);

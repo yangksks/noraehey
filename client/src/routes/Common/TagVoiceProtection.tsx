@@ -11,13 +11,6 @@ const TagVoiceProtection = () => {
   const [userInfo, setUserInfo] = useRecoilState(userInfoState);
   const [userTags, setUserTags] = useRecoilState(userTagListState);
   const [loading, setLoading] = useState(true);
-  const navigate = useNavigate();
-
-  const logout = () => {
-    sessionStorage.removeItem('accessToken');
-    localStorage.removeItem('refreshToken');
-    navigate('/login');
-  };
 
   const getUserInfo = async () => {
     const URL = '/api/v1/member/info';
@@ -27,7 +20,6 @@ const TagVoiceProtection = () => {
       setUserTags(result.data.memberTagList);
     } catch (err: any) {
       console.log(err);
-      logout();
     }
   };
 
