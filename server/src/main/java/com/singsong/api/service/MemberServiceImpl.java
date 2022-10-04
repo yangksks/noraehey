@@ -45,13 +45,17 @@ public class MemberServiceImpl implements MemberService {
         // TODO: 기본값 수정
         Member member = Member.builder()
                 .memberEmail(kakaoMemberInfo.getEmail())
-                .memberNickname("노래쟁이 #" + kakaoMemberInfo.getId())
+                .memberNickname("")
                 .memberProfileUrl("https://s3.ap-northeast-2.amazonaws.com/noraehey/member/0/default_image.png")
                 .memberHighPitch(0)
                 .memberRole(1)
                 .build();
 
         memberRepository.save(member);
+
+        member.setMemberNickname("노래쟁이"+member.getMemberId().toString());
+        memberRepository.save(member);
+
         return member;
     }
 
@@ -106,7 +110,8 @@ public class MemberServiceImpl implements MemberService {
 
         if (nickname.length() > 6)
             throw new MemberNicknameValidateException("닉네임 길이가 너무 깁니다.",ErrorCode.NICKNAME_LENGTH_ERROR);
-
+        if(nickname.contains("노래쟁이"))
+            throw new MemberNicknameValidateException("노래쟁이는 안됩니다",ErrorCode.NICKNAME_DUPLICATION);
         if (memberRepository.findByMemberNickname(nickname).isPresent())
             throw new MemberNicknameValidateException("닉네임이 중복됩니다.",ErrorCode.NICKNAME_DUPLICATION);
 
