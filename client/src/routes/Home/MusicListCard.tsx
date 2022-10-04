@@ -17,7 +17,7 @@ const MusicListCard = (props: recommendType) => {
   const BoxTitle =
     (type === 'fitList' && '내 고음에 맞는 추천곡') ||
     (type === 'highList' && '도전해 볼만한 추천곡') ||
-    (type === 'lowList' && '편하게 부를수 있는 추천곡');
+    (type === 'lowList' && '편하게 부르는 추천곡');
   const navigate = useNavigate();
   return (
     <MusicBox>

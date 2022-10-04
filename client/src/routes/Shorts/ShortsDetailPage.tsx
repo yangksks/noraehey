@@ -51,6 +51,8 @@ const Title = styled.div`
   align-items: center;
   width: 100%;
   padding: 0 20px 20px;
+  position: relative;
+  top: 0;
 
   svg {
     cursor: pointer;
@@ -71,6 +73,7 @@ const Shorts = styled.div`
   padding: 20px 0;
   display: flex;
   flex-direction: column;
+  justify-content: start;
   align-items: center;
 `;
 

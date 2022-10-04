@@ -25,6 +25,7 @@ const Protection = () => {
     } else {
       setNavStatus(true);
     }
+
   }, [url]);
 
   if (user.memberTagList.length === 0) {

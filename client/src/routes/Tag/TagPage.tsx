@@ -231,6 +231,7 @@ const MyTagList = styled.div`
 
   p {
     font-size: 20px;
+    text-shadow: 0px 0px 6px rgba(0, 0, 0, 0.2);
     color: #fff;
     padding-bottom: 10px;
     font-weight: 700;
