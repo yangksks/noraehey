@@ -1,17 +1,18 @@
 import styled from 'styled-components';
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import UserInfo from './UserInfo';
 import { useRecoilState } from 'recoil';
 import { userInfoState } from '../../Atom';
 
 const Header = () => {
+  const url = useLocation().pathname.split('/')[1];
   const [infoBar, setInfoBar] = useState(false);
   const [userInfo, setUserInfo] = useRecoilState(userInfoState);
 
   useEffect(() => {
     setInfoBar(false);
-  }, [userInfo]);
+  }, [url, userInfo]);
 
   return (
     <HeaderContainer>

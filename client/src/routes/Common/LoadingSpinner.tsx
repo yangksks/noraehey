@@ -9,7 +9,7 @@ import {
   tagListState,
   userInfoState,
 } from '../../Atom';
-import { fetchData } from '../../utils/api/api';
+import { fetchData, removeAccessToken } from '../../utils/api/api';
 import VoiceButtonBorder from '../HighNote/VoiceButtonBorder';
 import CoupleSinging from '../../assets/images/coupleSinging.png';
 import Singing from '../../assets/images/singing.png';
@@ -29,9 +29,10 @@ const LoadingSpinner = () => {
     try {
       const result = await fetchData.get(URL);
       setUserInfo(() => result.data);
-      return console.log(result.data);
+      return result.data;
     } catch (err: any) {
       console.log(err);
+      removeAccessToken();
     }
   };
 
@@ -40,7 +41,7 @@ const LoadingSpinner = () => {
     try {
       const result = await fetchData.get(URL);
       setTagList(() => result.data);
-      return console.log(result.data);
+      return result.data;
     } catch (err: any) {
       console.log(err);
     }
@@ -52,7 +53,7 @@ const LoadingSpinner = () => {
       const result = await fetchData.get(URL);
       setShortsList(() => result.data);
       setShortsLength(() => result.data.length);
-      return console.log(result.data);
+      return result.data;
     } catch (err: any) {
       console.log(err);
     }
@@ -66,7 +67,7 @@ const LoadingSpinner = () => {
       result.data['fitList'] = _.shuffle(result.data['fitList']);
       result.data['highList'] = _.shuffle(result.data['highList']);
       setReccommendSongs(() => result.data);
-      return console.log(result.data);
+      return result.data;
     } catch (err: any) {
       console.log(err);
     }

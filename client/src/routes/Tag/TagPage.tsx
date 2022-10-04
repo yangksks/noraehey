@@ -45,7 +45,8 @@ const TagPage = () => {
   }, [temp]);
 
   const updateTags = async () => {
-    if (userTag.length >= 5 && userTag.length <= 10) {
+    // if (userTag.length >= 5 && userTag.length <= 10) {
+    if (true) {
       let list: Array<number> = [];
       userTag.forEach((data) => {
         list.push(data.tagId);
@@ -99,9 +100,9 @@ const TagPage = () => {
       <>
         <BtnBox>
           <button
-            disabled={
-              userTag.length >= 5 && userTag.length <= 10 ? false : true
-            }
+            // disabled={
+            //   userTag.length >= 5 && userTag.length <= 10 ? false : true
+            // }
             onClick={() => {
               updateTags();
             }}>

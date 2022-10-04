@@ -7,6 +7,7 @@ import ConvertAudio from './ConvertAudio';
 import { fetchData } from '../../utils/api/api';
 import SongBriefInfo from './SongBriefInfo';
 import { useNavigate } from 'react-router-dom';
+import ShortsCreateCard from './ShortsCreateCard';
 
 const ShortsCreatePage = () => {
   const [file, setFile] = useState(null as any);
@@ -92,16 +93,17 @@ const ShortsCreatePage = () => {
       </Title>
 
       <CreateBox>
-        <ShortsCard>
+        {/* <ShortsCard>
           <SongBriefInfo />
-          <textarea
-            id="shortsComment"
-            name="shortsComment"
-            onChange={(e) => {
-              getShortsComment(e.target.value);
-            }}
-          />
-        </ShortsCard>
+        </ShortsCard> */}
+        <ShortsCreateCard />
+        <textarea
+          id="shortsComment"
+          name="shortsComment"
+          onChange={(e) => {
+            getShortsComment(e.target.value);
+          }}
+        />
         <MirtStyle
           file={file}
           onChange={(e: any) => getTrimLocation(e)}
@@ -156,20 +158,6 @@ const CreateBox = styled.div`
   flex-direction: column;
   justify-content: start;
   align-items: center;
-`;
-
-const ShortsCard = styled.div`
-  width: 100%;
-  height: 100%;
-  gap: 20px;
-  padding: 20px;
-  border-radius: 10px;
-  display: flex;
-  flex-direction: column;
-  justify-content: start;
-  align-items: center;
-  box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.3);
-
   #shortsComment {
     width: 100%;
     aspect-ratio: 4;

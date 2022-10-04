@@ -4,13 +4,16 @@ import { Route, Routes } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 import Container from '../../style/style';
 import { fetchData } from '../../utils/api/api';
-import LikeSongCard from '../Like/LikeSongCard';
-
+import {useRecoilValue} from 'recoil';
+import {userInfoState} from '../../Atom'
+// import LikeSongCard from '../Like/LikeSongCard';
+import SongCard from '../Home/SongCard';
 const SearchPage = () => {
   const [searchText, setSearchText] = useState('');
   const [searchList, setSearchList] = useState([]);
   const [nowTab, setNowTab] = useState(1);
   const [prevText, setPrevText] = useState('');
+  const userKey = useRecoilValue(userInfoState).memberHighPitch;
   const navigate = useNavigate();
   useEffect(() => {
     fetchData
@@ -73,7 +76,7 @@ const SearchPage = () => {
       <SearchResult>
         {searchList.length !== 0 ? (
           searchList.map((item, i) => (
-            <LikeSongCard songData={item} key={i}></LikeSongCard>
+            <SongCard key={i} songData={item} userInfo={userKey} />
           ))
         ) : (
           <div>검색 결과가 없습니다.</div>

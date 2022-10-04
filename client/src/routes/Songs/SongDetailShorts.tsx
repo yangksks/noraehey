@@ -3,7 +3,9 @@ import { AiFillHeart } from 'react-icons/ai';
 import { useEffect, useState } from 'react';
 import { fetchData } from '../../utils/api/api';
 import { useParams } from 'react-router';
+import { useNavigate } from 'react-router-dom';
 interface shortsListType {
+  shortsId: number;
   likeCount: number;
   memberNickname: string;
   memberProfileUrl: string;
@@ -11,7 +13,7 @@ interface shortsListType {
 const SongDetailShorts = () => {
   const { songId } = useParams();
   const [shortsData, setShortsData] = useState<shortsListType[]>([]);
-
+  const navigate = useNavigate();
   useEffect(() => {
     fetchData.get(`/api/v1/shorts/song/${songId}?page=0`).then((res) => {
       setShortsData(res.data.shortsList);
@@ -23,7 +25,11 @@ const SongDetailShorts = () => {
       <SongShortsList>
         <ul>
           {shortsData.map((item, i) => (
-            <SongShortsItem key={i}>
+            <SongShortsItem
+              key={i}
+              onClick={() => {
+                navigate(`/shorts/${item.shortsId}`);
+              }}>
               <img src={item.memberProfileUrl} alt="" />
               <p className="nickname">{item.memberNickname}</p>
               <p className="like">

@@ -5,7 +5,7 @@ import {
 } from 'react-icons/md';
 import { BsDash } from 'react-icons/bs';
 import { useNavigate } from 'react-router-dom';
-
+import { HiMinusSm } from 'react-icons/hi';
 interface songsType {
   songHighPitch: 0;
   songId: -1;
@@ -45,7 +45,7 @@ const SongCard = (props: songProps) => {
         <p className="key" style={{ color: `${keyColor}` }}>
           {myKey}
           {(diff < 0 && <MdOutlineKeyboardArrowDown />) ||
-            (diff === 0 && <BsDash />) ||
+            (diff === 0 && <HiMinusSm />) ||
             (diff > 0 && <MdOutlineKeyboardArrowUp />)}
         </p>
       </SongInfo>
@@ -108,7 +108,7 @@ const SongInfo = styled.div`
     text-overflow: ellipsis;
     word-wrap: break-word;
     display: -webkit-box;
-    -webkit-line-clamp: 2;
+    -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
   }
 

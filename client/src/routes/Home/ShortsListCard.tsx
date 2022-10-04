@@ -8,13 +8,12 @@ interface shortsType {
 }
 
 const ShortsListCard = (props: shortsType) => {
-  const user = useRecoilValue(userInfoState);
   const shorts = useRecoilValue(shortsListState)[props.idx];
-  const userName = user.memberNickname;
   const songData = {
     URL: shorts.songImageUrl,
     title: shorts.songTitle,
     artist: shorts.songSinger,
+    userName: shorts.memberNickname
   };
   const navigate = useNavigate();
 
@@ -49,7 +48,7 @@ const ShortsListCard = (props: shortsType) => {
         <p className="title">{songData.title}</p>
         <p className="singer">{songData.artist}</p>
         <User>
-          <p>{userName}</p>
+          <p>{songData.userName}</p>
           <p>{getCreatedTime()}</p>
         </User>
       </HeadAndFoot>
