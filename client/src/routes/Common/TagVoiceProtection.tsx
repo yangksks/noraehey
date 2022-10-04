@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Navigate, Outlet } from 'react-router-dom';
+import { Navigate, Outlet, useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
 import { tagListState, userInfoState, userTagListState } from '../../Atom';
@@ -11,6 +11,13 @@ const TagVoiceProtection = () => {
   const [userInfo, setUserInfo] = useRecoilState(userInfoState);
   const [userTags, setUserTags] = useRecoilState(userTagListState);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
+
+  const logout = () => {
+    sessionStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
+    navigate('/login');
+  };
 
   const getUserInfo = async () => {
     const URL = '/api/v1/member/info';
@@ -20,6 +27,7 @@ const TagVoiceProtection = () => {
       setUserTags(result.data.memberTagList);
     } catch (err: any) {
       console.log(err);
+      logout();
     }
   };
 

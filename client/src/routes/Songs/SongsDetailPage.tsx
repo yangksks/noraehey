@@ -7,7 +7,6 @@ import AlbumImage from './AlbumImage';
 import SongLyrics from './SongLyrics';
 import SongBtnList from './SongBtnList';
 import SongDetailShorts from './SongDetailShorts';
-// import { fetchData } from '../../utils/api/api';
 import SongInfo from './SongInfo';
 import { useParams } from 'react-router-dom';
 import { useLocation } from 'react-router';

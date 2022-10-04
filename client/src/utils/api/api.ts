@@ -1,33 +1,51 @@
 import axios from 'axios';
 
 const getAccessToken = () => {
+  console.log('getAccessToken');
+
   const accessToken = sessionStorage.getItem('accessToken');
   return accessToken;
 };
 const getLocalRefreshToken = () => {
+  console.log('getLocalRefreshToken');
+
   const refreshToken = localStorage.getItem('refreshToken');
   return refreshToken;
 };
 
 export const setRefreshToken = (refreshToken: string) => {
+  console.log('setRefreshToken');
   localStorage.setItem('refreshToken', refreshToken);
 };
 
 export const removeRefreshToken = () => {
+  console.log('removeRefreshToken');
   localStorage.removeItem('refreshToken');
 };
 
 export const removeAccessToken = () => {
+  console.log('removeAccessToken');
   sessionStorage.removeItem('accessToken');
 };
 
-const getNewAccessToken = () => {
-  return instance.get('/api/v1/member/refresh', {
+const getNewAccessToken = async () => {
+  const baseURL = import.meta.env.VITE_BASE_URL;
+  const refreshtoken = getLocalRefreshToken();
+  console.log('getNewAccessToken');
+  const result = await axios.get(`${baseURL}api/v1/member/refresh`, {
     headers: {
-      'REFRESH-TOKEN': `${getLocalRefreshToken()}`,
+      'REFRESH-TOKEN': `${refreshtoken}`,
     },
   });
+  return result;
 };
+
+// export const axiosInstance = axios.create({
+//   baseURL: import.meta.env.VITE_BASE_URL,
+//   headers: {
+//     'Content-Type': 'application/json',
+//   },
+// });
 
 export const instance = axios.create({
   baseURL: import.meta.env.VITE_BASE_URL,
@@ -60,15 +78,20 @@ instance.interceptors.response.use(
         err.response.status === 401 &&
         err.response.data?.error === 'TokenExpiredException'
       ) {
+        console.log('int1');
         try {
+          console.log('int2try');
           const response = await getNewAccessToken();
+          console.log('int3try');
           console.log(response);
           const { accessToken, refreshToken } = response.data;
           sessionStorage.setItem('accessToken', accessToken);
           setRefreshToken(refreshToken);
+          console.log('int4try');
           instance.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
           return instance(originalConfig);
         } catch (err: any) {
+          console.log('int2catch');
           if (
             err.response.status === 401 &&
             err.response.data?.message === 'REFRESH_ERROR'
@@ -76,7 +99,7 @@ instance.interceptors.response.use(
             removeAccessToken();
             removeRefreshToken();
             setTimeout(() => {
-              window.location.href = '/';
+              window.location.href = '/login';
             }, 2000);
             return;
           }

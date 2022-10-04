@@ -11,7 +11,6 @@ import MagazineDetailPage from './routes/Magazine/MagazineDetailPage';
 import ShortsDetailPage from './routes/Shorts/ShortsDetailPage';
 import SongsDetailPage from './routes/Songs/SongsDetailPage';
 import SearchPage from './routes/Search/SearchPage';
-import SettingPage from './routes/Profile/SettingPage';
 import LikePage from './routes/Like/LikePage';
 import LikeShortsPage from './routes/Like/LikeShortsPage';
 import LikeSongPage from './routes/Like/LikeSongPage';
@@ -21,10 +20,10 @@ import LoggedInProtection from './routes/Common/LoggedInProtection';
 import ShortsCreatePage from './routes/Shorts/ShortsCreatePage';
 import LoadingSpinner from './routes/Common/LoadingSpinner';
 import TagVoiceProtection from './routes/Common/TagVoiceProtection';
-import UserShorts from './routes/Profile/UserShorts';
 import RecommendSongsPage from './routes/Home/RecommendSongsPage';
 import VoiceResultPage from './routes/HighNote/VoiceResultPage';
 import RandomShorts from './routes/Shorts/RandomShorts';
+import ProfileSettingPage from './routes/Profile/ProfileSettingPage';
 const Router = () => {
   return (
     <BrowserRouter>
@@ -53,10 +52,8 @@ const Router = () => {
             />
 
             <Route path="/search/*" element={<SearchPage />} />
-            <Route path="/profile/:userId" element={<ProfilePage />}>
-              <Route path="" element={<UserShorts />} />
-              <Route path="setting" element={<SettingPage />} />
-            </Route>
+            <Route path="/profile/:userId" element={<ProfilePage />} />
+            <Route path="/profile/setting" element={<ProfileSettingPage />} />
             <Route path="/songs/:songId" element={<SongsDetailPage />} />
             <Route path="/like/*" element={<LikePage />}>
               <Route path="songlist" element={<LikeSongPage />} />

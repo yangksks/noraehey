@@ -15,7 +15,6 @@ const ShortsCreatePage = () => {
   const [startPoint, setStartPoint] = useState(0);
   const [endPoint, setEndPoint] = useState(1);
   const navigate = useNavigate();
-
   useEffect(() => {
     console.log(convertFile);
     if (convertFile) {

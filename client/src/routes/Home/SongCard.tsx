@@ -26,12 +26,12 @@ const SongCard = (props: songProps) => {
   const navigate = useNavigate();
   const myKey =
     (diff < 0 && `${-diff} Key`) ||
-    (diff === 0 && `Perfect Key`) ||
+    (diff === 0 && `${diff} Key`) ||
     (diff > 0 && `${diff} Key`);
 
   const keyColor =
-    (diff < 0 && '#5ca535') ||
-    (diff === 0 && '#5574c4') ||
+    (diff < 0 && '#5574c4') ||
+    (diff === 0 && '#5ca535') ||
     (diff > 0 && '#d53958');
   return (
     <SongBox
@@ -65,7 +65,6 @@ const SongBox = styled.div`
   justify-content: start;
   align-items: center;
   padding: 8px 1px;
-  border-top: solid 1px #a0a0a0;
 `;
 
 const AlbumArt = styled.div<{ url: string }>`

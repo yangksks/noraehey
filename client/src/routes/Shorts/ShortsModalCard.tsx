@@ -7,7 +7,9 @@ import {
 } from 'react-icons/ai';
 import { useEffect, useState } from 'react';
 import { fetchData } from '../../utils/api/api';
-
+import getCreatedTime from '../../utils/getCreatedTime';
+import { useNavigate } from 'react-router-dom';
+import { IoClose } from 'react-icons/io5';
 export interface shortsDetailType {
   shortsId: number;
   shortsComment: string;
@@ -33,7 +35,8 @@ const ShortsModalCard = (props: any) => {
   const [play, setPlay] = useState(false);
   const [likeCount, setLikeCount] = useState(0);
   const [liked, setLiked] = useState(false);
-
+  const createdTime = getCreatedTime(shortsData.shortsCreateTime);
+  const navigate = useNavigate();
   useEffect(() => {
     setAudio(new Audio(shortsData.shortsAudioUrl));
     setLikeCount(shortsData.likeCount);
@@ -56,11 +59,20 @@ const ShortsModalCard = (props: any) => {
     <>
       <ShortsCard>
         <Profile>
-          <img src={shortsData.memberProfileUrl} alt="" />
+          <img
+            src={shortsData.memberProfileUrl}
+            alt=""
+            onClick={() => {
+              navigate(`/profile/${shortsData.memberId}`);
+            }}
+          />
           <div>
             <p>{shortsData.memberNickname}</p>
-            <span>{shortsData.shortsCreateTime}</span>
+            <span>{createdTime}</span>
           </div>
+          <IoClose size={32} onClick={() => {
+              navigate(-1);
+            }}/>
         </Profile>
         <Album
           play={play}
@@ -71,9 +83,9 @@ const ShortsModalCard = (props: any) => {
             <i></i>
             <img src={shortsData.songImageUrl} alt="" />
             {play ? (
-              <AiFillPlayCircle size={70} />
-            ) : (
               <AiFillPauseCircle size={70} />
+            ) : (
+              <AiFillPlayCircle size={70} />
             )}
           </div>
         </Album>
@@ -173,6 +185,7 @@ const Profile = styled.div`
     height: 50px;
     border-radius: 50%;
     object-fit: cover;
+    cursor: pointer;
   }
   & > div {
     display: flex;
@@ -183,6 +196,10 @@ const Profile = styled.div`
       font-size: 12px;
       color: ${(props) => props.theme.colors.textGray};
     }
+  }
+  svg{
+    align-self:flex-start;
+    cursor: pointer;
   }
 `;
 const boxFade = keyframes`

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
 import {
@@ -23,6 +23,7 @@ const LoadingSpinner = () => {
     useRecoilState(reccommendSongsState);
   const [tagList, setTagList] = useRecoilState(tagListState);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   const getUserInfo = async () => {
     const URL = '/api/v1/member/info';
@@ -32,6 +33,7 @@ const LoadingSpinner = () => {
       return console.log(result.data);
     } catch (err: any) {
       console.log(err);
+      logout();
     }
   };
 
@@ -70,6 +72,12 @@ const LoadingSpinner = () => {
     } catch (err: any) {
       console.log(err);
     }
+  };
+
+  const logout = () => {
+    sessionStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
+    navigate('/login');
   };
 
   useEffect(() => {

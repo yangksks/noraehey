@@ -25,15 +25,14 @@ const Protection = () => {
     } else {
       setNavStatus(true);
     }
-
   }, [url]);
-
-  if (user.memberTagList.length === 0) {
+  
+  if (!loggedData) {
+    return <Navigate to="/login" replace />;
+  } else if (user.memberTagList.length === 0) {
     return <Navigate to="/tag" replace />;
   } else if (user.memberHighPitch === 0) {
     return <Navigate to="/voice" replace />;
-  } else if (!loggedData) {
-    return <Navigate to="/login" replace />;
   } else {
     return (
       <Container>
