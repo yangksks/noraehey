@@ -57,6 +57,15 @@ public class ShortsController {
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "success"));
     }
 
+    // 인기도 순 쇼츠 조회
+    @GetMapping("/song/popular")
+    public ResponseEntity<?> getShortsOrderByLike(@ApiIgnore Authentication authentication) {
+        Member member = jwtAuthenticationUtil.jwtTokenAuth(authentication);
+
+        List<ShortsEntityRes> resList = shortsService.getShortsListOrderByLike(member);
+        return ResponseEntity.status(200).body(resList);
+    }
+
     // 노래 별 쇼츠 조회 (인기순)
     @GetMapping("/song/{songId}")
     public ResponseEntity<?> getShortsBySong(@PathVariable("songId") Long songId, @RequestParam("page") int page, @ApiIgnore Authentication authentication) {
