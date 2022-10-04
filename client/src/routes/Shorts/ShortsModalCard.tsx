@@ -1,5 +1,10 @@
-import styled, { css } from 'styled-components';
-import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
+import styled, { css, keyframes } from 'styled-components';
+import {
+  AiFillHeart,
+  AiOutlineHeart,
+  AiFillPauseCircle,
+  AiFillPlayCircle,
+} from 'react-icons/ai';
 import { useEffect, useState } from 'react';
 import { fetchData } from '../../utils/api/api';
 
@@ -37,11 +42,16 @@ const ShortsModalCard = (props: any) => {
 
   useEffect(() => {
     audio.loop = true;
+    return () => {
+      audio.pause();
+      audio.loop = false;
+    };
   }, [audio]);
 
   useEffect(() => {
     play ? audio.play() : audio.pause();
   }, [play]);
+
   return (
     <>
       <ShortsCard>
@@ -60,6 +70,11 @@ const ShortsModalCard = (props: any) => {
           <div>
             <i></i>
             <img src={shortsData.songImageUrl} alt="" />
+            {play ? (
+              <AiFillPlayCircle size={70} />
+            ) : (
+              <AiFillPauseCircle size={70} />
+            )}
           </div>
         </Album>
         <SongInfo>
@@ -115,6 +130,7 @@ const ShortsCard = styled.div`
   width: 90%;
   min-height: 500px;
   height: 82%;
+  max-height: 750px;
   padding: 20px;
   display: flex;
   justify-content: space-between;
@@ -169,14 +185,53 @@ const Profile = styled.div`
     }
   }
 `;
-
+const boxFade = keyframes`
+  0% {
+    transform:translate(-50%, -50%) scale(0,0);
+    opacity: 0;
+  }
+  50% {
+    transform:translate(-50%, -50%) scale(1,1);
+    opacity: 1;
+  }
+  100% {
+    
+    opacity: 0;
+  }
+`;
+const boxFade2 = keyframes`
+  0% {
+    transform:translate(-50%, -50%) scale(0,0);
+    opacity: 0;
+  }
+  100% {
+    transform:translate(-50%, -50%) scale(1,1);
+    opacity: 1;
+  }
+ 
+`;
 const Album = styled.div<{ play: boolean }>`
   position: relative;
   display: flex;
   justify-content: center;
   div {
     position: relative;
-
+    svg {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: rgba(83, 83, 83, 0.7);
+      animation: ${(props) =>
+        props.play
+          ? css`
+              ${boxFade} 1s
+            `
+          : css`
+              ${boxFade2} .5s
+            `};
+      opacity: ${(props) => (props.play ? 0 : 1)};
+    }
     img {
       width: 200px;
       height: 200px;

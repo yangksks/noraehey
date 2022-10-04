@@ -7,7 +7,6 @@ import {
 } from 'react-icons/ai';
 import { useEffect, useState } from 'react';
 import { fetchData } from '../../utils/api/api';
-import React from 'react';
 export interface shortsDetailType {
   shortsId: number;
   shortsComment: string;
@@ -118,6 +117,7 @@ const ShortsDetailCard = (props: any) => {
 const ShortsCard = styled.div`
   width: 90%;
   min-height: 500px;
+  max-height: 750px;
   height: 90%;
   padding: 20px;
   display: flex;
