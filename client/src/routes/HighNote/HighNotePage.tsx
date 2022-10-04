@@ -19,6 +19,26 @@ const HighNotePage = () => {
   const [pitchList, setPitchList] = useState(reset);
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const stop = () => {
+      navigator.mediaDevices
+        .getUserMedia({ video: false, audio: true })
+        .then((mediaStream) => {
+          const stream = mediaStream;
+          const tracks = stream.getAudioTracks();
+          tracks.forEach((track) => {
+            track.stop();
+            track.enabled = false;
+          });
+          stream.removeTrack(tracks[0]);
+        });
+    };
+
+    return () => {
+      stop();
+    };
+  }, []);
+
   const getPitch = (note: number) => {
     const newList = pitchList;
     newList[note] += 1;
@@ -53,7 +73,7 @@ const HighNotePage = () => {
 
   const finish = async () => {
     await updateUserPitch(pitchNum);
-    navigate('/voice/result');
+    window.location.href = '/voice/result';
   };
 
   const getHighestNote = () => {

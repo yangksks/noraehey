@@ -9,14 +9,20 @@ const MenuURL = ['', 'like/songlist', 'shorts/random', 'search'];
 const NavBar = () => {
   const url = useLocation().pathname.split('/')[1];
   const [urlNow, setUrlNow] = useState(url);
+  const [footerStatus, setFooterStatus] = useState(false);
 
   useEffect(() => {
     setUrlNow(url);
+    if (url === 'shorts') {
+      setFooterStatus(false);
+    } else {
+      setFooterStatus(true);
+    }
   }, [url]);
 
   return (
     <>
-      <Footer />
+      {footerStatus ? <Footer /> : null}
       <Menu>
         {MenuName.map((name, idx) => (
           <Link to={`/${MenuURL[idx]}`} key={name}>

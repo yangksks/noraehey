@@ -42,11 +42,16 @@ const ShortsModalCard = (props: any) => {
 
   useEffect(() => {
     audio.loop = true;
+    return () => {
+      audio.pause();
+      audio.loop = false;
+    };
   }, [audio]);
 
   useEffect(() => {
     play ? audio.play() : audio.pause();
   }, [play]);
+
   return (
     <>
       <ShortsCard>
@@ -125,6 +130,7 @@ const ShortsCard = styled.div`
   width: 90%;
   min-height: 500px;
   height: 82%;
+  max-height: 750px;
   padding: 20px;
   display: flex;
   justify-content: space-between;
