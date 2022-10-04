@@ -8,4 +8,5 @@ import lombok.Getter;
 public class MemberInfoRes {
     private String memberNickname;
     private String memberProfileUrl;
+    private int memberHighPitch;
 }
