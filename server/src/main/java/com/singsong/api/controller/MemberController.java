@@ -136,6 +136,7 @@ public class MemberController {
         MemberInfoRes memberInfoRes = MemberInfoRes.builder()
                 .memberNickname(member.getMemberNickname())
                 .memberProfileUrl(member.getMemberProfileUrl())
+                .memberHighPitch(member.getMemberHighPitch())
                 .build();
 
         return ResponseEntity.status(200).body(memberInfoRes);
