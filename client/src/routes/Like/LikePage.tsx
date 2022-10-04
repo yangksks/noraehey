@@ -1,6 +1,7 @@
 import { NavLink, Outlet } from 'react-router-dom';
 import styled from 'styled-components';
 import Container from '../../style/style';
+
 const LikePage = () => {
   return (
     <Container>

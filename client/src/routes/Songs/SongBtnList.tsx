@@ -15,6 +15,7 @@ const SongBtnList = (props: any) => {
   const { songId } = useParams();
   const [evalToggle, setEvalToggle] = useState(false);
   const [nowEval, setNowEval] = useState(0);
+  const navigate = useNavigate();
   useEffect(() => {
     setNowEval(myEval);
   }, [props]);
@@ -40,8 +41,10 @@ const SongBtnList = (props: any) => {
           }}>
           평가
         </button>
-        <button>
-          <Link to={`/create/shorts/${songId}`}>쇼츠 등록</Link>
+        <button onClick={()=>{
+          navigate(`/create/shorts/${songId}`);
+        }}>
+          쇼츠 등록
         </button>
       </BtnList>
       <Evaluation evalToggle={evalToggle} eval={nowEval}>

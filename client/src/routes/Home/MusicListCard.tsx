@@ -49,6 +49,7 @@ const BoxHeader = styled.div`
   font-size: 18px;
   font-family: 'omni035';
   box-sizing: border-box;
+  border-bottom: 1px solid #929292;
 
   p {
     font-size: 10px;

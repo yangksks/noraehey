@@ -1,39 +1,36 @@
 import { ImArrowLeft2 } from 'react-icons/im';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
-import { useRecoilState, useRecoilValue } from 'recoil';
 import styled from 'styled-components';
-import { userInfoState } from '../../Atom';
 import Container from '../../style/style';
 import { FiSettings } from 'react-icons/fi';
-import { RiPencilFill } from 'react-icons/ri';
 import { useEffect, useState } from 'react';
 import { fetchData } from '../../utils/api/api';
+import { userInfoState } from '../../Atom';
+import { useRecoilValue } from 'recoil';
+import UserShorts from './UserShorts';
+
 const ProfilePage = () => {
-  const url = useLocation().pathname.split('/')[3];
-  const [settingNow, setSettingNow] = useState(url);
+  const userId = useLocation().pathname.split('/')[2];
+  const [itsMe, setItsMe] = useState(false);
   const [nameEdit, setNameEdit] = useState(false);
-  const [user, setUser] = useRecoilState(userInfoState);
-  const [nickname, setNickname] = useState(user.memberNickname);
+  const [user, setUser] = useState(null) as any;
+  const [loading, setLoading] = useState(true);
+  const me = useRecoilValue(userInfoState);
   const navigate = useNavigate();
 
   useEffect(() => {
-    setSettingNow(url);
-    setNameEdit(false);
-    updateUserInfo();
-  }, [url]);
+    const syncFunc = async () => {
+      await getUserInfo();
+      setItsMe(false);
+      isItMe();
+      setNameEdit(false);
+      setLoading(false);
+    };
+    syncFunc();
+  }, [userId]);
 
-  const updateNickname = async () => {
-    const URL = '/api/v1/member/nickname';
-    try {
-      const result = await fetchData.patch(URL, { nickname: nickname });
-      return console.log(result);
-    } catch (err: any) {
-      console.log(err);
-    }
-  };
-
-  const updateUserInfo = async () => {
-    const URL = '/api/v1/member/info';
+  const getUserInfo = async () => {
+    const URL = `/api/v1/member/info/${userId}`;
     try {
       const result = await fetchData.get(URL);
       setUser(() => result.data);
@@ -43,104 +40,47 @@ const ProfilePage = () => {
     }
   };
 
-  const updateUserImage = async (profileImg: any) => {
-    const option = {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    };
-    console.log(profileImg);
-    let formData = new FormData();
-    const URL = '/api/v1/member/profileimg';
-    formData.append('profileImg', profileImg);
-    try {
-      const result = await fetchData.patch(URL, formData, option);
-      return console.log(result.data);
-    } catch (err: any) {
-      console.log(err);
+  const isItMe = () => {
+    if (me.memberId === +userId) {
+      setItsMe(true);
     }
   };
 
-  const ChangeName = () => {
-    const syncFunc = async () => {
-      await updateNickname();
-      await updateUserInfo();
-    };
-    syncFunc();
-    setNameEdit(!nameEdit);
-  };
-
-  const getImage = (input: any) => {
-    const syncFunc = async () => {
-      await updateUserImage(input[0]);
-      await updateUserInfo();
-    };
-    syncFunc();
-  };
-
-  return (
-    <Container>
-      <TitleBox>
-        <Title>
-          <ImArrowLeft2
-            size={30}
-            onClick={() => {
-              navigate(-1);
-            }}
-          />
-        </Title>
-        {settingNow !== 'setting' ? (
-          <SettingButton
-            onClick={() => {
-              navigate('setting');
-            }}>
-            <FiSettings />
-          </SettingButton>
-        ) : null}
-      </TitleBox>
-      <Profile>
-        <PicBox>
-          <img src={user.memberProfileUrl} alt="" />
-          {settingNow !== 'setting' ? null : (
-            <PicEdit>
-              <label className="profileImageBtn" htmlFor="profileImage" />
-              <p>수정</p>
-              <RiPencilFill />
-              <input
-                type="file"
-                name="profileImage"
-                id="profileImage"
-                accept="image/*"
-                onChange={(e) => {
-                  getImage(e.target.files);
-                }}
-                style={{ display: 'none' }}
-              />
-            </PicEdit>
-          )}
-        </PicBox>
-        <NameBox>
-          {nameEdit ? (
-            <textarea
-              onChange={(e) => {
-                setNickname(e.target.value);
-              }}
-              defaultValue={user.memberNickname}></textarea>
-          ) : (
-            <p>{user.memberNickname}</p>
-          )}
-          {settingNow !== 'setting' ? null : (
-            <RiPencilFill
+  const render = () => {
+    return (
+      <Container>
+        <TitleBox>
+          <Title>
+            <ImArrowLeft2
+              size={30}
               onClick={() => {
-                settingNow !== 'setting' ? null : ChangeName();
+                navigate(-1);
               }}
             />
-          )}
-        </NameBox>
-      </Profile>
-      <Outlet></Outlet>
-    </Container>
-  );
+          </Title>
+          {itsMe ? (
+            <SettingButton
+              onClick={() => {
+                navigate('/profile/setting');
+              }}>
+              <FiSettings />
+            </SettingButton>
+          ) : null}
+        </TitleBox>
+        <Profile>
+          <PicBox>
+            <img src={user.memberProfileUrl} alt="" />
+          </PicBox>
+          <NameBox>
+            <p>{user.memberNickname}</p>
+          </NameBox>
+        </Profile>
+        <UserShorts />
+      </Container>
+    );
+  };
+
+  return loading ? null : render();
 };
 
 const Profile = styled.div`
@@ -173,28 +113,6 @@ const PicBox = styled.div`
     width: 120px;
     height: 120px;
     z-index: 1;
-  }
-`;
-
-const PicEdit = styled.div`
-  position: absolute;
-  display: flex;
-  justify-content: center;
-  flex-direction: row;
-  align-items: center;
-  width: 120px;
-  height: 40px;
-  z-index: 2;
-  background-color: rgba(221, 221, 221, 0.588);
-  svg {
-    font-size: 18px;
-    padding-bottom: 3px;
-  }
-  .profileImageBtn {
-    position: absolute;
-    width: 100%;
-    height: 500%;
-    cursor: pointer;
   }
 `;
 

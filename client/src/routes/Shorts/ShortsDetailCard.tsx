@@ -7,6 +7,8 @@ import {
 } from 'react-icons/ai';
 import { useEffect, useState } from 'react';
 import { fetchData } from '../../utils/api/api';
+import getCreatedTime from '../../utils/getCreatedTime';
+import { useNavigate } from 'react-router-dom';
 export interface shortsDetailType {
   shortsId: number;
   shortsComment: string;
@@ -27,11 +29,13 @@ export interface shortsDetailType {
 }
 
 const ShortsDetailCard = (props: any) => {
+  const navigate = useNavigate();
   const { shortsData, play, setPlay } = props;
   // const [audio, setAudio] = useState(new Audio());
   // const [play, setPlay] = useState(false);
   const [likeCount, setLikeCount] = useState(0);
   const [liked, setLiked] = useState(false);
+  const createdTime = getCreatedTime(shortsData.shortsCreateTime);
 
   useEffect(() => {
     // setAudio(new Audio(shortsData.shortsAudioUrl));
@@ -45,10 +49,16 @@ const ShortsDetailCard = (props: any) => {
   return (
     <ShortsCard>
       <Profile>
-        <img src={shortsData.memberProfileUrl} alt="" />
+        <img
+          src={shortsData.memberProfileUrl}
+          alt=""
+          onClick={() => {
+            navigate(`/profile/${shortsData.memberId}`);
+          }}
+        />
         <div>
           <p>{shortsData.memberNickname}</p>
-          <span>{shortsData.shortsCreateTime}</span>
+          <span>{createdTime}</span>
         </div>
       </Profile>
       <Album
@@ -60,9 +70,9 @@ const ShortsDetailCard = (props: any) => {
           <i></i>
           <img src={shortsData.songImageUrl} alt="" />
           {play ? (
-            <AiFillPlayCircle size={70} />
-          ) : (
             <AiFillPauseCircle size={70} />
+          ) : (
+            <AiFillPlayCircle size={70} />
           )}
         </div>
       </Album>
@@ -161,6 +171,7 @@ const Profile = styled.div`
     height: 50px;
     border-radius: 50%;
     object-fit: cover;
+    cursor: pointer;
   }
   & > div {
     display: flex;
