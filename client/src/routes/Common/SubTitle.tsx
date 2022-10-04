@@ -37,7 +37,6 @@ const Title = styled.div`
     width: 100%;
     padding-left: 25px;
     font-size: 18px;
-    font-weight: 700;
   }
 `;
 

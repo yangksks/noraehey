@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 import { myshortsListState, userInfoState } from '../../Atom';
@@ -10,10 +11,10 @@ const UserShorts = () => {
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(0);
   const [hasMore, setHasMore] = useState('');
-  const user = useRecoilValue(userInfoState);
+  const url = useLocation().pathname.split('/')[2];
 
   const getMyShortsList = async () => {
-    const URL = `/api/v1/shorts/member/${user.memberId}?page=${page}`;
+    const URL = `/api/v1/shorts/member/${url}?page=${page}`;
     try {
       const result = await fetchData.get(URL);
       console.log(result);
@@ -30,7 +31,7 @@ const UserShorts = () => {
       setLoading(false);
     };
     syncFunc();
-  }, []);
+  }, [url]);
 
   const render = () => {
     return shortsList.map((short, idx) => {

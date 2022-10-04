@@ -44,13 +44,16 @@ const TagPage = () => {
     scrollToBottom();
   }, [temp]);
 
-  const updateTags = () => {
+  const updateTags = async () => {
     if (userTag.length >= 5 && userTag.length <= 10) {
       let list: Array<number> = [];
       userTag.forEach((data) => {
         list.push(data.tagId);
       });
-      fetchData.patch('/api/v1/member/tag', { tagIdList: list });
+      const result = await fetchData.patch('/api/v1/member/tag', {
+        tagIdList: list,
+      });
+      console.log(result.data);
       navigate('/');
     } else {
       alert('태그는 5개 이상 10개 이하로 선택해주세요.');

@@ -1,18 +1,17 @@
 import styled from 'styled-components';
 import { useEffect, useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import UserInfo from './UserInfo';
-import { useRecoilValue } from 'recoil';
+import { useRecoilState } from 'recoil';
 import { userInfoState } from '../../Atom';
 
 const Header = () => {
   const [infoBar, setInfoBar] = useState(false);
-  const url = useLocation().pathname.split('/')[1];
-  const user = useRecoilValue(userInfoState);
+  const [userInfo, setUserInfo] = useRecoilState(userInfoState);
 
   useEffect(() => {
     setInfoBar(false);
-  }, [url]);
+  }, [userInfo]);
 
   return (
     <HeaderContainer>
@@ -27,9 +26,7 @@ const Header = () => {
               <p style={{ color: 'white' }}>HEY</p>
             </Logo>
           </Link>
-          <ProfileImg
-            src={user.memberProfileUrl}
-          />
+          <ProfileImg src={userInfo.memberProfileUrl} />
         </TopBox>
         <UserInfo />
       </HeaderTop>

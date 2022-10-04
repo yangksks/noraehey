@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components';
 import Container from '../../style/style';
-import { IoClose } from 'react-icons/io5';
+
 import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
@@ -31,7 +31,7 @@ const ShortsDetailPage = () => {
   return (
     <Container>
       <Shorts>
-        <Title>
+        {/* <Title>
           <ImArrowLeft2
             size={30}
             color={'white'}
@@ -39,7 +39,7 @@ const ShortsDetailPage = () => {
               navigate(-1);
             }}
           />
-        </Title>
+        </Title> */}
         <ShortsModalCard shortsData={shortsData} />
       </Shorts>
     </Container>

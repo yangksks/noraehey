@@ -82,7 +82,7 @@ const SongInfo = (props: any) => {
             </>
           ) : (
             <>
-              <span style={{ color: 'green' }}>-</span>
+              <span style={{ color: 'green' }}>0 Key -</span>
             </>
           )}
         </p>
