@@ -42,7 +42,7 @@ const LyricsText = styled.div<{ lyricsToggle: boolean }>`
   height: ${(props) => (props.lyricsToggle ? '200px' : '0px')};
   text-align: center;
   font-size: 14px;
-  transition: 0.5s;
+  transition: 0.2s ease-in-out;
   overflow: auto;
   line-height: 20px;
 `;
