@@ -43,11 +43,11 @@ const ShortsListCard = (props: shortsType) => {
       }}>
       <HeadAndFoot />
       <Description>
-        <p>{shorts.shortsComment}</p>
+        <p className="comment">{shorts.shortsComment}</p>
       </Description>
       <HeadAndFoot>
         <p className="title">{songData.title}</p>
-        <p className="title">{songData.artist}</p>
+        <p className="singer">{songData.artist}</p>
         <User>
           <p>{userName}</p>
           <p>{getCreatedTime()}</p>
@@ -72,7 +72,7 @@ const User = styled.div`
 const HeadAndFoot = styled.div`
   position: relative;
   width: 100%;
-  height: 25%;
+  height: 30%;
   padding: 0 10px;
   gap: 3px;
   display: flex;
@@ -83,9 +83,17 @@ const HeadAndFoot = styled.div`
   color: #ffffff;
   font-family: 'omni025';
   box-sizing: border-box;
-  .title,
+  .title {
+    width: 100%;
+    font-size: 14px;
+    text-align: start;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
   .singer {
     width: 100%;
+    color: #ffc34e;
     text-align: start;
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -96,8 +104,8 @@ const HeadAndFoot = styled.div`
 const Description = styled.div`
   position: relative;
   width: 100%;
-  height: 50%;
-  padding: 10px;
+  height: 40%;
+  padding: 0 10px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -106,6 +114,14 @@ const Description = styled.div`
   color: #ffffff;
   font-family: 'omni025';
   box-sizing: border-box;
+  .comment {
+    text-shadow: 0px 0px 6px rgba(0, 0, 0, 0.8);
+    overflow: hidden;
+    word-wrap: break-word;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+  }
 `;
 
 const ShortsBox = styled.div<{ album: string }>`
@@ -118,9 +134,11 @@ const ShortsBox = styled.div<{ album: string }>`
   background-color: white;
   border-radius: 15px;
   background-image: linear-gradient(
-      rgba(122, 122, 122, 0.55) 35%,
-      rgba(0, 0, 0, 0.7) 90%
+      rgba(122, 122, 122, 0) -20%,
+      rgba(0, 0, 0, 0.4) 50%,
+      rgba(122, 122, 122, 0) 120%
     ),
+    linear-gradient(rgba(87, 86, 86, 0.55) 35%, rgba(0, 0, 0, 0.7) 90%),
     url(${({ album }) => album});
   background-size: cover;
   background-position: center center;

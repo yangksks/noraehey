@@ -59,6 +59,7 @@ const SongCard = (props: songProps) => {
 
 const SongBox = styled.div`
   width: 100%;
+  height: 20%;
   display: flex;
   flex-direction: row;
   justify-content: start;

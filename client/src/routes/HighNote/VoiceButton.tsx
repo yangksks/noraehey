@@ -4,8 +4,6 @@ import AudioContext from './AudioContext';
 import autoCorrelate from './AutoCorrelate';
 import VoiceButtonBorder from './VoiceButtonBorder';
 import { FiMic } from 'react-icons/fi';
-import { fetchData } from '../../utils/api/api';
-import { useNavigate } from 'react-router-dom';
 
 const audioCtx = AudioContext.getAudioContext();
 const analyserNode = AudioContext.getAnalyser();
@@ -36,7 +34,6 @@ interface VoiceBtnType {
 const VoiceButton = (props: VoiceBtnType) => {
   const [source, setSource] = useState(null) as any;
   const [started, setStart] = useState(false);
-  const [ended, setEnded] = useState(false);
   const [pitchNote, setPitchNote] = useState('도') as any;
   const [pitchScale, setPitchScale] = useState('1') as any;
 
@@ -47,7 +44,6 @@ const VoiceButton = (props: VoiceBtnType) => {
 
   const getResult = (data: number) => {
     props.getPitch(data);
-    console.log(data);
   };
 
   const updatePitch = () => {
@@ -66,38 +62,18 @@ const VoiceButton = (props: VoiceBtnType) => {
   };
 
   useEffect(() => {
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
+
+  useEffect(() => {
     if (source !== null) {
       source.connect(analyserNode);
     }
   }, [source]);
 
-  useEffect(() => {
-    const stop = () => {
-      navigator.mediaDevices
-        .getUserMedia({ video: false, audio: true })
-        .then((mediaStream) => {
-          const stream = mediaStream;
-          const tracks = stream.getAudioTracks();
-          tracks.forEach((track) => {
-            track.stop();
-            track.enabled = false;
-          });
-          stream.removeTrack(tracks[0]);
-        });
-    };
-
-    if (ended) {
-      props.finish();
-    }
-    // 일단 측정페이지이니까 새로고침일어나도 무방하다판단
-    // 나중에 오디오제거 방법 찾아내면 추가예정
-
-    return () => {
-      stop();
-    };
-  }, [ended]);
-
-  setInterval(updatePitch, 100);
+  const interval = setInterval(updatePitch, 100);
 
   const start = async () => {
     const input = await getMicInput();
@@ -134,7 +110,7 @@ const VoiceButton = (props: VoiceBtnType) => {
       ) : (
         <StartBtn
           onClick={() => {
-            setEnded(true);
+            props.finish();
           }}
           status={started}>
           {pitchNote}
