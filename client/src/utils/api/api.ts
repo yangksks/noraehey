@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+const baseURL = 'https://j7a503.p.ssafy.io';
+
 const getAccessToken = () => {
   console.log('getAccessToken');
 
@@ -29,7 +31,6 @@ export const removeAccessToken = () => {
 };
 
 const getNewAccessToken = async () => {
-  const baseURL = import.meta.env.VITE_BASE_URL;
   const refreshtoken = getLocalRefreshToken();
   console.log('getNewAccessToken');
   const result = await axios.get(`${baseURL}/api/v1/member/refresh`, {
@@ -40,15 +41,8 @@ const getNewAccessToken = async () => {
   return result;
 };
 
-// export const axiosInstance = axios.create({
-//   baseURL: import.meta.env.VITE_BASE_URL,
-//   headers: {
-//     'Content-Type': 'application/json',
-//   },
-// });
-
 export const instance = axios.create({
-  baseURL: import.meta.env.VITE_BASE_URL,
+  baseURL: baseURL,
   headers: {
     'Content-Type': 'application/json',
   },
