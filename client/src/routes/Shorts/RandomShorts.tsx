@@ -45,6 +45,10 @@ const RandomShorts = () => {
       audio.play();
       setPlay(true);
     }
+    return () => {
+      audio.pause();
+      audio.loop = false;
+    };
   }, [audio]);
 
   useEffect(() => {

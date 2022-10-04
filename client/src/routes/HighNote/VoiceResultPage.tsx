@@ -1,9 +1,11 @@
 import { useNavigate } from 'react-router-dom';
-import { useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 import { userInfoState } from '../../Atom';
 import { keyList } from '../../utils/constants/constants';
 import { FiArrowLeft } from 'react-icons/fi';
+import { fetchData } from '../../utils/api/api';
+import { useEffect } from 'react';
 
 const setScreenSize = () => {
   let vh = window.innerHeight * 0.01;
@@ -14,7 +16,22 @@ window.addEventListener('resize', () => setScreenSize());
 
 const VoiceResultPage = () => {
   const navigate = useNavigate();
-  const user = useRecoilValue(userInfoState);
+  const [user, setUser] = useRecoilState(userInfoState);
+
+  const updateUserInfo = async () => {
+    const URL = '/api/v1/member/info';
+    try {
+      const result = await fetchData.get(URL);
+      setUser(() => result.data);
+      return console.log(result.data);
+    } catch (err: any) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    updateUserInfo();
+  }, []);
 
   return (
     <ResultContainer>
@@ -79,20 +96,21 @@ const Title = styled.div`
 `;
 
 const Footer = styled.div`
+  position: relative;
   font-size: 20px;
   width: 100%;
-  position: fixed;
+  padding: 20px;
   color: white;
-  top: 0;
-  padding: 30px;
   display: flex;
   flex-direction: row;
   justify-content: start;
   align-items: center;
+  text-shadow: 0px 0px 6px rgba(0, 0, 0, 0.2);
   svg {
     position: relative;
-    top: -2px;
+    top: -1px;
   }
+  z-index: 10;
 `;
 
 const Button = styled.div`
