@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
-import { IoIosHeartEmpty } from 'react-icons/io';
 import { fetchData } from '../../utils/api/api';
 import { useParams } from 'react-router';
 import { useEffect, useState } from 'react';
@@ -81,11 +80,14 @@ const AlbumBox = styled.div<{ url: string }>`
   align-items: flex-end;
 `;
 const NumAndLike = styled.div`
-  background-color: rgba(190, 190, 190, 0.5);
+  background-image: linear-gradient(
+    rgba(255, 255, 255, 0) 0%,
+    rgba(0, 0, 0, 0.9) 120%
+  );
   border-radius: 0 0 10px 10px;
   display: flex;
   width: 100%;
-  padding: 5px 10px;
+  padding: 40px 10px 10px;
   justify-content: space-between;
   align-items: center;
 
@@ -110,6 +112,7 @@ const NumAndLike = styled.div`
 
     span {
       display: block;
+      color: white;
       font-size: 10px;
     }
   }

@@ -151,11 +151,8 @@ const InnerBox = styled.div`
 const LoadingSign = styled.div`
   position: absolute;
   font-size: 26px;
-  color: white;
+  color: black;
   z-index: 1;
-  p {
-    text-shadow: 0px 0px 6px rgba(0, 1, 0, 0.6);
-  }
 `;
 
 const SpinnerBox = styled.div`
