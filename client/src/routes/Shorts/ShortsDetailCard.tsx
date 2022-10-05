@@ -9,6 +9,8 @@ import { useEffect, useState } from 'react';
 import { fetchData } from '../../utils/api/api';
 import getCreatedTime from '../../utils/getCreatedTime';
 import { useNavigate } from 'react-router-dom';
+import { useRecoilValue } from 'recoil';
+import { userInfoState } from '../../Atom';
 export interface shortsDetailType {
   shortsId: number;
   shortsComment: string;
@@ -36,7 +38,7 @@ const ShortsDetailCard = (props: any) => {
   const [likeCount, setLikeCount] = useState(0);
   const [liked, setLiked] = useState(false);
   const createdTime = getCreatedTime(shortsData.shortsCreateTime);
-
+  const memberId = useRecoilValue(userInfoState).memberId;
   useEffect(() => {
     // setAudio(new Audio(shortsData.shortsAudioUrl));
     setLikeCount(shortsData.likeCount);
@@ -82,6 +84,22 @@ const ShortsDetailCard = (props: any) => {
       </SongInfo>
       <Content>{shortsData.shortsComment}</Content>
       <LikeHeart>
+        {memberId === shortsData.memberId && (
+          <p
+            onClick={() => {
+              if (window.confirm('삭제하시겠습니까?')) {
+                fetchData
+                  .delete(`/api/v1/shorts`, {
+                    data: { shortsId: shortsData.shortsId },
+                  })
+                  .then(() => {
+                    navigate('/');
+                  });
+              }
+            }}>
+            삭제
+          </p>
+        )}
         <div>
           {liked ? (
             <AiFillHeart
@@ -301,8 +319,16 @@ const Content = styled.div`
 
 const LikeHeart = styled.div`
   display: flex;
-
+  align-items: center;
   justify-content: flex-end;
+  & > p {
+    font-size: 12px;
+    flex-grow: 1;
+    align-self: flex-end;
+    color: gray;
+    text-decoration: underline;
+    cursor: pointer;
+  }
   div {
     display: flex;
     flex-direction: column;

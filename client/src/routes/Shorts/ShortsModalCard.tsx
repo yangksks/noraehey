@@ -103,17 +103,17 @@ const ShortsModalCard = (props: any) => {
         <LikeHeart>
           {memberId === shortsData.memberId && (
             <p
-
               onClick={() => {
-                if(window.confirm("삭제하시겠습니까?")) {
-                fetchData
-                  .delete(`/api/v1/shorts`, {
-                    data: { shortsId: shortsData.shortsId },
-                  })
-                  .then(() => {
-                    navigate('/');
-                  });
-              }}}>
+                if (window.confirm('삭제하시겠습니까?')) {
+                  fetchData
+                    .delete(`/api/v1/shorts`, {
+                      data: { shortsId: shortsData.shortsId },
+                    })
+                    .then(() => {
+                      navigate('/');
+                    });
+                }
+              }}>
               삭제
             </p>
           )}
@@ -123,7 +123,7 @@ const ShortsModalCard = (props: any) => {
                 size={30}
                 color={'#f47b73'}
                 onClick={() => {
-                    fetchData
+                  fetchData
                     .delete(`/api/v1/shorts/like`, {
                       data: {
                         shortsId: shortsData.shortsId,
@@ -133,8 +133,7 @@ const ShortsModalCard = (props: any) => {
                       setLikeCount(res.data.likeCount);
                       setLiked(res.data.liked);
                     });
-                  }
-                }
+                }}
               />
             ) : (
               <AiOutlineHeart
@@ -164,7 +163,7 @@ const ShortsModalCard = (props: any) => {
 const ShortsCard = styled.div`
   width: 90%;
   min-height: 500px;
-  height: 82%;
+  height: 90%;
   max-height: 750px;
   padding: 20px;
   display: flex;

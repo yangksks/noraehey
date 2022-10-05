@@ -109,9 +109,9 @@ const VoiceButton = (props: VoiceBtnType) => {
         </StartBtn>
       ) : (
         <StartBtn
-          onClick={() => {
-            props.finish();
-          }}
+          // onClick={() => {
+          //   props.finish();
+          // }}
           status={started}>
           {pitchNote}
           <p>{pitchScale} 옥타브</p>

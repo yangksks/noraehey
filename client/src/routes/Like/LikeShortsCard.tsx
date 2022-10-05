@@ -1,16 +1,24 @@
 import { useNavigate } from 'react-router';
 import styled from 'styled-components';
-
+import getCreatedTime from '../../utils/getCreatedTime';
 const ShortsCard = (props: any) => {
   const { shortsData } = props;
+  const createdTime = getCreatedTime(shortsData.shortsCreateTime);
   const navigate = useNavigate();
   return (
     <ShortsBox
       albumUrl={shortsData.songImageUrl}
       onClick={() => {
         navigate(`/shorts/${shortsData.shortsId}`);
-      }}
-    />
+      }}>
+      <div>
+        <div className="songInfo">
+          <p className="title">{shortsData.songTitle}</p>
+          <p className="singer">{shortsData.memberNickname}</p>
+        </div>
+        <p className="time">{createdTime}</p>
+      </div>
+    </ShortsBox>
   );
 };
 
@@ -25,6 +33,50 @@ const ShortsBox = styled.div<{ albumUrl: string }>`
   background-image: url(${({ albumUrl }) => albumUrl});
   background-size: 115%;
   background-position: center center;
+  display: flex;
+  align-items: flex-end;
+  & > div {
+    background-image: linear-gradient(
+      rgba(255, 255, 255, 0) 0%,
+      rgba(0, 0, 0, 0.9) 80%
+    );
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 5px;
+    padding-top: 25px;
+    gap: 2px;
+    p {
+      font-size: 10px;
+      color: white;
+      font-family: 'omni025';
+      overflow: hidden;
+      text-overflow: ellipsis;
+      word-wrap: break-word;
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
+    }
+    .songInfo {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+    .title {
+      font-size: 12px;
+    }
+    .singer {
+      font-family: 'omni025';
+      font-size: 10px;
+      color: #ffd132;
+    }
+    .time {
+      flex-shrink: 0;
+      align-self: flex-end;
+      color: ${(props) => props.theme.colors.lineGray};
+    }
+  }
 `;
 
 export default ShortsCard;

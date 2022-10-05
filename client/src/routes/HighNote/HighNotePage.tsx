@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { BsArrowRight } from 'react-icons/bs';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { fetchData } from '../../utils/api/api';
@@ -105,17 +106,30 @@ const HighNotePage = () => {
   return (
     <VoiceContainer>
       {started ? (
-        <Title>
-          <p>자유롭게 소리를 내어보세요</p>
-          <p>한 음에서 3초이상 소리내면</p>
-          <p>최고음으로 인정됩니다.</p>
-        </Title>
+        <>
+          <BtnBox>
+            <button
+              onClick={() => {
+                finish();
+              }}>
+              다음 <BsArrowRight size={20} />
+            </button>
+          </BtnBox>
+          <Title>
+            <p>자유롭게 소리를 내어보세요</p>
+            <p>한 음에서 3초이상 소리내면</p>
+            <p>최고음으로 인정됩니다.</p>
+          </Title>
+        </>
       ) : (
-        <Title>
-          <p className="title1">지금부터</p>
-          <p className="title2">고음</p>
-          <p className="title1">을 측정할게요</p>
-        </Title>
+        <>
+          <TempBox></TempBox>
+          <Title>
+            <p className="title1">지금부터</p>
+            <p className="title2">고음</p>
+            <p className="title1">을 측정할게요</p>
+          </Title>
+        </>
       )}
 
       <ButtonContainer>
@@ -129,7 +143,7 @@ const HighNotePage = () => {
         getResult()
       ) : (
         <Footer>
-          <a>마이크 사용이 어려우신가요?</a>
+          <a>마이크 버튼을 클릭해주세요.</a>
         </Footer>
       )}
     </VoiceContainer>
@@ -145,11 +159,35 @@ const VoiceContainer = styled.div`
   justify-content: center;
   align-items: center;
 `;
-
+const TempBox = styled.div`
+  width: 100%;
+  height: 10%;
+  padding: 5px;
+`;
+const BtnBox = styled.div`
+  display: flex;
+  width: 100%;
+  height: 10%;
+  padding: 5px;
+  justify-content: flex-end;
+  align-items: end;
+  button {
+    border: none;
+    width: 100px;
+    height: 40px;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    background-color: transparent;
+    cursor: pointer;
+  }
+`;
 const Title = styled.div`
   position: relative;
   width: 100%;
-  height: 25%;
+  height: 15%;
   max-width: 420px;
   font-size: 20px;
   font-family: 'omni035';
@@ -204,10 +242,10 @@ const Footer = styled.div`
   a {
     font-size: 14px;
     font-family: 'omni025';
-    border-bottom: 0.5px solid;
+    /* border-bottom: 0.5px solid; */
     color: #575757;
     animation: fadeIn 1s ease-in;
-    cursor: pointer;
+    /* cursor: pointer; */
   }
   p {
     font-size: 28px;

@@ -8,7 +8,8 @@ import { fetchData } from '../../utils/api/api';
 import { userInfoState } from '../../Atom';
 import { useRecoilValue } from 'recoil';
 import UserShorts from './UserShorts';
-
+import { keyList } from '../../utils/constants/constants';
+import { IoMdMusicalNote } from 'react-icons/io';
 const ProfilePage = () => {
   const userId = useLocation().pathname.split('/')[2];
   const [itsMe, setItsMe] = useState(false);
@@ -73,6 +74,7 @@ const ProfilePage = () => {
           </PicBox>
           <NameBox>
             <p>{user.memberNickname}</p>
+            <p className="highPitch">{keyList[user.memberHighPitch]}</p>
           </NameBox>
         </Profile>
         <UserShorts />
@@ -119,11 +121,19 @@ const PicBox = styled.div`
 const NameBox = styled.div`
   padding: 5px;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: 5px;
   p {
     font-size: 18px;
+  }
+  .highPitch {
+    display: flex;
+    align-items: center;
+
+    font-size: 12px;
+    color: ${(props) => props.theme.colors.textGray};
   }
 
   textarea {

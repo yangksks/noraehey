@@ -43,7 +43,7 @@ const SongInfo = (props: any) => {
     } else if (songData.songLevel == 4) {
       return (
         <>
-          <MdOutlineSentimentVeryDissatisfied size={40} color={'red'} />
+          <MdOutlineSentimentVeryDissatisfied size={40} color={'#e23a3a'} />
           <p className="songLevel">Hell</p>
         </>
       );
@@ -86,9 +86,7 @@ const SongInfo = (props: any) => {
             </>
           ) : (
             <>
-              <span style={{ color: '#5ca535' }}>
-                0 Key 
-              </span>
+              <span style={{ color: '#5ca535' }}>0 Key</span>
               <HiMinusSm size={20} color={'#5ca535'} />
             </>
           )}
@@ -159,11 +157,12 @@ const Level = styled.div<{ level: number }>`
         : props.level == 3
         ? 'orange'
         : props.level == 4
-        ? 'red'
+        ? '#e23a3a'
         : 'gray'};
   }
   .songLevelCount {
-    font-size: 8px;
+    font-size: 10px;
+    font-family: 'omni025';
     color: ${(props) => props.theme.colors.textGray};
   }
 `;

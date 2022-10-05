@@ -8,6 +8,7 @@ import { useRecoilValue } from 'recoil';
 import { userInfoState } from '../../Atom';
 // import LikeSongCard from '../Like/LikeSongCard';
 import SongCard from '../Home/SongCard';
+import { BiSearch } from 'react-icons/bi';
 const SearchPage = () => {
   const [searchText, setSearchText] = useState('');
   const [searchList, setSearchList] = useState([]);
@@ -20,7 +21,6 @@ const SearchPage = () => {
       .get(`/api/v1/song/search?key=${nowTab}&word=${searchText}&page=0`)
       .then((res) => {
         setSearchList(res.data.songEntityResList);
-        // console.log('검색함');
       });
     navigate({
       pathname: '/search',
@@ -53,6 +53,10 @@ const SearchPage = () => {
               setSearchText(value);
             }}
           />
+          <input type="submit" id="search" />
+          <label htmlFor="search">
+            <BiSearch size={28} />
+          </label>
         </form>
       </SearchForm>
       <TabSection>
@@ -121,14 +125,32 @@ const SearchForm = styled.div`
   width: 100%;
   padding: 10px 0;
   text-align: center;
-  input {
-    outline: none;
-    padding: 0 10px;
-    height: 35px;
-    width: 70%;
-    background-color: ${(props) => props.theme.colors.lineGray};
-    border: none;
-    border-radius: 10px;
+
+  form {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+
+    input[type='text'] {
+      outline: none;
+      padding: 0 10px;
+      height: 35px;
+      width: 70%;
+      background-color: ${(props) => props.theme.colors.lineGray};
+      border: none;
+      border-radius: 10px;
+      flex-shrink: 0;
+    }
+    input[type='submit'] {
+      display: none;
+    }
+    label {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
   }
 `;
 const SearchResult = styled.div`

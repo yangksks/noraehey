@@ -297,6 +297,7 @@ const BtnBox = styled.div`
     justify-content: center;
     gap: 5px;
     background-color: transparent;
+    cursor: pointer;
   }
 `;
 export default TagPage;
