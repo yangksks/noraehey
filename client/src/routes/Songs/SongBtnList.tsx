@@ -41,9 +41,10 @@ const SongBtnList = (props: any) => {
           }}>
           평가
         </button>
-        <button onClick={()=>{
-          navigate(`/create/shorts/${songId}`);
-        }}>
+        <button
+          onClick={() => {
+            navigate(`/create/shorts/${songId}`);
+          }}>
           쇼츠 등록
         </button>
       </BtnList>
@@ -85,9 +86,9 @@ const SongBtnList = (props: any) => {
             }}>
             <MdOutlineSentimentVeryDissatisfied
               size={40}
-              color={nowEval == 4 ? 'red' : 'gray'}
+              color={nowEval == 4 ? '#e23a3a' : 'gray'}
             />
-            <p style={{ color: nowEval == 4 ? 'red' : 'gray' }}>Hell</p>
+            <p style={{ color: nowEval == 4 ? '#e23a3a' : 'gray' }}>Hell</p>
           </li>
         </ul>
       </Evaluation>

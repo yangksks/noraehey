@@ -11,13 +11,13 @@ const UserInfo = () => {
   const levelFnc = () => {
     const n = user.memberHighPitch % 12;
 
-    if (n == 1 || n == 2) return 'red';
-    else if (n == 3 || n == 4) return 'orange';
-    else if (n == 5) return 'yellow';
-    else if (n == 6 || n == 7) return 'green';
-    else if (n == 8 || n == 9) return 'skyblue';
-    else if (n == 10 || n == 11) return 'blue';
-    else return 'purple';
+    if (n == 1 || n == 2) return '#f2827c';
+    else if (n == 3 || n == 4) return '#f6bc50';
+    else if (n == 5) return '#f7e241';
+    else if (n == 6 || n == 7) return '#ABE074';
+    else if (n == 8 || n == 9) return '#6AD5F6';
+    else if (n == 10 || n == 11) return '#538EE5';
+    else return '#AF7EEF';
   };
   return (
     <InfoBox>
