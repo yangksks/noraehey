@@ -1,15 +1,11 @@
 import { useNavigate } from 'react-router';
 import styled from 'styled-components';
 import getCreatedTime from '../../utils/getCreatedTime';
-// interface ShortsCardType {
-//   albumUrl: string;
-// }
 
 const ShortsCard = (props: any) => {
   const { shorts } = props;
   const createdTime = getCreatedTime(shorts.shortsCreateTime);
   const navigate = useNavigate();
-  // return <ShortsBox albumUrl={albumUrl}></ShortsBox>;
   return (
     <ShortsBox
       albumUrl={shorts.songImageUrl}
@@ -27,7 +23,6 @@ const ShortsCard = (props: any) => {
   );
 };
 
-// const ShortsBox = styled.div<{ albumUrl: string }>`
 const ShortsBox = styled.div<{ albumUrl: string }>`
   height: 100%;
   border: lightgrey 1px solid;

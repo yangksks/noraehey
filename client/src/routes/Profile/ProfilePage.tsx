@@ -35,7 +35,7 @@ const ProfilePage = () => {
     try {
       const result = await fetchData.get(URL);
       setUser(() => result.data);
-      return console.log(result.data);
+      return result.data;
     } catch (err: any) {
       console.log(err);
     }
@@ -186,5 +186,9 @@ const SettingButton = styled.div`
   align-items: center;
   cursor: pointer;
   color: #3e3e3e;
+  &:active {
+    scale: 0.95;
+    opacity: 0.8;
+  }
 `;
 export default ProfilePage;

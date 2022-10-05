@@ -1,7 +1,6 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import {
   MdOutlineSentimentVerySatisfied,
   MdOutlineSentimentSatisfied,
@@ -110,6 +109,10 @@ const BtnList = styled.div`
     font-size: 16px;
     cursor: pointer;
     color: white;
+    &:active {
+      scale: 0.95;
+      opacity: 0.8;
+    }
   }
   button:first-child {
     background-color: #ffc978;
@@ -133,6 +136,14 @@ const Evaluation = styled.div<{ evalToggle: boolean; eval: number }>`
       flex-direction: column;
       align-items: center;
       cursor: pointer;
+      &:active {
+        scale: 0.95;
+        opacity: 0.8;
+      }
+      &:hover {
+        scale: 1.10;
+        opacity: 0.8;
+      }
       gap: 2px;
       p {
         font-size: 14px;

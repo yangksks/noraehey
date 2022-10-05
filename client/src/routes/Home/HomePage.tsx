@@ -1,8 +1,10 @@
 import styled from 'styled-components';
 import MusicCardSwiper from './MusicCardSwiper';
 import ShortsListSwiper from './ShortsListSwiper';
+import ShortsHotListSwiper from './ShortsHotListSwiper';
 import { BsCollectionPlay } from 'react-icons/bs';
 import { GrArticle } from 'react-icons/gr';
+import { MdLocalFireDepartment } from 'react-icons/md';
 import MagazineListSwiper from './MagazineListSwiper';
 
 const HomePage = () => {
@@ -16,6 +18,11 @@ const HomePage = () => {
           HEY쇼츠
         </FeatTitle>
         <ShortsListSwiper />
+        <FeatTitle>
+          <MdLocalFireDepartment />
+          HEY쇼츠 Top20
+        </FeatTitle>
+        <ShortsHotListSwiper />
         <FeatTitle>
           <GrArticle />
           매거진

@@ -52,6 +52,10 @@ const HeaderButtonsBox = styled.div`
     text-decoration: underline;
     text-underline-offset: 4px;
     cursor: pointer;
+    &:active {
+      scale: 0.95;
+      opacity: 0.8;
+    }
   }
 `;
 

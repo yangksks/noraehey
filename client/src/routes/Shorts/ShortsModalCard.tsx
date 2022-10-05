@@ -40,6 +40,7 @@ const ShortsModalCard = (props: any) => {
   const createdTime = getCreatedTime(shortsData.shortsCreateTime);
   const memberId = useRecoilValue(userInfoState).memberId;
   const navigate = useNavigate();
+  
   useEffect(() => {
     setAudio(new Audio(shortsData.shortsAudioUrl));
     setLikeCount(shortsData.likeCount);
@@ -117,7 +118,7 @@ const ShortsModalCard = (props: any) => {
               삭제
             </p>
           )}
-          <div>
+          <div className="heart">
             {liked ? (
               <AiFillHeart
                 size={30}
@@ -222,6 +223,10 @@ const Profile = styled.div`
   svg {
     align-self: flex-start;
     cursor: pointer;
+    &:active {
+      scale: 0.95;
+      opacity: 0.8;
+    }
   }
 `;
 const boxFade = keyframes`
@@ -357,6 +362,13 @@ const LikeHeart = styled.div`
     cursor: pointer;
     p {
       font-size: 10px;
+    }
+  }
+  .heart {
+    cursor: pointer;
+    &:active {
+      scale: 0.95;
+      opacity: 0.8;
     }
   }
 `;

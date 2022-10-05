@@ -102,6 +102,14 @@ const Logo = styled.div`
   font-size: 20px;
   text-shadow: 0px 0px 5px rgba(0, 0, 0, 0.25);
   cursor: pointer;
+  &:active {
+    scale: 0.95;
+    opacity: 0.8;
+  }
+  &:hover {
+    scale: 1.05;
+    opacity: 0.8;
+  }
 `;
 
 const ProfileImg = styled.img`
@@ -110,6 +118,14 @@ const ProfileImg = styled.img`
   color: #ffffff;
   border-radius: 50px;
   cursor: pointer;
+  &:active {
+    scale: 0.95;
+    opacity: 0.8;
+  }
+  &:hover {
+    scale: 1.05;
+    opacity: 0.8;
+  }
 `;
 
 export default Header;

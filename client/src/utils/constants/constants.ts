@@ -65,6 +65,78 @@ export const keyList = [
 export const magazines = [
   {
     magazineId: 1,
+    magazineTitle: '영원히 기억될 아이유의 시간',
+    magazineSubTitle: '아이유, 국내 여성 가수 최초 잠실 주경기장 단독 콘서트',
+    ArtistUrl: 'https://www.melon.com/artist/detail.htm?artistId=261143',
+    magazineContent:
+      "9월 17일과 9월 18일, 잠실종합운동장 올림픽주경기장에는 오렌지빛 태양이 떴습니다. 바로 3년 만에 개최한 아이유의 콘서트 때문이었는데요. 이틀 동안 수만 명의 관객을 동원하며 데뷔 14주년에도 여전한 티켓 파워를 입증한 아이유. 팬데믹으로 인해 오랜 시간 끝에 열린 'The Golden Hour : 오렌지 태양 아래'는 개최도 전부터 수많은 화제를 낳은 바 있습니다. 한국 여성 가수 최초로 잠실종합운동장 올림픽주경기장에 입성한다는 사실부터, 양일 전석 매진을 기록하며 아이유가 수년간 다져온 '탑 아티스트'의 자리를 공고히 했죠. 세 시간 반 동안 최상의 무대를 보여준 아이유. 공연을 진행하는 내내 이 모든 영광을 수많은 스태프와 세션, 관객들에게 돌리며 겸손한 모습까지 보여주었는데요. 이번 'The Golden Hour : 오렌지 태양 아래'는 아이유가 어째서 14년 동안 탑 아티스트의 자리를 차지하고 있는지 알 수 있었던 시간이었습니다. 단순히 실력이 뛰어나기 때문만이 아니라는 것까지도요.",
+    magazineImageUrl:
+      'https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjA5MjJfMjUw%2FMDAxNjYzNzc4NjY1MzMz.6zMbwsJ5epikRii8hwn-MzZq3kbXaI2NLlnI6ARjrvYg.xBC5g_aiZCuZhOKAZohRks0Hb8Vg7Ew5skmvTw7obPAg.JPEG.syyu02%2FIMG_6281.JPG&type=sc960_832',
+    magazineSongList: [
+      {
+        songHighPitch: '29',
+        songId: 327,
+        songImageUrl:
+          'https://cdnimg.melon.co.kr/cm/album/images/026/46/282/2646282_500.jpg/melon/resize/282/quality/80/optimize',
+        songKy: '59851',
+        songSinger: '아이유',
+        songTitle: '무릎',
+        songTj: '45524',
+      },
+      {
+        songHighPitch: '30',
+        songId: 58,
+        songImageUrl:
+          'https://cdnimg.melon.co.kr/cm2/album/images/108/27/816/10827816_20211229143632_500.jpg?5212701ba136b287d5c446d6f504451f/melon/resize/282/quality/80/optimize',
+        songKy: '28615',
+        songSinger: '아이유',
+        songTitle: '겨울잠',
+        songTj: '80967',
+      },
+      {
+        songHighPitch: '25',
+        songId: 370,
+        songImageUrl:
+          'https://cdnimg.melon.co.kr/cm/album/images/100/47/890/10047890_500.jpg?fe3170fcb1ac397fc072be5877d5f1b9/melon/resize/282/quality/80/optimize',
+        songKy: '49492',
+        songSinger: '아이유',
+        songTitle: '밤편지',
+        songTj: '62433',
+      },
+      {
+        songHighPitch: '30',
+        songId: 584,
+        songImageUrl:
+          'https://cdnimg.melon.co.kr/cm2/album/images/105/54/246/10554246_20210325161233_500.jpg?304eb9ed9c07a16ec6d6e000dc0e7d91/melon/resize/282/quality/80/optimize',
+        songKy: '28409',
+        songSinger: '아이유',
+        songTitle: '아이와 나의 바다',
+        songTj: '76600',
+      },
+      {
+        songHighPitch: '32',
+        songId: 592,
+        songImageUrl:
+          'https://cdnimg.melon.co.kr/cm/album/images/100/56/666/10056666_500.jpg?6aeddbe69ee3e13388eb0d9b81adaca8/melon/resize/282/quality/80/optimize',
+        songKy: '90133',
+        songSinger: '아이유',
+        songTitle: '이름에게',
+        songTj: '49496',
+      },
+      {
+        songHighPitch: '27',
+        songId: 325,
+        songImageUrl:
+          'https://cdnimg.melon.co.kr/cm/album/images/023/19/008/2319008_500.jpg?1d5950f924c443dce26fdfeb4b55471b/melon/resize/282/quality/80/optimize',
+        songKy: '48823',
+        songSinger: '아이유',
+        songTitle: '마음',
+        songTj: '29262',
+      },
+    ],
+  },
+  {
+    magazineId: 2,
     magazineTitle: '4세대 아이돌 뉴진스',
     magazineSubTitle: '데뷔와 동시에 이렇게 핫했던 아이돌이 있었을까?',
     ArtistUrl: 'https://www.melon.com/artist/detail.htm?artistId=3092950',
@@ -106,7 +178,7 @@ export const magazines = [
     ],
   },
   {
-    magazineId: 2,
+    magazineId: 3,
     magazineTitle: '르세라핌 컴백!',
     magazineSubTitle: '두 번째 미니앨범 ANTIFRAGILE',
     ArtistUrl: 'https://www.melon.com/artist/detail.htm?artistId=3092950',
@@ -138,10 +210,10 @@ export const magazines = [
     ],
   },
   {
-    magazineId: 3,
+    magazineId: 4,
     magazineTitle: '데뷔 첫 월드투어, G-IDLE!',
     magazineSubTitle: '톰보이(TOMBOY), 스포티파이 1억 스트리밍 돌파',
-    ArtistUrl: 'https://www.melon.com/artist/detail.htm?artistId=3092950',
+    ArtistUrl: 'https://www.melon.com/artist/detail.htm?artistId=2137482',
     magazineContent:
       "지난 3월 (여자)아이들은 정규 1집 '아이 네버 다이(I NEVER DIE)'로 컴백하고, 타이틀곡 '톰보이'로 국내외 차트를섭렵하며 대중성과 동시에 음악성을 인정받아 '톰보이 신드롬'을 탄생시켰다.(여자)아이들은 지난 1일 싱가포르 공연을 마지막으로 데뷔 첫 월드투어 2022 (G)I-DLE WORLD TOUR ［JUST ME ( )I-DLE]의 막을 내렸다. (여자)아이들은 오는 17일 다섯 번째 미니앨범 ‘아이러브’(I love)의 컴백을 위해 박차를 가하고 있다.",
     magazineImageUrl:

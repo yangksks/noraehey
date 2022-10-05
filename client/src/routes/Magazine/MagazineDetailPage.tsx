@@ -29,7 +29,7 @@ const MagazineDetailPage = () => {
           <p className="content">{magazineData.magazineContent}</p>
         </InfoCard>
         <SongsCard>
-          <p className="songTitle">아티스트 인기곡</p>
+          <p className="songTitle">아티스트 추천곡</p>
           {songList.map((song: any, idx: number) => {
             return <SongCard key={idx} songData={song} userInfo={userKey} />;
           })}

@@ -1,23 +1,30 @@
 import { createFFmpeg } from '@ffmpeg/ffmpeg';
 import styled from 'styled-components';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 interface ConvertType {
   start: number;
   end: number;
   m4a: any;
   getConvertAudio: Function;
+  getMsg: Function;
+  startUploading: Function;
 }
 
 const ConvertAudio = (props: ConvertType) => {
   const { start, end, m4a } = props;
-  const [message, setMessage] = useState('Click Start to import');
+  const [message, setMessage] = useState('');
   const ffmpeg = createFFmpeg({
     log: false,
   });
 
+  useEffect(() => {
+    props.getMsg(message);
+  }, [message]);
+
   const doImport = async () => {
-    setMessage('Loading ffmpeg-core.js');
+    props.startUploading();
+    setMessage('파일 로딩중...');
     try {
       await ffmpeg.load();
       if (m4a) {
@@ -27,7 +34,7 @@ const ConvertAudio = (props: ConvertType) => {
           'test.m4a',
           new Uint8Array(await m4a.arrayBuffer()),
         );
-        setMessage('Start Import');
+        setMessage('인코딩 진행중');
         const args = [
           '-ss',
           `${start}ms`,
@@ -40,14 +47,15 @@ const ConvertAudio = (props: ConvertType) => {
           'output.m4a',
         ];
         await ffmpeg.run(...args);
-        setMessage('Complete Import');
+        setMessage('업로드 진행중');
         const data = ffmpeg.FS('readFile', 'output.m4a');
         const result = new File([data.buffer], 'output.m4a', {
           type: 'audio/x-m4a',
         });
         props.getConvertAudio(result);
+        setMessage('업로드 완료!');
       } else {
-        setMessage('Can not Import. need file check. 😪');
+        setMessage('업로드에 실패했습니다.');
       }
     } catch {
       alert('iOS 기기는 편집기능이 제공되지 않습니다. 원본이 업로드됩니다');
@@ -67,6 +75,11 @@ const ConvertButton = styled.div`
   background-color: #a793ff;
   color: white;
   cursor: pointer;
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.2);
+  &:active {
+    scale: 0.95;
+    opacity: 0.8;
+  }
 `;
 
 export default ConvertAudio;

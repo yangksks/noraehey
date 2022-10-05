@@ -104,6 +104,12 @@ const NumAndLike = styled.div`
     justify-content: center;
     align-items: center;
     gap: 2px;
+    cursor: pointer;
+    &:active {
+      scale: 0.95;
+      opacity: 0.8;
+    }
+
     span {
       display: block;
       color: white;

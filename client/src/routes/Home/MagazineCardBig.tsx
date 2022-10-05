@@ -1,7 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
-
 const MagazineCardBig = (props: any) => {
   const navigate = useNavigate();
   const magazineData = props.magazine;

@@ -100,9 +100,10 @@ const ShortsDetailCard = (props: any) => {
             삭제
           </p>
         )}
-        <div>
+        <div className="heart">
           {liked ? (
             <AiFillHeart
+              className="heart"
               size={30}
               color={'#f47b73'}
               onClick={() => {
@@ -336,6 +337,19 @@ const LikeHeart = styled.div`
     cursor: pointer;
     p {
       font-size: 10px;
+    }
+    svg {
+      &:active {
+        scale: 0.95;
+        opacity: 0.8;
+      }
+    }
+  }
+  .heart {
+    cursor: pointer;
+    &:active {
+      scale: 0.95;
+      opacity: 0.8;
     }
   }
 `;

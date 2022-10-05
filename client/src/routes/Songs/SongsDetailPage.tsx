@@ -36,7 +36,6 @@ const SongsDetailPage = () => {
   useEffect(() => {
     fetchData.get(`/api/v1/song/info/${songId}`).then((res) => {
       setSongData(res.data);
-      console.log(res.data);
     });
   }, []);
 
@@ -47,7 +46,6 @@ const SongsDetailPage = () => {
   const refetchFunc = () => {
     fetchData.get(`/api/v1/song/info/${songId}`).then((res) => {
       setSongData(res.data);
-      console.log(res.data);
     });
   };
   return (

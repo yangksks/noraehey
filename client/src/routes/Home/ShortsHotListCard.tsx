@@ -1,5 +1,5 @@
 import { useRecoilValue } from 'recoil';
-import { shortsListState, userInfoState } from '../../Atom';
+import { shortsHotListState } from '../../Atom';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 
@@ -7,8 +7,8 @@ interface shortsType {
   idx: number;
 }
 
-const ShortsListCard = (props: shortsType) => {
-  const shorts = useRecoilValue(shortsListState)[props.idx];
+const ShortsHotListCard = (props: shortsType) => {
+  const shorts = useRecoilValue(shortsHotListState)[props.idx];
   const songData = {
     URL: shorts.songImageUrl,
     title: shorts.songTitle,
@@ -143,4 +143,4 @@ const ShortsBox = styled.div<{ album: string }>`
   background-position: center center;
   cursor: pointer;
 `;
-export default ShortsListCard;
+export default ShortsHotListCard;

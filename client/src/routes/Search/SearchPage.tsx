@@ -6,7 +6,6 @@ import Container from '../../style/style';
 import { fetchData } from '../../utils/api/api';
 import { useRecoilValue } from 'recoil';
 import { userInfoState } from '../../Atom';
-// import LikeSongCard from '../Like/LikeSongCard';
 import SongCard from '../Home/SongCard';
 import { BiSearch } from 'react-icons/bi';
 const SearchPage = () => {
@@ -54,7 +53,7 @@ const SearchPage = () => {
             }}
           />
           <input type="submit" id="search" />
-          <label htmlFor="search">
+          <label className="search" htmlFor="search">
             <BiSearch size={28} />
           </label>
         </form>
@@ -114,6 +113,10 @@ const NavStyle = styled.li<{ active: boolean }>`
   display: block;
   padding: 10px 0;
   cursor: pointer;
+  &:active {
+    scale: 0.95;
+    opacity: 0.8;
+  }
   ${(props) =>
     props.active &&
     css`
@@ -150,6 +153,11 @@ const SearchForm = styled.div`
       display: flex;
       justify-content: center;
       align-items: center;
+      cursor: pointer;
+      &:active {
+        scale: 0.95;
+        opacity: 0.8;
+      }
     }
   }
 `;

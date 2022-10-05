@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
-import { myshortsListState, userInfoState } from '../../Atom';
+import { myshortsListState } from '../../Atom';
 import { fetchData } from '../../utils/api/api';
 import ShortsCard from '../Like/ShortsCard';
 
@@ -17,7 +17,6 @@ const UserShorts = () => {
     const URL = `/api/v1/shorts/member/${url}?page=${page}`;
     try {
       const result = await fetchData.get(URL);
-      console.log(result);
       setShortsList(result.data.shortsList);
       setHasMore(result.data.hasMore);
     } catch (err: any) {

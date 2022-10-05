@@ -67,6 +67,10 @@ const SettingCard = styled.div`
   align-items: start;
   font-family: 'omni025';
   cursor: pointer;
+  &:active {
+    scale: 0.95;
+    opacity: 0.8;
+  }
 
   .description {
     font-size: 16px;

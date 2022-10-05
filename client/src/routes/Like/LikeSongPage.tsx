@@ -5,15 +5,6 @@ import { fetchData } from '../../utils/api/api';
 import SongCard from '../Home/SongCard';
 import { useRecoilValue } from 'recoil';
 import { userInfoState } from '../../Atom';
-// interface songListType {
-//   songId: number;
-//   songTitle: string;
-//   songSinger: string;
-//   songImageUrl: string;
-//   songTj: string;
-//   songKy: string;
-//   songHighPitch: number;
-// }
 
 interface songsType {
   songHighPitch: 0;

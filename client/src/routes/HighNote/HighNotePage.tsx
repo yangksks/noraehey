@@ -64,9 +64,7 @@ const HighNotePage = () => {
     const URL = `/api/v1/member/highpitch?highpitch=${pitch}`;
     try {
       const result = await fetchData.patch(URL);
-      return () => {
-        console.log(result.data);
-      };
+      return result.data;
     } catch (err: any) {
       console.log(err);
     }
@@ -240,18 +238,15 @@ const Footer = styled.div`
   align-items: center;
   gap: 20px;
   a {
+    margin-top: 20px;
     font-size: 14px;
     font-family: 'omni025';
-    /* border-bottom: 0.5px solid; */
     color: #575757;
     animation: fadeIn 1s ease-in;
-    /* cursor: pointer; */
   }
   p {
     font-size: 28px;
   }
 `;
-
-const FinishButton = styled.div``;
 
 export default HighNotePage;

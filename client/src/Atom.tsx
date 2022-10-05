@@ -29,6 +29,35 @@ export const shortsListLengthState = atom({
   default: 0,
 });
 
+export const shortsHotListState = atom({
+  key: 'shortsHotList',
+  default: [
+    {
+      likeCount: 0,
+      liked: false,
+      memberId: -1,
+      memberNickname: '',
+      memberProfileUrl: '',
+      shortsAudioUrl: '',
+      shortsComment: '',
+      shortsCreateTime: '',
+      shortsId: -1,
+      songHighPitch: 0,
+      songId: 0,
+      songImageUrl: '',
+      songKy: '',
+      songSinger: '',
+      songTitle: '',
+      songTj: '',
+    },
+  ],
+});
+
+export const shortsHotListLengthState = atom({
+  key: 'shortsHotLength',
+  default: 0,
+});
+
 export const myshortsListState = atom({
   key: 'myshortsList',
   default: [

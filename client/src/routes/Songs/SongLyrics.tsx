@@ -35,6 +35,10 @@ const LyricsBtn = styled.button`
   margin: 10px;
   font-size: 12px;
   color: ${(props) => props.theme.colors.textGray};
+  &:active {
+    scale: 0.95;
+    opacity: 0.8;
+  }
 `;
 
 const LyricsText = styled.div<{ lyricsToggle: boolean }>`

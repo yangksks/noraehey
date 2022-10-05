@@ -3,9 +3,9 @@ import {
   MdOutlineKeyboardArrowDown,
   MdOutlineKeyboardArrowUp,
 } from 'react-icons/md';
-import { BsDash } from 'react-icons/bs';
 import { useNavigate } from 'react-router-dom';
 import { HiMinusSm } from 'react-icons/hi';
+
 interface songsType {
   songHighPitch: 0;
   songId: -1;
@@ -69,6 +69,11 @@ const SongBox = styled.div`
   justify-content: start;
   align-items: center;
   padding: 8px 1px;
+  &:active {
+    scale: 0.95;
+    opacity: 0.8;
+  }
+  cursor: pointer;
 `;
 
 const AlbumArt = styled.div<{ url: string }>`
