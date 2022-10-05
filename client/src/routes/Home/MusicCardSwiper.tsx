@@ -37,7 +37,7 @@ const MusicCardSwiper = () => {
 const CardContainer = styled.div<{ status: boolean }>`
   position: relative;
   width: 100%;
-  aspect-ratio: 0.77;
+  aspect-ratio: 0.7;
   display: flex;
   flex-direction: column;
   justify-content: start;
