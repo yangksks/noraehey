@@ -69,7 +69,7 @@ export const magazines = [
     magazineSubTitle: '아이유, 국내 여성 가수 최초 잠실 주경기장 단독 콘서트',
     ArtistUrl: 'https://www.melon.com/artist/detail.htm?artistId=261143',
     magazineContent:
-      "9월 17일과 9월 18일, 잠실종합운동장 올림픽주경기장에는 오렌지빛 태양이 떴습니다. 바로 3년 만에 개최한 아이유의 콘서트 때문이었는데요. 이틀 동안 수만 명의 관객을 동원하며 데뷔 14주년에도 여전한 티켓 파워를 입증한 아이유. 팬데믹으로 인해 오랜 시간 끝에 열린 'The Golden Hour : 오렌지 태양 아래'는 개최도 전부터 수많은 화제를 낳은 바 있습니다. 한국 여성 가수 최초로 잠실종합운동장 올림픽주경기장에 입성한다는 사실부터, 양일 전석 매진을 기록하며 아이유가 수년간 다져온 '탑 아티스트'의 자리를 공고히 했죠. 세 시간 반 동안 최상의 무대를 보여준 아이유. 공연을 진행하는 내내 이 모든 영광을 수많은 스태프와 세션, 관객들에게 돌리며 겸손한 모습까지 보여주었는데요. 이번 'The Golden Hour : 오렌지 태양 아래'는 아이유가 어째서 14년 동안 탑 아티스트의 자리를 차지하고 있는지 알 수 있었던 시간이었습니다. 단순히 실력이 뛰어나기 때문만이 아니라는 것까지도요.",
+      "9월 17일과 9월 18일, 잠실종합운동장 올림픽주경기장에는 오렌지빛 태양이 떴습니다. 바로 3년 만에 개최한 아이유의 콘서트 때문이었는데요. 이틀 동안 수만 명의 관객을 동원하며 데뷔 14주년에도 여전한 티켓 파워를 입증한 아이유. 팬데믹으로 인해 오랜 시간 끝에 열린 'The Golden Hour : 오렌지 태양 아래'는 개최도 전부터 수많은 화제를 낳은 바 있습니다. 한국 여성 가수 최초로 잠실종합운동장 올림픽주경기장에 입성한다는 사실부터, 양일 전석 매진을 기록하며 아이유가 수년간 다져온 '탑 아티스트'의 자리를 공고히 했죠. 이번 'The Golden Hour : 오렌지 태양 아래'는 아이유가 어째서 14년 동안 탑 아티스트의 자리를 차지하고 있는지 알 수 있었던 시간이었습니다. 단순히 실력이 뛰어나기 때문만이 아니라는 것까지도요.",
     magazineImageUrl:
       'https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjA5MjJfMjUw%2FMDAxNjYzNzc4NjY1MzMz.6zMbwsJ5epikRii8hwn-MzZq3kbXaI2NLlnI6ARjrvYg.xBC5g_aiZCuZhOKAZohRks0Hb8Vg7Ew5skmvTw7obPAg.JPEG.syyu02%2FIMG_6281.JPG&type=sc960_832',
     magazineSongList: [

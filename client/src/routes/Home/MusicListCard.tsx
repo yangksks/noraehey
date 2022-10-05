@@ -46,7 +46,7 @@ const BoxHeader = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  font-size: 18px;
+  font-size: 16px;
   font-family: 'omni035';
   box-sizing: border-box;
   border-bottom: 1px solid #929292;

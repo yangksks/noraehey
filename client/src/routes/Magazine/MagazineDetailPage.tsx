@@ -68,8 +68,8 @@ const InfoCard = styled.div`
     line-height: 28px;
   }
   .content {
-    font-size: 12px;
-    line-height: 18px;
+    font-size: 14px;
+    line-height: 20px;
   }
 `;
 

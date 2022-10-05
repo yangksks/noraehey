@@ -69,10 +69,6 @@ const SongBox = styled.div`
   justify-content: start;
   align-items: center;
   padding: 8px 1px;
-  &:active {
-    scale: 0.95;
-    opacity: 0.8;
-  }
   cursor: pointer;
 `;
 
