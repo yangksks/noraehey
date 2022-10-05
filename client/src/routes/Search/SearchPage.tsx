@@ -4,8 +4,8 @@ import { Route, Routes } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 import Container from '../../style/style';
 import { fetchData } from '../../utils/api/api';
-import {useRecoilValue} from 'recoil';
-import {userInfoState} from '../../Atom'
+import { useRecoilValue } from 'recoil';
+import { userInfoState } from '../../Atom';
 // import LikeSongCard from '../Like/LikeSongCard';
 import SongCard from '../Home/SongCard';
 const SearchPage = () => {
@@ -79,12 +79,19 @@ const SearchPage = () => {
             <SongCard key={i} songData={item} userInfo={userKey} />
           ))
         ) : (
-          <div>검색 결과가 없습니다.</div>
+          <NoData>검색 결과가 없습니다.</NoData>
         )}
       </SearchResult>
     </Container>
   );
 };
+const NoData = styled.div`
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+  font-size: 14px;
+  color: ${(props) => props.theme.colors.textGray};
+`;
 const TabSection = styled.section`
   width: 100%;
   padding: 0 20px 10px;
