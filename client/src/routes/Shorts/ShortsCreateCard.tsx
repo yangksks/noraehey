@@ -1,59 +1,86 @@
 import styled from 'styled-components';
 import { AiFillHeart } from 'react-icons/ai';
 import { fetchData } from '../../utils/api/api';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { IoClose } from 'react-icons/io5';
+import { useEffect, useState } from 'react';
+import { useRecoilValue } from 'recoil';
+import { userInfoState } from '../../Atom';
+import Mirt from 'react-mirt';
 
-const ShortsCreateCard = () => {
-  const navigate = useNavigate();
+interface ShortsCreateType {
+  file: File;
+  getTrimLocation: Function;
+  getShortsComment: Function;
+}
+
+const ShortsCreateCard = (props: ShortsCreateType) => {
+  const url = useLocation().pathname.split('/')[3];
+  const [song, setSong] = useState({} as any);
+  const user = useRecoilValue(userInfoState);
+  const [startPoint, setStartPoint] = useState(0);
+  const [endPoint, setEndPoint] = useState(1);
 
   const getSongsInfo = async () => {
-    const URL = '/api/v1/song/info/{songId}';
+    const URL = `/api/v1/song/info/${url}`;
     try {
       const result = await fetchData.get(URL);
+      setSong(result.data);
       return result.data;
     } catch (err: any) {
       console.log(err);
     }
   };
 
+  useEffect(() => {
+    getSongsInfo();
+  }, []);
+
+  const getStartEnd = (e: any) => {
+    if (startPoint !== e.start) {
+      const startTime = Math.round(+e.start / 100) / 10;
+      setStartPoint(startTime);
+    }
+    if (endPoint !== e.end) {
+      const endTime = Math.round(+e.end / 100) / 10;
+      setEndPoint(endTime);
+    }
+    props.getTrimLocation(e);
+  };
+
   return (
     <ShortsCard>
-      <Profile>
-        <img
-          src={''}
-          alt=""
-          onClick={() => {
-            navigate(`/profile/${''}`);
-          }}
-        />
+      {/* <Profile>
+        <img src={user.memberProfileUrl} alt="" />
         <div>
-          <p>{''}</p>
-          <span>{''}</span>
+          <p>{user.memberNickname}</p>
         </div>
-        <IoClose
-          size={32}
-          onClick={() => {
-            navigate(-1);
-          }}
-        />
-      </Profile>
+      </Profile> */}
       <Album>
         <div>
-          <img src={'앨범아트'} alt="" />
+          <img src={song.songImageUrl} alt="" />
         </div>
       </Album>
       <SongInfo>
-        <p>제목</p>
-        <p>가수</p>
+        <p>{song.songTitle}</p>
+        <p>{song.songSinger}</p>
       </SongInfo>
-      <Content>코멘트</Content>
-      <LikeHeart>
-        <div>
-          <AiFillHeart size={30} color={'#f47b73'} />
-          <p>33</p>
-        </div>
-      </LikeHeart>
+      <MirtStyle
+        file={props.file}
+        onChange={(e: any) => getStartEnd(e)}
+        options={{ fineTuningDelay: 0 }}
+      />
+      <SongsLength>
+        <p>시작: {startPoint}초</p>
+        <p>종료: {endPoint}초</p>
+      </SongsLength>
+      <textarea
+        id="shortsComment"
+        name="shortsComment"
+        onChange={(e) => {
+          props.getShortsComment(e.target.value);
+        }}
+      />
     </ShortsCard>
   );
 };
@@ -75,12 +102,62 @@ const ShortsCard = styled.div`
     #ffffff 53.42%,
     #e9e4ff 98.54%
   );
+  #shortsComment {
+    width: 100%;
+    aspect-ratio: 3;
+    margin-top: 20px;
+    padding: 10px;
+    font-size: 18px;
+    border-radius: 10px;
+    border: lightgrey 1px solid;
+    resize: none;
+  }
 `;
+
+const MirtStyle = styled(Mirt)`
+  width: 100%;
+  touch-action: none;
+  background-image: linear-gradient(
+    107.48deg,
+    #c6f2c6 2.51%,
+    #c2e2e0 49.99%,
+    #e8e8ca 94.21%
+  );
+  --mirt-height: 60px;
+  --mirt-playhead-width: 3px;
+  --mirt-frame-color: #d1c5e4;
+  --mirt-playhead-color: #e8bb61;
+  --mirt-button-border-color: white;
+  --mirt-background-color: #d1c5e4;
+  --mirt-button-icon-color: white;
+  --mirt-handle-icon-color: white;
+  --mirt-button-hover-color: #a793ff;
+  --mirt-handle-transition-duration: 0ms;
+  --mirt-handle-width: 30px;
+  .mirt__range-handle {
+    height: 100%;
+  }
+  .mirt__play-button {
+    border: solid 1px lightrey;
+  }
+`;
+
+const SongsLength = styled.div`
+  width: 100%;
+  padding: 5px 0;
+  font-size: 12px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  color: black;
+`;
+
 const SongInfo = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 15px 0;
+  padding: 10px 0 20px;
   gap: 5px;
   word-break: break-all;
   text-align: center;
@@ -90,36 +167,6 @@ const SongInfo = styled.div`
   p:last-child {
     font-size: 14px;
     color: ${(props) => props.theme.colors.textGray};
-  }
-`;
-const Profile = styled.div`
-  display: flex;
-  width: 100%;
-  padding-bottom: 10px;
-  justify-content: space-between;
-  align-items: center;
-  gap: 20px;
-
-  img {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    object-fit: cover;
-    cursor: pointer;
-  }
-  & > div {
-    display: flex;
-    flex-grow: 1;
-    gap: 8px;
-    align-items: center;
-    & > span {
-      font-size: 12px;
-      color: ${(props) => props.theme.colors.textGray};
-    }
-  }
-  svg {
-    align-self: flex-start;
-    cursor: pointer;
   }
 `;
 
@@ -138,18 +185,11 @@ const Album = styled.div`
   }
 `;
 
-const Content = styled.div`
-  display: flex;
-  justify-content: center;
-  padding: 15px 0;
-  height: 150px;
-  text-align: center;
-`;
-
 const LikeHeart = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-end;
+  padding-top: 10px;
   & > p {
     font-size: 12px;
     flex-grow: 1;
