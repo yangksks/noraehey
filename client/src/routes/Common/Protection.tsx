@@ -13,6 +13,7 @@ const Protection = () => {
   const [navStatus, setNavStatus] = useState(false);
   const user = useRecoilValue(userInfoState);
 
+
   useEffect(() => {
     if (url === 'tag' || url === 'voice' || url === 'shorts') {
       setHeaderStatus(false);

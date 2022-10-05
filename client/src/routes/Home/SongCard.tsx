@@ -36,7 +36,11 @@ const SongCard = (props: songProps) => {
   return (
     <SongBox
       onClick={() => {
-        navigate(`/songs/${props.songData.songId}`);
+        if (props.songData.songId !== -1) {
+          navigate(`/songs/${props.songData.songId}`);
+        } else {
+          alert('상세보기 미지원 곡입니다. 곧 업데이트 예정입니다.');
+        }
       }}>
       <AlbumArt url={props.songData.songImageUrl}></AlbumArt>
       <SongInfo>
