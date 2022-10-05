@@ -51,6 +51,11 @@ const HeaderButtonsBox = styled.div`
     font-family: 'omni025';
     text-decoration: underline;
     text-underline-offset: 4px;
+    cursor: pointer;
+    &:active {
+      scale: 0.95;
+      opacity: 0.8;
+    }
   }
 `;
 

@@ -82,7 +82,6 @@ const VoiceButton = (props: VoiceBtnType) => {
     }
     setStart(true);
     setSource(audioCtx.createMediaStreamSource(input));
-    console.log(audioCtx);
     props.getStarted(true);
   };
 
@@ -109,9 +108,9 @@ const VoiceButton = (props: VoiceBtnType) => {
         </StartBtn>
       ) : (
         <StartBtn
-          onClick={() => {
-            props.finish();
-          }}
+          // onClick={() => {
+          //   props.finish();
+          // }}
           status={started}>
           {pitchNote}
           <p>{pitchScale} 옥타브</p>
@@ -135,6 +134,7 @@ const StartBtn = styled.div<{ status: boolean }>`
   box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.2);
   animation: ${({ status }) => (status ? '' : 'bounce 1.5s linear infinite')};
   z-index: 100;
+  cursor: pointer;
 
   p {
     font-size: 12px;

@@ -61,3 +61,214 @@ export const keyList = [
   '5옥 라#',
   '5옥 시',
 ];
+
+export const magazines = [
+  {
+    magazineId: 1,
+    magazineTitle: '영원히 기억될 아이유의 시간',
+    magazineSubTitle: '아이유, 국내 여성 가수 최초 잠실 주경기장 단독 콘서트',
+    ArtistUrl: 'https://www.melon.com/artist/detail.htm?artistId=261143',
+    magazineContent:
+      "9월 17일과 9월 18일, 잠실종합운동장 올림픽주경기장에는 오렌지빛 태양이 떴습니다. 바로 3년 만에 개최한 아이유의 콘서트 때문이었는데요. 이틀 동안 수만 명의 관객을 동원하며 데뷔 14주년에도 여전한 티켓 파워를 입증한 아이유. 팬데믹으로 인해 오랜 시간 끝에 열린 'The Golden Hour : 오렌지 태양 아래'는 개최도 전부터 수많은 화제를 낳은 바 있습니다. 한국 여성 가수 최초로 잠실종합운동장 올림픽주경기장에 입성한다는 사실부터, 양일 전석 매진을 기록하며 아이유가 수년간 다져온 '탑 아티스트'의 자리를 공고히 했죠. 세 시간 반 동안 최상의 무대를 보여준 아이유. 공연을 진행하는 내내 이 모든 영광을 수많은 스태프와 세션, 관객들에게 돌리며 겸손한 모습까지 보여주었는데요. 이번 'The Golden Hour : 오렌지 태양 아래'는 아이유가 어째서 14년 동안 탑 아티스트의 자리를 차지하고 있는지 알 수 있었던 시간이었습니다. 단순히 실력이 뛰어나기 때문만이 아니라는 것까지도요.",
+    magazineImageUrl:
+      'https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjA5MjJfMjUw%2FMDAxNjYzNzc4NjY1MzMz.6zMbwsJ5epikRii8hwn-MzZq3kbXaI2NLlnI6ARjrvYg.xBC5g_aiZCuZhOKAZohRks0Hb8Vg7Ew5skmvTw7obPAg.JPEG.syyu02%2FIMG_6281.JPG&type=sc960_832',
+    magazineSongList: [
+      {
+        songHighPitch: '29',
+        songId: 327,
+        songImageUrl:
+          'https://cdnimg.melon.co.kr/cm/album/images/026/46/282/2646282_500.jpg/melon/resize/282/quality/80/optimize',
+        songKy: '59851',
+        songSinger: '아이유',
+        songTitle: '무릎',
+        songTj: '45524',
+      },
+      {
+        songHighPitch: '30',
+        songId: 58,
+        songImageUrl:
+          'https://cdnimg.melon.co.kr/cm2/album/images/108/27/816/10827816_20211229143632_500.jpg?5212701ba136b287d5c446d6f504451f/melon/resize/282/quality/80/optimize',
+        songKy: '28615',
+        songSinger: '아이유',
+        songTitle: '겨울잠',
+        songTj: '80967',
+      },
+      {
+        songHighPitch: '25',
+        songId: 370,
+        songImageUrl:
+          'https://cdnimg.melon.co.kr/cm/album/images/100/47/890/10047890_500.jpg?fe3170fcb1ac397fc072be5877d5f1b9/melon/resize/282/quality/80/optimize',
+        songKy: '49492',
+        songSinger: '아이유',
+        songTitle: '밤편지',
+        songTj: '62433',
+      },
+      {
+        songHighPitch: '30',
+        songId: 584,
+        songImageUrl:
+          'https://cdnimg.melon.co.kr/cm2/album/images/105/54/246/10554246_20210325161233_500.jpg?304eb9ed9c07a16ec6d6e000dc0e7d91/melon/resize/282/quality/80/optimize',
+        songKy: '28409',
+        songSinger: '아이유',
+        songTitle: '아이와 나의 바다',
+        songTj: '76600',
+      },
+      {
+        songHighPitch: '32',
+        songId: 592,
+        songImageUrl:
+          'https://cdnimg.melon.co.kr/cm/album/images/100/56/666/10056666_500.jpg?6aeddbe69ee3e13388eb0d9b81adaca8/melon/resize/282/quality/80/optimize',
+        songKy: '90133',
+        songSinger: '아이유',
+        songTitle: '이름에게',
+        songTj: '49496',
+      },
+      {
+        songHighPitch: '27',
+        songId: 325,
+        songImageUrl:
+          'https://cdnimg.melon.co.kr/cm/album/images/023/19/008/2319008_500.jpg?1d5950f924c443dce26fdfeb4b55471b/melon/resize/282/quality/80/optimize',
+        songKy: '48823',
+        songSinger: '아이유',
+        songTitle: '마음',
+        songTj: '29262',
+      },
+    ],
+  },
+  {
+    magazineId: 2,
+    magazineTitle: '4세대 아이돌 뉴진스',
+    magazineSubTitle: '데뷔와 동시에 이렇게 핫했던 아이돌이 있었을까?',
+    ArtistUrl: 'https://www.melon.com/artist/detail.htm?artistId=3092950',
+    magazineContent:
+      '걸그룹 뉴진스는 데뷔 앨범 첫 번째 타이틀곡 Attention을 선공개하며 눈길을 끄는데 성공, 이어 음원차트에서 돌풍을 일으키며 높은 순위를 기록하는 등, 신인 걸그룹으로서 이례적으로 큰 인기와 함께 4세대 아이돌의 판도를 뒤흔들고 있다.',
+    magazineImageUrl:
+      'https://file2.nocutnews.co.kr/newsroom/image/2022/08/01/202208012001467882_0.jpg',
+    magazineSongList: [
+      {
+        songHighPitch: '23',
+        songId: 967,
+        songImageUrl:
+          'https://cdnimg.melon.co.kr/cm2/album/images/110/11/565/11011565_20220801102637_500.jpg?1d674a44faffa0ebd34d86c182463171/melon/resize/282/quality/80/optimize',
+        songKy: '24219',
+        songSinger: 'NewJeans',
+        songTitle: 'Attention',
+        songTj: '82071',
+      },
+      {
+        songHighPitch: '25',
+        songId: -1,
+        songImageUrl:
+          'https://cdnimg.melon.co.kr/cm2/album/images/110/11/565/11011565_20220801102637_500.jpg?1d674a44faffa0ebd34d86c182463171/melon/resize/282/quality/80/optimize',
+        songKy: '28888',
+        songSinger: 'NewJeans',
+        songTitle: 'Cookie',
+        songTj: '82076',
+      },
+      {
+        songHighPitch: '27',
+        songId: -1,
+        songImageUrl:
+          'https://cdnimg.melon.co.kr/cm2/album/images/110/11/565/11011565_20220801102637_500.jpg?1d674a44faffa0ebd34d86c182463171/melon/resize/282/quality/80/optimize',
+        songKy: '28907',
+        songSinger: 'NewJeans',
+        songTitle: 'Hype boy',
+        songTj: '82072',
+      },
+    ],
+  },
+  {
+    magazineId: 3,
+    magazineTitle: '르세라핌 컴백!',
+    magazineSubTitle: '두 번째 미니앨범 ANTIFRAGILE',
+    ArtistUrl: 'https://www.melon.com/artist/detail.htm?artistId=3092950',
+    magazineContent:
+      '르세라핌은 다음달 17일로 컴백 일자가 정해졌다고 한다. 르세라핌의 데뷔 활동은 성공적이었다. 걸그룹 음판 데뷔 신기록을 썼고, 데뷔곡 ‘FEARLESS’는 아직까지 차트 30위권에 있다. 위버스와 유튜브 자체 콘텐츠를 통한 팬덤 유입 또한 이어진다. 르세라핌은 데뷔 전부터 어마어마한 이슈를 모았는데, 좋은 의미에서든 나쁜 의미에서든 신인 걸그룹이 그 정도로 화제를 일으킨 모습을 본 적이 없다. 이건 곧 이 그룹과 멤버들이 가진 잠재력과 파급력을 알려주는 것이다.',
+    magazineImageUrl:
+      'https://cdn.ize.co.kr/news/photo/202205/51948_62449_3722.jpg',
+    magazineSongList: [
+      {
+        songHighPitch: '25',
+        songId: -1,
+        songImageUrl:
+          'https://cdnimg.melon.co.kr/cm2/album/images/109/39/458/10939458_20220502123814_500.jpg?86d6e58174ad3b107f20ccfe00658b1f/melon/resize/282/quality/80/optimize',
+        songKy: '28753',
+        songSinger: '르세라핌',
+        songTitle: 'FEARLESS',
+        songTj: '81596',
+      },
+      {
+        songHighPitch: '26',
+        songId: -1,
+        songImageUrl:
+          'https://cdnimg.melon.co.kr/cm2/album/images/109/39/458/10939458_20220502123814_500.jpg?86d6e58174ad3b107f20ccfe00658b1f/melon/resize/282/quality/80/optimize',
+        songKy: '-',
+        songSinger: '르세라핌',
+        songTitle: 'Blue Flame',
+        songTj: '81892',
+      },
+    ],
+  },
+  {
+    magazineId: 4,
+    magazineTitle: '데뷔 첫 월드투어, G-IDLE!',
+    magazineSubTitle: '톰보이(TOMBOY), 스포티파이 1억 스트리밍 돌파',
+    ArtistUrl: 'https://www.melon.com/artist/detail.htm?artistId=2137482',
+    magazineContent:
+      "지난 3월 (여자)아이들은 정규 1집 '아이 네버 다이(I NEVER DIE)'로 컴백하고, 타이틀곡 '톰보이'로 국내외 차트를섭렵하며 대중성과 동시에 음악성을 인정받아 '톰보이 신드롬'을 탄생시켰다.(여자)아이들은 지난 1일 싱가포르 공연을 마지막으로 데뷔 첫 월드투어 2022 (G)I-DLE WORLD TOUR ［JUST ME ( )I-DLE]의 막을 내렸다. (여자)아이들은 오는 17일 다섯 번째 미니앨범 ‘아이러브’(I love)의 컴백을 위해 박차를 가하고 있다.",
+    magazineImageUrl:
+      'https://post-phinf.pstatic.net/MjAyMjAzMjFfMjk4/MDAxNjQ3ODQ5OTEwMTE2.MAbansZRbmei_ANYozGpoat8TruGI6AIObp9XOjc_IEg.HfNea0L5hP_wtOAN5IFotoViDqKj3EWODUxjbgv25Fgg.JPEG/%EB%8B%A8%EC%B2%B44.jpg?type=w1200',
+    magazineSongList: [
+      {
+        songHighPitch: '24',
+        songId: -1,
+        songImageUrl:
+          'https://cdnimg.melon.co.kr/cm2/album/images/108/90/384/10890384_20220314111504_500.jpg?4b9dba7aeba43a4e0042eedb6b9865c1/melon/resize/282/quality/80/optimize',
+        songKy: '23767',
+        songSinger: '(G)I-DLE',
+        songTitle: 'TOMBOY',
+        songTj: '81343',
+      },
+      {
+        songHighPitch: '24',
+        songId: -1,
+        songImageUrl:
+          'https://cdnimg.melon.co.kr/cm2/album/images/108/90/384/10890384_20220314111504_500.jpg?4b9dba7aeba43a4e0042eedb6b9865c1/melon/resize/282/quality/80/optimize',
+        songKy: '28677',
+        songSinger: '(G)I-DLE',
+        songTitle: 'MY BAG',
+        songTj: '81353',
+      },
+      {
+        songHighPitch: '24',
+        songId: -1,
+        songImageUrl:
+          'https://cdnimg.melon.co.kr/cm2/album/images/104/70/992/10470992_20200803154248_500.jpg?c0a9f9461e3259c788c25136bdccfa1f/melon/resize/282/sharpen/0x1',
+        songKy: '22059',
+        songSinger: '(G)I-DLE',
+        songTitle: '덤디덤디 (DUMDi DUMDi)',
+        songTj: '75460',
+      },
+      {
+        songHighPitch: '25',
+        songId: -1,
+        songImageUrl:
+          'https://cdnimg.melon.co.kr/cm/album/images/101/63/578/10163578_500.jpg?739305c999f77b790aa2c40eab1834e5/melon/resize/282/quality/80/optimize',
+        songKy: '91675',
+        songSinger: '(G)I-DLE',
+        songTitle: 'LATATA',
+        songTj: '97769',
+      },
+      {
+        songHighPitch: '27',
+        songId: -1,
+        songImageUrl:
+          'https://cdnimg.melon.co.kr/cm/album/images/101/94/362/10194362_500.jpg?07546ef885f79f0e7e4bcff567cb55be/melon/resize/282/quality/80/optimize',
+        songKy: '76346',
+        songSinger: '(G)I-DLE',
+        songTitle: '한(-)',
+        songTj: '98330',
+      },
+    ],
+  },
+];

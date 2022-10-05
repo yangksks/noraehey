@@ -1,12 +1,12 @@
 import styled from 'styled-components';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
-import ShortsListCard from './ShortsListCard';
 import { useRecoilValue } from 'recoil';
-import { shortsListLengthState, shortsListState } from '../../Atom';
+import { shortsHotListLengthState } from '../../Atom';
+import ShortsHotListCard from './ShortsHotListCard';
 
-const ShortsListSwiper = () => {
-  const shortsLength = useRecoilValue(shortsListLengthState);
+const ShortsHotListSwiper = () => {
+  const shortsLength = useRecoilValue(shortsHotListLengthState);
   const arr = Array.from({ length: shortsLength }, () => 0);
 
   return (
@@ -19,7 +19,7 @@ const ShortsListSwiper = () => {
         className="mySwiper">
         {arr.map((a, idx) => (
           <SwiperSlide key={idx}>
-            <ShortsListCard idx={idx} />
+            <ShortsHotListCard idx={idx} />
           </SwiperSlide>
         ))}
       </Swiper>
@@ -63,4 +63,4 @@ const CardContainer = styled.div`
     width: 60%;
   }
 `;
-export default ShortsListSwiper;
+export default ShortsHotListSwiper;

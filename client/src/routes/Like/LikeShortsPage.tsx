@@ -26,7 +26,6 @@ const LikeShortsPage = () => {
   useEffect(() => {
     fetchData.get('/api/v1/shorts/like?page=0').then((res) => {
       setShortsDatas(res.data.shortsList);
-      console.log(res.data.shortsList);
     });
   }, []);
 
@@ -54,7 +53,6 @@ const ShortsList = styled.div`
   justify-content: center;
   grid-template-columns: repeat(3, minmax(auto, 300px));
   grid-template-rows: repeat(auto-fill, 1fr);
-  /* grid-auto-rows: auto; */
   gap: 10px;
 `;
 

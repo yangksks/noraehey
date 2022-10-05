@@ -40,7 +40,6 @@ const LoginPage = () => {
         <a href={KAKAO_AUTH_URL}>
           <KakaoButton src={kakaoLogin} />
         </a>
-        <p>체험하기</p>
       </LoginBox>
     </LoginContainer>
   );

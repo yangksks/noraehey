@@ -224,6 +224,11 @@ const PicEdit = styled.div`
   height: 40px;
   z-index: 2;
   background-color: rgba(221, 221, 221, 0.588);
+  cursor: pointer;
+  &:active {
+    scale: 0.95;
+    opacity: 0.8;
+  }
   svg {
     font-size: 18px;
     padding-bottom: 3px;
@@ -259,6 +264,11 @@ const NameBox = styled.div`
     font-size: 18px;
     padding-bottom: 3px;
     padding-left: 3px;
+    &:active {
+      scale: 0.95;
+      opacity: 0.8;
+    }
+    cursor: pointer;
   }
 `;
 
