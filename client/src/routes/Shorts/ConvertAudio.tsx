@@ -1,6 +1,6 @@
 import { createFFmpeg } from '@ffmpeg/ffmpeg';
 import styled from 'styled-components';
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 
 interface ConvertType {
   start: number;
@@ -50,25 +50,22 @@ const ConvertAudio = (props: ConvertType) => {
         setMessage('Can not Import. need file check. 😪');
       }
     } catch {
-      alert('iOS 기기는 편집기능이 제공되지 않습니다. 원본이 업로드됩니다')
+      alert('iOS 기기는 편집기능이 제공되지 않습니다. 원본이 업로드됩니다');
       props.getConvertAudio(m4a);
     }
   };
-  return (
-    <ConvertButton className="shortsBtn" onClick={doImport}>
-      업로드
-    </ConvertButton>
-  );
+  return <ConvertButton onClick={doImport}>쇼츠등록</ConvertButton>;
 };
 
 const ConvertButton = styled.div`
-  padding: 10px 20px;
-  background-color: lavender;
-  border-radius: 5px;
+  padding: 10px 22px;
+  border-radius: 30px;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  background-color: #a793ff;
+  color: white;
   cursor: pointer;
 `;
 

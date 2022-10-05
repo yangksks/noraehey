@@ -3,7 +3,7 @@ import { Navigate, Outlet, useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
 import { tagListState, userInfoState, userTagListState } from '../../Atom';
-import { fetchData } from '../../utils/api/api';
+import { fetchData, removeAccessToken } from '../../utils/api/api';
 
 const TagVoiceProtection = () => {
   const loggedData = sessionStorage.getItem('accessToken');
@@ -20,6 +20,7 @@ const TagVoiceProtection = () => {
       setUserTags(result.data.memberTagList);
     } catch (err: any) {
       console.log(err);
+      removeAccessToken();
     }
   };
 

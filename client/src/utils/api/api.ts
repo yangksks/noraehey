@@ -3,36 +3,28 @@ import axios from 'axios';
 const baseURL = 'https://j7a503.p.ssafy.io';
 
 const getAccessToken = () => {
-  console.log('getAccessToken');
-
   const accessToken = sessionStorage.getItem('accessToken');
   return accessToken;
 };
 const getLocalRefreshToken = () => {
-  console.log('getLocalRefreshToken');
-
   const refreshToken = localStorage.getItem('refreshToken');
   return refreshToken;
 };
 
 export const setRefreshToken = (refreshToken: string) => {
-  console.log('setRefreshToken');
   localStorage.setItem('refreshToken', refreshToken);
 };
 
 export const removeRefreshToken = () => {
-  console.log('removeRefreshToken');
   localStorage.removeItem('refreshToken');
 };
 
 export const removeAccessToken = () => {
-  console.log('removeAccessToken');
   sessionStorage.removeItem('accessToken');
 };
 
 const getNewAccessToken = async () => {
   const refreshtoken = getLocalRefreshToken();
-  console.log('getNewAccessToken');
   const result = await axios.get(`${baseURL}/api/v1/member/refresh`, {
     headers: {
       'REFRESH-TOKEN': `${refreshtoken}`,
@@ -72,20 +64,15 @@ instance.interceptors.response.use(
         err.response.status === 401 &&
         err.response.data?.error === 'TokenExpiredException'
       ) {
-        console.log('int1');
         try {
-          console.log('int2try');
           const response = await getNewAccessToken();
-          console.log('int3try');
           const { accessToken, refreshToken } = response.data;
           sessionStorage.setItem('accessToken', accessToken);
           setRefreshToken(refreshToken);
           console.log(accessToken, refreshToken);
-          console.log('int4try');
           instance.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
           return instance(originalConfig);
         } catch (err: any) {
-          console.log('int2catch');
           if (
             err.response.status === 401 &&
             err.response.data?.message === 'REFRESH_ERROR'

@@ -21,7 +21,7 @@ const MagazineListSwiper = () => {
           </SwiperSlide>
         ))}
       </Swiper>
-      <Swiper
+      {/* <Swiper
         slidesOffsetBefore={10}
         slidesOffsetAfter={10}
         slidesPerView={3.3}
@@ -32,7 +32,7 @@ const MagazineListSwiper = () => {
             <MagazineCardSmall />
           </SwiperSlide>
         ))}
-      </Swiper>
+      </Swiper> */}
     </CardContainer>
   );
 };

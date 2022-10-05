@@ -10,6 +10,8 @@ import { fetchData } from '../../utils/api/api';
 import getCreatedTime from '../../utils/getCreatedTime';
 import { useNavigate } from 'react-router-dom';
 import { IoClose } from 'react-icons/io5';
+import { userInfoState } from '../../Atom';
+import { useRecoilValue } from 'recoil';
 export interface shortsDetailType {
   shortsId: number;
   shortsComment: string;
@@ -36,6 +38,7 @@ const ShortsModalCard = (props: any) => {
   const [likeCount, setLikeCount] = useState(0);
   const [liked, setLiked] = useState(false);
   const createdTime = getCreatedTime(shortsData.shortsCreateTime);
+  const memberId = useRecoilValue(userInfoState).memberId;
   const navigate = useNavigate();
   useEffect(() => {
     setAudio(new Audio(shortsData.shortsAudioUrl));
@@ -70,9 +73,12 @@ const ShortsModalCard = (props: any) => {
             <p>{shortsData.memberNickname}</p>
             <span>{createdTime}</span>
           </div>
-          <IoClose size={32} onClick={() => {
+          <IoClose
+            size={32}
+            onClick={() => {
               navigate(-1);
-            }}/>
+            }}
+          />
         </Profile>
         <Album
           play={play}
@@ -95,13 +101,29 @@ const ShortsModalCard = (props: any) => {
         </SongInfo>
         <Content>{shortsData.shortsComment}</Content>
         <LikeHeart>
+          {memberId === shortsData.memberId && (
+            <p
+
+              onClick={() => {
+                if(window.confirm("삭제하시겠습니까?")) {
+                fetchData
+                  .delete(`/api/v1/shorts`, {
+                    data: { shortsId: shortsData.shortsId },
+                  })
+                  .then(() => {
+                    navigate('/');
+                  });
+              }}}>
+              삭제
+            </p>
+          )}
           <div>
             {liked ? (
               <AiFillHeart
                 size={30}
                 color={'#f47b73'}
                 onClick={() => {
-                  fetchData
+                    fetchData
                     .delete(`/api/v1/shorts/like`, {
                       data: {
                         shortsId: shortsData.shortsId,
@@ -111,7 +133,8 @@ const ShortsModalCard = (props: any) => {
                       setLikeCount(res.data.likeCount);
                       setLiked(res.data.liked);
                     });
-                }}
+                  }
+                }
               />
             ) : (
               <AiOutlineHeart
@@ -197,8 +220,8 @@ const Profile = styled.div`
       color: ${(props) => props.theme.colors.textGray};
     }
   }
-  svg{
-    align-self:flex-start;
+  svg {
+    align-self: flex-start;
     cursor: pointer;
   }
 `;
@@ -318,8 +341,16 @@ const Content = styled.div`
 
 const LikeHeart = styled.div`
   display: flex;
-
+  align-items: center;
   justify-content: flex-end;
+  & > p {
+    font-size: 12px;
+    flex-grow: 1;
+    align-self: flex-end;
+    color: gray;
+    text-decoration: underline;
+    cursor: pointer;
+  }
   div {
     display: flex;
     flex-direction: column;

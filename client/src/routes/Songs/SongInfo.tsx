@@ -1,5 +1,9 @@
 import styled from 'styled-components';
-import { IoMdArrowDropup, IoMdArrowDropdown } from 'react-icons/io';
+import {
+  MdOutlineKeyboardArrowDown,
+  MdOutlineKeyboardArrowUp,
+} from 'react-icons/md';
+import { HiMinusSm } from 'react-icons/hi';
 import { AiOutlineQuestionCircle } from 'react-icons/ai';
 import { keyList } from '../../utils/constants/constants';
 import { useRecoilValue } from 'recoil';
@@ -66,23 +70,26 @@ const SongInfo = (props: any) => {
           {songData.songHighPitch != 0 &&
           songData.songHighPitch - userInfo.memberHighPitch > 0 ? (
             <>
-              <span style={{ color: 'red' }}>
+              <span style={{ color: '#d53958' }}>
                 {songData.songHighPitch - userInfo.memberHighPitch} Key
               </span>
-              <IoMdArrowDropup size={20} color={'red'} />
+              <MdOutlineKeyboardArrowUp size={20} color={'#d53958'} />
             </>
           ) : songData.songHighPitch != 0 &&
             songData.songHighPitch - userInfo.memberHighPitch < 0 ? (
             <>
-              <span style={{ color: 'blue' }}>
+              <span style={{ color: '#5574c4' }}>
                 {Math.abs(songData.songHighPitch - userInfo.memberHighPitch)}{' '}
                 Key
               </span>
-              <IoMdArrowDropdown size={20} color={'blue'} />
+              <MdOutlineKeyboardArrowDown size={20} color={'#5574c4'} />
             </>
           ) : (
             <>
-              <span style={{ color: 'green' }}>0 Key -</span>
+              <span style={{ color: '#5ca535' }}>
+                0 Key 
+              </span>
+              <HiMinusSm size={20} color={'#5ca535'} />
             </>
           )}
         </p>
