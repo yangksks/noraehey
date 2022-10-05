@@ -58,7 +58,7 @@ public class ShortsController {
     }
 
     // 인기도 순 쇼츠 조회
-    @GetMapping("/song/popular")
+    @GetMapping("/popular")
     public ResponseEntity<?> getShortsOrderByLike(@ApiIgnore Authentication authentication) {
         Member member = jwtAuthenticationUtil.jwtTokenAuth(authentication);
 
