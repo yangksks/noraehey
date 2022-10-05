@@ -23,25 +23,38 @@ const SongDetailShorts = () => {
     <SongShorts>
       <p>이곡의 HEY쇼츠 Top10</p>
       <SongShortsList>
-        <ul>
-          {shortsData.map((item, i) => (
-            <SongShortsItem
-              key={i}
-              onClick={() => {
-                navigate(`/shorts/${item.shortsId}`);
-              }}>
-              <img src={item.memberProfileUrl} alt="" />
-              <p className="nickname">{item.memberNickname}</p>
-              <p className="like">
-                <AiFillHeart size={12} color={'#f47b73'} /> {item.likeCount}
-              </p>
-            </SongShortsItem>
-          ))}
-        </ul>
+        {shortsData.length !== 0 ? (
+          <ul>
+            {shortsData.map((item, i) => (
+              <SongShortsItem
+                key={i}
+                onClick={() => {
+                  navigate(`/shorts/${item.shortsId}`);
+                }}>
+                <img src={item.memberProfileUrl} alt="" />
+                <p className="nickname">{item.memberNickname}</p>
+                <p className="like">
+                  <AiFillHeart size={12} color={'#f47b73'} /> {item.likeCount}
+                </p>
+              </SongShortsItem>
+            ))}
+          </ul>
+        ) : (
+          <NoData>첫 번째 쇼츠의 주인공이 되어주세요!</NoData>
+        )}
       </SongShortsList>
     </SongShorts>
   );
 };
+
+const NoData = styled.div`
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+  font-size: 12px;
+  color: ${(props) => props.theme.colors.textGray};
+`;
+
 const SongShorts = styled.div`
   width: 100%;
   padding: 0 20px;
