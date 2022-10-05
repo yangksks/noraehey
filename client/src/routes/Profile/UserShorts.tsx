@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
-import { myshortsListState, userInfoState } from '../../Atom';
+import { myshortsListState } from '../../Atom';
 import { fetchData } from '../../utils/api/api';
 import ShortsCard from '../Like/ShortsCard';
 
@@ -17,7 +17,6 @@ const UserShorts = () => {
     const URL = `/api/v1/shorts/member/${url}?page=${page}`;
     try {
       const result = await fetchData.get(URL);
-      console.log(result);
       setShortsList(result.data.shortsList);
       setHasMore(result.data.hasMore);
     } catch (err: any) {
@@ -42,10 +41,21 @@ const UserShorts = () => {
   return (
     <>
       <ShortsTitle>Hey Shorts</ShortsTitle>
-      <ShortsList>{loading ? null : render()}</ShortsList>
+      {shortsList.length !== 0 ? (
+        <ShortsList>{loading ? null : render()}</ShortsList>
+      ) : (
+        <NoData>등록된 쇼츠가 없습니다.</NoData>
+      )}
     </>
   );
 };
+const NoData = styled.div`
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+  font-size: 14px;
+  color: ${(props) => props.theme.colors.textGray};
+`;
 
 const ShortsTitle = styled.div`
   width: 100%;

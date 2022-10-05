@@ -3,6 +3,8 @@ import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
 import {
   reccommendSongsState,
+  shortsHotListLengthState,
+  shortsHotListState,
   shortsListLengthState,
   shortsListState,
   tagListState,
@@ -19,6 +21,10 @@ const LoadingSpinner = () => {
   const [userInfo, setUserInfo] = useRecoilState(userInfoState);
   const [shortsList, setShortsList] = useRecoilState(shortsListState);
   const [shortsLength, setShortsLength] = useRecoilState(shortsListLengthState);
+  const [shortsHotList, setShortsHotList] = useRecoilState(shortsHotListState);
+  const [shortsHotLength, setShortsHotLength] = useRecoilState(
+    shortsHotListLengthState,
+  );
   const [reccommendSongs, setReccommendSongs] =
     useRecoilState(reccommendSongsState);
   const [tagList, setTagList] = useRecoilState(tagListState);
@@ -59,6 +65,18 @@ const LoadingSpinner = () => {
     }
   };
 
+  const getShortsHotList = async () => {
+    const URL = '/api/v1/shorts/popular';
+    try {
+      const result = await fetchData.get(URL);
+      setShortsHotList(() => result.data);
+      setShortsHotLength(() => result.data.length);
+      return result.data;
+    } catch (err: any) {
+      console.log(err);
+    }
+  };
+
   const getReccomendList = async () => {
     const URL = '/api/v1/recommend';
     try {
@@ -77,6 +95,7 @@ const LoadingSpinner = () => {
     const syncFunc = async () => {
       await getUserInfo();
       await getShortsList();
+      await getShortsHotList();
       await getReccomendList();
       await getTags();
       setLoading(false);
@@ -89,12 +108,12 @@ const LoadingSpinner = () => {
       <LoadingSpinerBox>
         <InnerBox>
           <Header />
-          <div>
+          <SpinnerBox>
             <VoiceButtonBorder />
             <LoadingSign>
               <p>Loading</p>
             </LoadingSign>
-          </div>
+          </SpinnerBox>
           <NavBar></NavBar>
         </InnerBox>
       </LoadingSpinerBox>
@@ -107,7 +126,6 @@ const LoadingSpinner = () => {
 const LoadingSpinerBox = styled.div`
   width: 100%;
   height: calc(var(--vh, 1vh) * 100);
-  // background: ${(props) => props.theme.colors.gradientPurpleToYellow};
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -138,5 +156,15 @@ const LoadingSign = styled.div`
   p {
     text-shadow: 0px 0px 6px rgba(0, 1, 0, 0.6);
   }
+`;
+
+const SpinnerBox = styled.div`
+  width: 100%;
+  max-width: 420px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 `;
 export default LoadingSpinner;

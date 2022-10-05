@@ -23,7 +23,7 @@ const VoiceResultPage = () => {
     try {
       const result = await fetchData.get(URL);
       setUser(() => result.data);
-      return console.log(result.data);
+      return result.data;
     } catch (err: any) {
       console.log(err);
     }
@@ -35,17 +35,17 @@ const VoiceResultPage = () => {
 
   return (
     <ResultContainer>
-      <Title>
-        <p className={'title2'}>측정결과</p>
-        <p className={'title2'}>{keyList[user.memberHighPitch]}</p>
-      </Title>
-      <Button onClick={() => navigate('/')}>
-        <a>노래Hey로 떠나기</a>
-      </Button>
       <Footer onClick={() => navigate('/voice')}>
         <FiArrowLeft />
-        <a>재측정하기</a>
+        <p>재측정하기</p>
       </Footer>
+      <Title>
+        <p className={'resultTitle1'}>측정결과</p>
+        <p className={'resultTitle2'}>{keyList[user.memberHighPitch]}</p>
+        <Button onClick={() => navigate('/')}>
+          <p>노래Hey로 떠나기</p>
+        </Button>
+      </Title>
     </ResultContainer>
   );
 };
@@ -56,39 +56,46 @@ const ResultContainer = styled.div`
   background: ${(props) => props.theme.colors.gradientPurpleToYellow};
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
+  justify-content: center;
   align-items: center;
 `;
 
 const Title = styled.div`
   position: relative;
   width: 100%;
+  height: 80%;
   max-width: 420px;
   font-size: 20px;
   font-family: 'omni035';
   color: white;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-evenly;
   align-items: center;
-  gap: 60px;
-  text-shadow: 0px 0px 6px rgba(0, 0, 0, 0.2);
-  p {
-    position: relative;
+  gap: 40px;
+  .resultTitle1 {
+    font-size: 40px;
+    text-shadow: 0px 0px 6px rgba(0, 0, 0, 0.2);
   }
-  .title1 {
-    animation: fadeIn 1s ease-in;
-  }
-  .title2 {
-    top: -10px;
+  .resultTitle2 {
+    background: linear-gradient(
+      #ad24b9 0%,
+      rgba(159, 16, 209, 0.63) 52.08%,
+      rgba(87, 26, 219, 0.82849) 100%
+    );
+    background-clip: padding-box;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    top: -20px;
     font-size: 60px;
-    animation: fadeIn 1.5s ease-in forwards;
+    animation: fadeIn2 1s ease-in forwards;
   }
-  @keyframes fadeIn {
+  @keyframes fadeIn2 {
     0% {
       opacity: 0;
     }
     100% {
+      scale: 1.5;
       top: 0px;
       opacity: 1;
     }
@@ -96,35 +103,46 @@ const Title = styled.div`
 `;
 
 const Footer = styled.div`
-  position: relative;
+  position: absolute;
+  top: 10px;
   font-size: 20px;
   width: 100%;
+  max-width: 420px;
+  height: 20%;
   padding: 20px;
   color: white;
   display: flex;
   flex-direction: row;
   justify-content: start;
-  align-items: center;
+  align-items: start;
+  font-family: 'omni025';
   text-shadow: 0px 0px 6px rgba(0, 0, 0, 0.2);
   svg {
     position: relative;
-    top: -1px;
   }
   z-index: 10;
 `;
 
 const Button = styled.div`
   gap: 20px;
-  padding: 20px;
+  padding: 15px;
   font-size: 20px;
   color: white;
   border-radius: 30px;
-  background: linear-gradient(180deg, #a793fe 0%, #9278ff 100%);
+  background: #a793ff;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  &:active {
+    scale: 0.95;
+    opacity: 0.8;
+  }
+  &:hover {
+    scale: 1.04;
+  }
 `;
 
 export default VoiceResultPage;

@@ -32,6 +32,11 @@ const TabSection = styled.section`
     & > li {
       width: 100%;
       text-align: center;
+      cursor: pointer;
+      &:active {
+        scale: 0.95;
+        opacity: 0.8;
+      }
     }
     border-bottom: 1px solid ${(props) => props.theme.colors.textGray};
   }

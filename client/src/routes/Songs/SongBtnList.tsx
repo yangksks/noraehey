@@ -1,7 +1,6 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import {
   MdOutlineSentimentVerySatisfied,
   MdOutlineSentimentSatisfied,
@@ -41,9 +40,10 @@ const SongBtnList = (props: any) => {
           }}>
           평가
         </button>
-        <button onClick={()=>{
-          navigate(`/create/shorts/${songId}`);
-        }}>
+        <button
+          onClick={() => {
+            navigate(`/create/shorts/${songId}`);
+          }}>
           쇼츠 등록
         </button>
       </BtnList>
@@ -85,9 +85,9 @@ const SongBtnList = (props: any) => {
             }}>
             <MdOutlineSentimentVeryDissatisfied
               size={40}
-              color={nowEval == 4 ? 'red' : 'gray'}
+              color={nowEval == 4 ? '#e23a3a' : 'gray'}
             />
-            <p style={{ color: nowEval == 4 ? 'red' : 'gray' }}>Hell</p>
+            <p style={{ color: nowEval == 4 ? '#e23a3a' : 'gray' }}>Hell</p>
           </li>
         </ul>
       </Evaluation>
@@ -109,6 +109,10 @@ const BtnList = styled.div`
     font-size: 16px;
     cursor: pointer;
     color: white;
+    &:active {
+      scale: 0.95;
+      opacity: 0.8;
+    }
   }
   button:first-child {
     background-color: #ffc978;
@@ -132,6 +136,10 @@ const Evaluation = styled.div<{ evalToggle: boolean; eval: number }>`
       flex-direction: column;
       align-items: center;
       cursor: pointer;
+      &:active {
+        scale: 0.95;
+        opacity: 0.8;
+      }
       gap: 2px;
       p {
         font-size: 14px;

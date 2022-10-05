@@ -51,9 +51,16 @@ const BoxHeader = styled.div`
   box-sizing: border-box;
   border-bottom: 1px solid #929292;
 
+  cursor: pointer;
+
+  &:active {
+    scale: 0.96;
+    opacity: 0.8;
+  }
+
   p {
     font-size: 10px;
-    color: #929292
+    color: #929292;
   }
 `;
 

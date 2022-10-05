@@ -17,7 +17,6 @@ interface ShortsCreateType {
 const ShortsCreateCard = (props: ShortsCreateType) => {
   const url = useLocation().pathname.split('/')[3];
   const [song, setSong] = useState({} as any);
-  const user = useRecoilValue(userInfoState);
   const [startPoint, setStartPoint] = useState(0);
   const [endPoint, setEndPoint] = useState(1);
 
@@ -50,12 +49,6 @@ const ShortsCreateCard = (props: ShortsCreateType) => {
 
   return (
     <ShortsCard>
-      {/* <Profile>
-        <img src={user.memberProfileUrl} alt="" />
-        <div>
-          <p>{user.memberNickname}</p>
-        </div>
-      </Profile> */}
       <Album>
         <div>
           <img src={song.songImageUrl} alt="" />
@@ -96,6 +89,7 @@ const ShortsCard = styled.div`
   flex-direction: column;
   position: relative;
   border-radius: 20px;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
   background: linear-gradient(
     153.96deg,
     #ebe7ff 5.39%,
@@ -181,31 +175,9 @@ const Album = styled.div`
       height: 200px;
       border-radius: 50%;
       margin: 14px;
+      border: 1px solid lightgrey;
     }
   }
 `;
 
-const LikeHeart = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  padding-top: 10px;
-  & > p {
-    font-size: 12px;
-    flex-grow: 1;
-    align-self: flex-end;
-    color: gray;
-    text-decoration: underline;
-    cursor: pointer;
-  }
-  div {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    cursor: pointer;
-    p {
-      font-size: 10px;
-    }
-  }
-`;
 export default ShortsCreateCard;
