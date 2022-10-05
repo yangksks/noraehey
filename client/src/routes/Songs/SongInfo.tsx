@@ -113,7 +113,6 @@ const Song = styled.div`
     padding: 2px 0;
   }
   .title {
-    font-weight: 600;
   }
   .singer {
     color: ${(props) => props.theme.colors.mainPurple};

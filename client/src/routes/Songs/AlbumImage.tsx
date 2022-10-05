@@ -82,7 +82,7 @@ const AlbumBox = styled.div<{ url: string }>`
 const NumAndLike = styled.div`
   background-image: linear-gradient(
     rgba(255, 255, 255, 0) 0%,
-    rgba(0, 0, 0, 0.9) 120%
+    rgba(0, 0, 0, 0.9) 100%
   );
   border-radius: 0 0 10px 10px;
   display: flex;

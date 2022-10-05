@@ -32,7 +32,7 @@ const LyricsBtn = styled.button`
   background-color: transparent;
   border: none;
   cursor: pointer;
-  margin: 10px;
+  margin: 20px 0 10px;
   font-size: 12px;
   color: ${(props) => props.theme.colors.textGray};
   &:active {
