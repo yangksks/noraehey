@@ -36,7 +36,7 @@ const VoiceResultPage = () => {
   return (
     <ResultContainer>
       <Title>
-        <p className={'title2'}>측정결과</p>
+        <p className={'title1'}>측정결과</p>
         <p className={'title2'}>{keyList[user.memberHighPitch]}</p>
       </Title>
       <Button onClick={() => navigate('/')}>
@@ -71,7 +71,7 @@ const Title = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 60px;
+  gap: 40px;
   text-shadow: 0px 0px 6px rgba(0, 0, 0, 0.2);
   p {
     position: relative;
@@ -81,7 +81,7 @@ const Title = styled.div`
   }
   .title2 {
     top: -10px;
-    font-size: 60px;
+    font-size: 50px;
     animation: fadeIn 1.5s ease-in forwards;
   }
   @keyframes fadeIn {

@@ -40,7 +40,7 @@ const SongDetailShorts = () => {
             ))}
           </ul>
         ) : (
-          <NoData>첫 번째 쇼츠의 주인공이 되어주세요!</NoData>
+          <NoData>첫 번째 쇼츠의 주인공이 되어보세요!</NoData>
         )}
       </SongShortsList>
     </SongShorts>

@@ -42,10 +42,21 @@ const UserShorts = () => {
   return (
     <>
       <ShortsTitle>Hey Shorts</ShortsTitle>
-      <ShortsList>{loading ? null : render()}</ShortsList>
+      {shortsList.length !== 0 ? (
+        <ShortsList>{loading ? null : render()}</ShortsList>
+      ) : (
+        <NoData>등록된 쇼츠가 없습니다.</NoData>
+      )}
     </>
   );
 };
+const NoData = styled.div`
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+  font-size: 14px;
+  color: ${(props) => props.theme.colors.textGray};
+`;
 
 const ShortsTitle = styled.div`
   width: 100%;
