@@ -140,10 +140,6 @@ const Evaluation = styled.div<{ evalToggle: boolean; eval: number }>`
         scale: 0.95;
         opacity: 0.8;
       }
-      &:hover {
-        scale: 1.10;
-        opacity: 0.8;
-      }
       gap: 2px;
       p {
         font-size: 14px;

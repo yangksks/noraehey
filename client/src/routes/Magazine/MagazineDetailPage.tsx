@@ -1,10 +1,19 @@
-import React from 'react'
+import styled from 'styled-components';
+import { magazines } from '../../utils/constants/constants';
+import SubTitle from '../Common/SubTitle';
+import SongCard from '../Home/SongCard';
+import { useRecoilValue } from 'recoil';
+import { userInfoState } from '../../Atom';
+import { useLocation } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 
 const MagazineDetailPage = () => {
-  return (
-    <div>MagazineDetailPage</div>
-  )
-}
+  const url = useLocation().pathname.split('/')[2];
+  const magazineData = magazines[+url - 1];
+  const user = useRecoilValue(userInfoState);
+  const userKey = user.memberHighPitch;
+  const songList = magazineData.magazineSongList;
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     setLoading(false);

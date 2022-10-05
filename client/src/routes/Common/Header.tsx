@@ -106,10 +106,6 @@ const Logo = styled.div`
     scale: 0.95;
     opacity: 0.8;
   }
-  &:hover {
-    scale: 1.05;
-    opacity: 0.8;
-  }
 `;
 
 const ProfileImg = styled.img`
@@ -120,10 +116,6 @@ const ProfileImg = styled.img`
   cursor: pointer;
   &:active {
     scale: 0.95;
-    opacity: 0.8;
-  }
-  &:hover {
-    scale: 1.05;
     opacity: 0.8;
   }
 `;
