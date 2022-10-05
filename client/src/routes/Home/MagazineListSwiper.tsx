@@ -3,7 +3,8 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import MagazineCardBig from './MagazineCardBig';
 import MagazineCardSmall from './MagazineCardSmall';
 import 'swiper/css';
-import { magazines } from '../../utils/constants/constants';
+
+const magazines = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
 const MagazineListSwiper = () => {
   return (
@@ -16,10 +17,22 @@ const MagazineListSwiper = () => {
         className="mySwiper">
         {magazines.map((magazine, idx) => (
           <SwiperSlide key={`big${idx}`}>
-            <MagazineCardBig magazine={magazine} />
+            <MagazineCardBig />
           </SwiperSlide>
         ))}
       </Swiper>
+      {/* <Swiper
+        slidesOffsetBefore={10}
+        slidesOffsetAfter={10}
+        slidesPerView={3.3}
+        spaceBetween={10}
+        className="mySwiper">
+        {magazines.map((magazine, idx) => (
+          <SwiperSlide key={`small${idx}`}>
+            <MagazineCardSmall />
+          </SwiperSlide>
+        ))}
+      </Swiper> */}
     </CardContainer>
   );
 };
@@ -32,6 +45,7 @@ const CardContainer = styled.div`
   justify-content: start;
   align-items: center;
   box-sizing: border-box;
+  overflow: hidden;
 
   .swiper {
     width: 100%;

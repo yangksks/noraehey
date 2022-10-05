@@ -1,18 +1,15 @@
-import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
-
-const MagazineCardBig = (props: any) => {
-  const navigate = useNavigate();
-  const magazineData = props.magazine;
+const MagazineCardBig = () => {
+  const songData = {
+    URL: 'https://file.mk.co.kr/meet/neds/2022/05/image_readtop_2022_406833_16520588985036000.jpg',
+    title: '르세라핌 컴백!',
+  };
 
   return (
-    <BigCardContainer
-      onClick={() => {
-        navigate(`/magazine/${magazineData.magazineId}`);
-      }}>
-      <BigCard album={magazineData.magazineImageUrl}>
-        <Title>{magazineData.magazineTitle}</Title>
+    <BigCardContainer>
+      <BigCard album={songData.URL}>
+        <Title>{songData.title}</Title>
       </BigCard>
     </BigCardContainer>
   );
@@ -30,7 +27,6 @@ const Title = styled.div`
   font-size: 22px;
   color: white;
   font-family: 'omni035';
-  text-align: start;
 `;
 
 const BigCardContainer = styled.div`
@@ -41,7 +37,6 @@ const BigCardContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  cursor: pointer;
 `;
 
 const BigCard = styled.div<{ album: string }>`
