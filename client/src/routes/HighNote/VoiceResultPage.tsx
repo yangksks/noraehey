@@ -83,6 +83,7 @@ const Title = styled.div`
       rgba(159, 16, 209, 0.63) 52.08%,
       rgba(87, 26, 219, 0.82849) 100%
     );
+    background-clip: padding-box;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     top: -20px;
@@ -106,6 +107,7 @@ const Footer = styled.div`
   top: 10px;
   font-size: 20px;
   width: 100%;
+  max-width: 420px;
   height: 20%;
   padding: 20px;
   color: white;
@@ -125,19 +127,14 @@ const Button = styled.div`
   gap: 20px;
   padding: 15px;
   font-size: 20px;
-  color: #707070;
+  color: white;
   border-radius: 30px;
-  background: linear-gradient(
-    107.48deg,
-    #e3e1e1 2.51%,
-    #d6f7f5 49.99%,
-    #fbe0ff 94.21%
-  );
+  background: #a793ff;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
   cursor: pointer;
   &:active {
     scale: 0.95;
