@@ -4,10 +4,10 @@ import com.singsong.common.exception.code.ErrorCode;
 import lombok.Getter;
 
 @Getter
-public class MemberNicknameValidateException extends RuntimeException{
+public class MemberImageNotFoundException extends RuntimeException{
     private ErrorCode errorCode;
 
-    public MemberNicknameValidateException(String message, ErrorCode errorCode){
+    public MemberImageNotFoundException(String message, ErrorCode errorCode){
         super(message);
         this.errorCode = errorCode;
     }

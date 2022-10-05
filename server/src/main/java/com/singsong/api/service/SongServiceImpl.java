@@ -40,7 +40,8 @@ public class SongServiceImpl implements SongService {
 
     @Override
     public void updateSongLevel(Long songId, int updatedSongLevel, Long songEvalCount) {
-        Song song = songRepository.findSongBySongId(songId).orElseThrow(() -> new SongNotFoundException("song not found", ErrorCode.SONG_NOT_FOUND));;
+        Song song = songRepository.findSongBySongId(songId).orElseThrow(() -> new SongNotFoundException("song not found", ErrorCode.SONG_NOT_FOUND));
+        ;
         songRepository.save(Song.builder()
                 .songId(songId)
                 .songTitle(song.getSongTitle())
@@ -50,6 +51,7 @@ public class SongServiceImpl implements SongService {
                 .songNum(song.getSongNum())
                 .songHighPitch(song.getSongHighPitch())
                 .songImageUrl(song.getSongImageUrl())
+                .songAlbum(song.getSongAlbum())
                 .songKy(song.getSongKy())
                 .songTj(song.getSongTj())
                 .songLikeCount(song.getSongLikeCount())
@@ -61,7 +63,8 @@ public class SongServiceImpl implements SongService {
 
     @Override
     public void updateSongLike(Long songId, int result) {
-        Song song = songRepository.findSongBySongId(songId).orElseThrow(() -> new SongNotFoundException("song not found", ErrorCode.SONG_NOT_FOUND));;
+        Song song = songRepository.findSongBySongId(songId).orElseThrow(() -> new SongNotFoundException("song not found", ErrorCode.SONG_NOT_FOUND));
+        ;
         songRepository.save(Song.builder()
                 .songId(songId)
                 .songTitle(song.getSongTitle())

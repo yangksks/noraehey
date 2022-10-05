@@ -31,7 +31,7 @@ import java.util.List;
 @Service
 public class ShortsServiceImpl implements ShortsService {
 
-    static final int SIZE = 2;
+    static final int SIZE = 20;
     @Autowired
     ShortsRepository shortsRepository;
     @Autowired
@@ -70,8 +70,8 @@ public class ShortsServiceImpl implements ShortsService {
 
     @Override
     public List<Shorts> getShortsListBySongId(Long songId, int page) {
-        Pageable pageable = PageRequest.of(page, SIZE, Sort.by("shortsCreateTime").descending());
-        List<Shorts> shortsList = shortsRepository.findAllBySongSongId(songId, pageable);
+        Pageable pageable = PageRequest.of(page, 10);
+        List<Shorts> shortsList = shortsRepository.findBySongIdOrderByLike(songId, pageable);
         return shortsList;
     }
 
@@ -141,6 +141,39 @@ public class ShortsServiceImpl implements ShortsService {
             resList.add(shortsEntityRes);
         }
 
+        return resList;
+    }
+
+    @Override
+    public List<ShortsEntityRes> getShortsListOrderByLike(Member member) {
+        List<Shorts> shortsList = shortsRepository.findOrderByLike();
+        List<ShortsEntityRes> resList = new ArrayList<>();
+        for (Shorts shorts: shortsList) {
+            Song song = songRepository.findSongBySongId(shorts.getSong().getSongId()).orElseThrow(() -> new SongNotFoundException("song not found", ErrorCode.SONG_NOT_FOUND));;
+            boolean isLiked = shortsLikeRepository.findByShortsShortsIdAndMemberMemberId(shorts.getShortsId(), member.getMemberId()) != null;
+            int likeCount = shortsLikeRepository.countByShortsShortsId(shorts.getShortsId()).intValue();
+            Member shortsMember = memberRepository.findByMemberId(shorts.getMember().getMemberId()).orElseThrow(() -> new MemberNotFoundException("member not found", ErrorCode.MEMBER_NOT_FOUND));
+            ShortsEntityRes shortsEntityRes = ShortsEntityRes.builder()
+                    .shortsId(shorts.getShortsId())
+                    .shortsComment(shorts.getShortsComment())
+                    .shortsAudioUrl(shorts.getShortsAudioUrl())
+                    .shortsCreateTime(shorts.getShortsCreateTime())
+                    .songId(song.getSongId())
+                    .songTitle(song.getSongTitle())
+                    .songSinger(song.getSongSinger())
+                    .songHighPitch(song.getSongHighPitch())
+                    .songImageUrl(song.getSongImageUrl())
+                    .songTj(song.getSongTj())
+                    .songKy(song.getSongKy())
+                    .memberId(shortsMember.getMemberId())
+                    .memberNickname(shortsMember.getMemberNickname())
+                    .memberProfileUrl(shortsMember.getMemberProfileUrl())
+                    .likeCount(likeCount)
+                    .isLiked(isLiked)
+                    .build();
+
+            resList.add(shortsEntityRes);
+        }
         return resList;
     }
 

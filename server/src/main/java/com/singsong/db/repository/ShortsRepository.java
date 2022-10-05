@@ -15,10 +15,26 @@ public interface ShortsRepository extends JpaRepository<Shorts, Long> {
     Optional<Shorts> findByShortsId(Long shortsId);
     Optional<Shorts> findByShortsIdAndAndMemberMemberId(Long shorts, Long memberId);
     void deleteByShortsId(Long shortsId);
-    List<Shorts> findAllBySongSongId(Long songId, Pageable pageable);
+
+    @Query(value = "select s.shorts_id, s.shorts_audio_url, s.shorts_comment, s.shorts_create_time, s.member_id, s.song_id  from shorts as s\n" +
+            "left join \n" +
+            "(select shorts_id, count(shorts_id) cnt from shorts_like l\n" +
+            "group by l.shorts_id) as l\n" +
+            "on s.shorts_id = l.shorts_id\n" +
+            "order by cnt desc\n" +
+            "limit 30", nativeQuery = true)
+    List<Shorts> findOrderByLike();
+    @Query(value = "select s.shorts_id, s.shorts_audio_url, s.shorts_comment, s.shorts_create_time, s.member_id, s.song_id  from shorts as s\n" +
+            "left join \n" +
+            "(select shorts_id, count(shorts_id) cnt from shorts_like l\n" +
+            "group by l.shorts_id) as l\n" +
+            "on s.shorts_id = l.shorts_id\n" +
+            "where song_id = :songId\n" +
+            "order by cnt desc", nativeQuery = true)
+    List<Shorts> findBySongIdOrderByLike(Long songId, Pageable pageable);
     List<Shorts> findAllByMemberMemberId(Long memberId, Pageable pageable);
 
-    @Query(value = "select * from shorts order by rand() limit 3", nativeQuery = true)
+    @Query(value = "select * from shorts order by rand() limit 30", nativeQuery = true)
     List<Shorts> findByRandom();
 
     @Query(value = "SELECT s.shorts_id, s.shorts_audio_url, s.shorts_comment, s.shorts_create_time, s.member_id, s.song_id FROM shorts_like l\n" +

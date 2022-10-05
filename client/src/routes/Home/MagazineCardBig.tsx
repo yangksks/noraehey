@@ -1,4 +1,3 @@
-import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 const MagazineCardBig = (props: any) => {
@@ -6,12 +5,9 @@ const MagazineCardBig = (props: any) => {
   const magazineData = props.magazine;
 
   return (
-    <BigCardContainer
-      onClick={() => {
-        navigate(`/magazine/${magazineData.magazineId}`);
-      }}>
-      <BigCard album={magazineData.magazineImageUrl}>
-        <Title>{magazineData.magazineTitle}</Title>
+    <BigCardContainer>
+      <BigCard album={songData.URL}>
+        <Title>{songData.title}</Title>
       </BigCard>
     </BigCardContainer>
   );
@@ -29,7 +25,6 @@ const Title = styled.div`
   font-size: 22px;
   color: white;
   font-family: 'omni035';
-  text-align: start;
 `;
 
 const BigCardContainer = styled.div`
@@ -40,7 +35,6 @@ const BigCardContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  cursor: pointer;
 `;
 
 const BigCard = styled.div<{ album: string }>`

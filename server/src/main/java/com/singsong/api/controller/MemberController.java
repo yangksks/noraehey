@@ -1,10 +1,13 @@
 package com.singsong.api.controller;
 
+import com.singsong.api.request.TagPostReq;
 import com.singsong.api.response.MemberInfoRes;
 import com.singsong.api.response.MemberTokenRes;
 import com.singsong.api.response.MyInfoRes;
 import com.singsong.api.service.MemberService;
 import com.singsong.api.service.TagService;
+import com.singsong.common.exception.code.ErrorCode;
+import com.singsong.common.exception.member.MemberImageNotFoundException;
 import com.singsong.common.util.JwtAuthenticationUtil;
 import com.singsong.common.util.JwtTokenUtil;
 import com.singsong.common.util.S3Util;
@@ -57,10 +60,10 @@ public class MemberController {
 
         MyInfoRes myInfoRes = MyInfoRes.builder()
                 .memberId(member.getMemberId())
-                .email(member.getMemberEmail())
-                .nickName(member.getMemberNickname())
-                .songHighPitch(member.getMemberHighPitch())
-                .profileUrl(member.getMemberProfileUrl())
+                .memberEmail(member.getMemberEmail())
+                .memberNickname(member.getMemberNickname())
+                .memberHighPitch(member.getMemberHighPitch())
+                .memberProfileUrl(member.getMemberProfileUrl())
                 .memberTagList(tags)
                 .build();
 
@@ -91,8 +94,9 @@ public class MemberController {
         String s3Url = s3Util.uploadMemberProfileImageFile(profileImg, member.getMemberId());
 
         String memberImageUrl = member.getMemberProfileUrl();
-        if (memberImageUrl != null) s3Util.deleteFile(memberImageUrl.substring(49));
-
+        if (memberImageUrl == null) throw new MemberImageNotFoundException("member image not found", ErrorCode.MEMBER_IMAGE_NOT_FOUND);
+        // 기본 이미지가 아니라면 삭제 (url의 56번째에 폴더 명 (기본 이미지는 폴더 명 0))
+        if (memberImageUrl.charAt(56) != '0') s3Util.deleteFile(memberImageUrl.substring(49));
         memberService.modifyProfile(member, s3Url);
 
         return ResponseEntity.status(200).build();
@@ -106,18 +110,10 @@ public class MemberController {
         return ResponseEntity.status(200).build();
     }
 
-    @PatchMapping("/tag/add")
-    public ResponseEntity<?> memberTagAdd(@RequestParam(value = "tag") Long tagId, @ApiIgnore Authentication authentication) {
+    @PatchMapping("/tag")
+    public ResponseEntity<?> memberTagAdd(@RequestBody TagPostReq tagPostReq, @ApiIgnore Authentication authentication) {
         Member member = jwtAuthenticationUtil.jwtTokenAuth(authentication);
-        tagService.addMemberTag(member, tagId);
-
-        return ResponseEntity.status(200).build();
-    }
-
-    @PatchMapping("/tag/delete")
-    public ResponseEntity<?> memberTagDelete(@RequestParam(value = "tag") Long tagId, @ApiIgnore Authentication authentication) {
-        Member member = jwtAuthenticationUtil.jwtTokenAuth(authentication);
-        tagService.removeMemberTag(member, tagId);
+        tagService.modifyMemberTags(member, tagPostReq.getTagIdList());
 
         return ResponseEntity.status(200).build();
     }
@@ -140,6 +136,7 @@ public class MemberController {
         MemberInfoRes memberInfoRes = MemberInfoRes.builder()
                 .memberNickname(member.getMemberNickname())
                 .memberProfileUrl(member.getMemberProfileUrl())
+                .memberHighPitch(member.getMemberHighPitch())
                 .build();
 
         return ResponseEntity.status(200).body(memberInfoRes);

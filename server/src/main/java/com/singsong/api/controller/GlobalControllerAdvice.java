@@ -3,6 +3,8 @@ package com.singsong.api.controller;
 import com.singsong.common.exception.code.ErrorCode;
 import com.singsong.common.exception.file.FileUploadExtensionException;
 import com.singsong.common.exception.magazine.MagazineNotFoundException;
+import com.singsong.common.exception.member.MemberImageNotFoundException;
+import com.singsong.common.exception.member.MemberNicknameValidateException;
 import com.singsong.common.exception.member.MemberNotFoundException;
 import com.singsong.common.exception.member.MemberUnauthorizedException;
 import com.singsong.common.exception.response.ErrorResponse;
@@ -62,12 +64,25 @@ public class GlobalControllerAdvice {
         return new ResponseEntity<>(response, HttpStatus.valueOf(e.getErrorCode().getStatus()));
     }
 
-    // TODO: IOException 나누기 (S3 업로드에도 IOException 가능)
-    // Kakao IOException
+    @ExceptionHandler(MemberNicknameValidateException.class)
+    public ResponseEntity<ErrorResponse> handleMemberNicknameValidateException(MemberNicknameValidateException e) {
+        log.error("handleMemberNicknameValidateException", e);
+        ErrorResponse response = new ErrorResponse(e.getErrorCode());
+        return new ResponseEntity<>(response, HttpStatus.valueOf(e.getErrorCode().getStatus()));
+    }
+
+    @ExceptionHandler(MemberImageNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleMemberImageNotFoundException(MemberImageNotFoundException e) {
+        log.error("handleMemberImageNotFoundException", e);
+        ErrorResponse response = new ErrorResponse(e.getErrorCode());
+        return new ResponseEntity<>(response, HttpStatus.valueOf(e.getErrorCode().getStatus()));
+    }
+
+    // Kakao IOException, S3 IOException
     @ExceptionHandler(IOException.class)
-    public ResponseEntity<ErrorResponse> handleKakaoIoException(IOException e){
-        log.error("handleKakaoIoException",e);
-        ErrorResponse response = new ErrorResponse(ErrorCode.KAKAO_IO_EXCEPTION);
+    public ResponseEntity<ErrorResponse> handleIoException(IOException e){
+        log.error("handleIoException",e);
+        ErrorResponse response = new ErrorResponse(ErrorCode.IO_EXCEPTION);
         return new ResponseEntity<>(response, HttpStatus.CONFLICT);
     }
 

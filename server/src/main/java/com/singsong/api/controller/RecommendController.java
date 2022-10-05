@@ -1,7 +1,9 @@
 package com.singsong.api.controller;
 
 import com.singsong.api.request.PyRecommendPostReq;
-import com.singsong.api.request.RecommendPostReq;
+import com.singsong.api.response.RecommendRes;
+import com.singsong.api.response.SongEntityRes;
+import com.singsong.api.service.SongService;
 import com.singsong.api.service.TagService;
 import com.singsong.common.model.response.BaseResponseBody;
 import com.singsong.common.util.JwtAuthenticationUtil;
@@ -14,13 +16,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 import springfox.documentation.annotations.ApiIgnore;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,10 +38,12 @@ public class RecommendController {
     @Autowired
     TagService tagService;
 
-    @PatchMapping("/tag")
-    public ResponseEntity<? extends BaseResponseBody> recommendSongs(@RequestBody RecommendPostReq recommendPostReq, @ApiIgnore Authentication authentication) {
+    @Autowired
+    SongService songService;
+
+    @GetMapping
+    public ResponseEntity<?> recommendSongs(@ApiIgnore Authentication authentication) {
         Member member = jwtAuthenticationUtil.jwtTokenAuth(authentication);
-        tagService.modifyMemberTags(member, recommendPostReq.getTagIdList());
 
         HashMap<String, Object> resultMap = new HashMap<>();
 
@@ -59,7 +63,7 @@ public class RecommendController {
 
         // HTTP Body로 들어갈 것들 만들기
 
-        List<String> tagNameList = tagService.getTagNameList(recommendPostReq.getTagIdList());
+        List<String> tagNameList = tagService.getTagNameList(member);
 
         PyRecommendPostReq pyRequest = PyRecommendPostReq.builder()
                 .memberId(member.getMemberId())
@@ -72,12 +76,50 @@ public class RecommendController {
 //        String url = "http://localhost:8000/api/v2/songs/recommend/";
 
         // 5. postForEntity() 메소드로 api를 호출합니다.
-        ResponseEntity<Map> response = restTemplate.postForEntity(url, pyRequest, Map.class);
+        ResponseEntity<List> response = restTemplate.postForEntity(url, pyRequest, List.class);
 
-        System.out.println(response.getBody().get("result").toString());
+        List<SongEntityRes> lowList = new ArrayList<>();
+        List<SongEntityRes> fitList = new ArrayList<>();
+        List<SongEntityRes> highList = new ArrayList<>();
+        List<Map<String, Object>> resLowList = (List) response.getBody().get(0);
+        List<Map<String, Object>> resFitList = (List) response.getBody().get(1);
+        List<Map<String, Object>> resHighList = (List) response.getBody().get(2);
+        for(int i = 0; i < resLowList.size();i++){
+            lowList.add(SongEntityRes.builder()
+                    .songId(Long.parseLong(String.valueOf(resLowList.get(i).get("songId"))))
+                    .songTitle((String)resLowList.get(i).get("songTitle"))
+                    .songSinger((String)resLowList.get(i).get("songSinger"))
+                    .songImageUrl((String)resLowList.get(i).get("songImageUrl"))
+                    .songHighPitch((int)resLowList.get(i).get("songHighPitch"))
+                    .songTj((String)resLowList.get(i).get("songTj"))
+                    .songKy((String)resLowList.get(i).get("songKy"))
+                    .build());
+        }
+        for(int i = 0; i < resFitList.size();i++){
+            fitList.add(SongEntityRes.builder()
+                    .songId(Long.parseLong(String.valueOf(resFitList.get(i).get("songId"))))
+                    .songTitle((String)resFitList.get(i).get("songTitle"))
+                    .songSinger((String)resFitList.get(i).get("songSinger"))
+                    .songImageUrl((String)resFitList.get(i).get("songImageUrl"))
+                    .songHighPitch((int)resFitList.get(i).get("songHighPitch"))
+                    .songTj((String)resFitList.get(i).get("songTj"))
+                    .songKy((String)resFitList.get(i).get("songKy"))
+                    .build());
+        }
+        for(int i = 0; i < resHighList.size();i++){
+            highList.add(SongEntityRes.builder()
+                    .songId(Long.parseLong(String.valueOf(resHighList.get(i).get("songId"))))
+                    .songTitle((String)resHighList.get(i).get("songTitle"))
+                    .songSinger((String)resHighList.get(i).get("songSinger"))
+                    .songImageUrl((String)resHighList.get(i).get("songImageUrl"))
+                    .songHighPitch((int)resHighList.get(i).get("songHighPitch"))
+                    .songTj((String)resHighList.get(i).get("songTj"))
+                    .songKy((String)resHighList.get(i).get("songKy"))
+                    .build());
+        }
 
         if(response.getStatusCode() == HttpStatus.OK){
-            return ResponseEntity.status(200).body(BaseResponseBody.of(200, "success"));
+            return ResponseEntity.status(200).body(RecommendRes.of(lowList, fitList, highList));
         } else
             return ResponseEntity.status(409).body(BaseResponseBody.of(409, "fail"));
     }
