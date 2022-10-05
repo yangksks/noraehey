@@ -16,18 +16,18 @@ const HeaderButtons = () => {
 
   return (
     <HeaderButtonsBox>
-      <button
+      <span
         onClick={() => {
           navigate(`/profile/${userId}`);
         }}>
-        마이페이지
-      </button>
-      <button
+        MyPage
+      </span>
+      <span
         onClick={() => {
           logout();
         }}>
-        로그아웃
-      </button>
+        Logout
+      </span>
     </HeaderButtonsBox>
   );
 };
@@ -41,12 +41,16 @@ const HeaderButtonsBox = styled.div`
   align-items: center;
   gap: 10px;
   padding: 10px 0;
-  button {
-    background-color: #fff;
+  span {
+    background-color: transparent;
     padding: 5px;
     border: none;
     border-radius: 5px;
     font-size: 12px;
+    color: ${(props) => props.theme.colors.lineGray};
+    font-family: 'omni025';
+    text-decoration: underline;
+    text-underline-offset: 4px;
   }
 `;
 

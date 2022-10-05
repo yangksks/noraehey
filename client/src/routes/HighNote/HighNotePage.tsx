@@ -13,7 +13,7 @@ window.addEventListener('resize', () => setScreenSize());
 
 const HighNotePage = () => {
   const reset = Array.from({ length: 100 }, () => 0);
-  const [pitchNum, setPitchNum] = useState(1);
+  const [pitchNum, setPitchNum] = useState(0);
   const [started, setGetStarted] = useState(false);
   const [maxNote, setMaxNote] = useState('');
   const [pitchList, setPitchList] = useState(reset);

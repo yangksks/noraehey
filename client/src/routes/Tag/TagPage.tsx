@@ -7,8 +7,8 @@ import { useNavigate } from 'react-router-dom';
 import { BsArrowRight } from 'react-icons/bs';
 import { fetchData } from '../../utils/api/api';
 import { IoClose } from 'react-icons/io5';
-import { useRecoilState, useRecoilValue } from 'recoil';
-import { tagListState, userInfoState, userTagListState } from '../../Atom';
+import { useRecoilState } from 'recoil';
+import { tagListState, userTagListState } from '../../Atom';
 interface tagType {
   tagId: number;
   tagName: string;
@@ -46,6 +46,7 @@ const TagPage = () => {
 
   const updateTags = async () => {
     if (userTag.length >= 5 && userTag.length <= 10) {
+      // if (true) {
       let list: Array<number> = [];
       userTag.forEach((data) => {
         list.push(data.tagId);
@@ -73,8 +74,10 @@ const TagPage = () => {
           if (userTag.map((r: tagType) => r.tagId).includes(data.tagId)) {
             setUserTag(userTag.filter((item) => item.tagId !== data.tagId));
           } else {
-            setUserTag([...userTag, data]);
-            setTemp(temp + 1);
+            if (userTag.length < 10) {
+              setUserTag([...userTag, data]);
+              setTemp(temp + 1);
+            } else alert('태그는 10개 까지 선택 가능합니다.');
           }
         }}>
         {data.tagName}
@@ -140,18 +143,12 @@ const TagContainer = styled.div<{ image: string }>`
   .myBubbleUI {
     width: 100%;
     height: 50%;
-    /* border-radius: 150px; */
-    /* width: 300px; */
-    /* height: 300px; */
     max-width: 1000px;
-    /* flex-shrink: 1; */
     border-radius: 100px;
     padding-top: 10px;
     background: url(${({ image }) => image}) no-repeat;
     background-size: 400px;
     background-position: center center;
-    /* margin: 80px 0; */
-    /* border: 10px solid black; */
     overflow: hidden;
 
     .child {
@@ -277,7 +274,6 @@ const MyTagList = styled.div`
         top: -6px;
         overflow: visible;
         background-color: #f47373;
-        /* border: 1px solid red; */
         border-radius: 50%;
         padding: 2px;
       }
@@ -295,13 +291,11 @@ const BtnBox = styled.div`
     border: none;
     width: 100px;
     height: 40px;
-    /* border-radius: 20px; */
     font-size: 16px;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 5px;
-    /* background-color: #fff; */
     background-color: transparent;
   }
 `;

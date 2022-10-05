@@ -121,7 +121,7 @@ const BtnList = styled.div`
 const Evaluation = styled.div<{ evalToggle: boolean; eval: number }>`
   height: ${(props) => (props.evalToggle ? '100px' : '0px')};
   overflow: hidden;
-  transition: 0.5s;
+  transition: 0.2s ease-in-out;
   width: 100%;
   padding: 0 20px;
   ul {

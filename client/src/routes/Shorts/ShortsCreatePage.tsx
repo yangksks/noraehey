@@ -1,12 +1,11 @@
 import styled from 'styled-components';
-import Mirt from 'react-mirt';
 import 'react-mirt/dist/css/react-mirt.css';
 import { ImArrowLeft2 } from 'react-icons/im';
 import { useEffect, useState } from 'react';
 import ConvertAudio from './ConvertAudio';
 import { fetchData } from '../../utils/api/api';
-import SongBriefInfo from './SongBriefInfo';
 import { useNavigate } from 'react-router-dom';
+import ShortsCreateCard from './ShortsCreateCard';
 
 const ShortsCreatePage = () => {
   const [file, setFile] = useState(null as any);
@@ -83,30 +82,19 @@ const ShortsCreatePage = () => {
           />
           <p>쇼츠등록</p>
         </TitleBox>
-        <ConvertAudio
-          start={startPoint}
-          end={Math.floor(endPoint)}
-          m4a={file}
-          getConvertAudio={getConvertAudio}
-        />
       </Title>
 
       <CreateBox>
-        <ShortsCard>
+        {/* <ShortsCard>
           <SongBriefInfo />
-          <textarea
-            id="shortsComment"
-            name="shortsComment"
-            onChange={(e) => {
-              getShortsComment(e.target.value);
-            }}
-          />
-        </ShortsCard>
-        <MirtStyle
+        </ShortsCard> */}
+        <ShortsCreateCard
           file={file}
-          onChange={(e: any) => getTrimLocation(e)}
-          options={{ fineTuningDelay: 0 }}
+          getTrimLocation={getTrimLocation}
+          getShortsComment={getShortsComment}
         />
+      </CreateBox>
+      <Buttons>
         <label className="shortsBtn" htmlFor="shortsAudioFile">
           음성파일
         </label>
@@ -120,7 +108,13 @@ const ShortsCreatePage = () => {
           id="shortsAudioFile"
           style={{ display: 'none' }}
         />
-      </CreateBox>
+        <ConvertAudio
+          start={startPoint}
+          end={Math.floor(endPoint)}
+          m4a={file}
+          getConvertAudio={getConvertAudio}
+        />
+      </Buttons>
     </CreateContainer>
   );
 };
@@ -135,14 +129,14 @@ const CreateContainer = styled.div`
   align-items: center;
 
   .shortsBtn {
-    padding: 5px 10px;
-    background-color: lavender;
-    border-radius: 5px;
+    padding: 4px 22px;
+    border-radius: 30px;
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    border: lightgrey 1px solid;
+    background-color: #e8bb61;
+    color: white;
     cursor: pointer;
   }
 `;
@@ -158,44 +152,6 @@ const CreateBox = styled.div`
   align-items: center;
 `;
 
-const ShortsCard = styled.div`
-  width: 100%;
-  height: 100%;
-  gap: 20px;
-  padding: 20px;
-  border-radius: 10px;
-  display: flex;
-  flex-direction: column;
-  justify-content: start;
-  align-items: center;
-  box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.3);
-
-  #shortsComment {
-    width: 100%;
-    aspect-ratio: 4;
-    padding: 10px;
-    font-size: 18px;
-    border-radius: 10px;
-    border: lightgrey 1px solid;
-    resize: none;
-  }
-`;
-
-const MirtStyle = styled(Mirt)`
-  width: 100%;
-  touch-action: none;
-  --mirt-height: 60px;
-  --mirt-playhead-width: 3px;
-  --mirt-frame-color: #a793ff;
-  --mirt-background-color: #a793ff;
-  --mirt-button-icon-color: #ffffff;
-  --mirt-handle-transition-duration: 0ms;
-  --mirt-handle-width: 40px;
-  .mirt__range-handle {
-    height: 100%;
-  }
-`;
-
 const Title = styled.div`
   display: flex;
   flex-direction: row;
@@ -209,8 +165,16 @@ const Title = styled.div`
   p {
     padding-left: 25px;
     font-size: 18px;
-    font-family: 'omni045';
   }
+`;
+
+const Buttons = styled.div`
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  padding-top: 10px;
+  gap: 40px;
 `;
 
 const TitleBox = styled.div`

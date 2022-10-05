@@ -30,15 +30,24 @@ const LikeShortsPage = () => {
     });
   }, []);
 
-  return (
-    <ShortsList>
-      {shortsDatas.length != 0 &&
-        shortsDatas.map((item, i) => (
-          <LikeShortsCard key={i} shortsData={item}></LikeShortsCard>
-        ))}
-    </ShortsList>
-  );
+  if (shortsDatas.length != 0)
+    return (
+      <ShortsList>
+        {shortsDatas.length != 0 &&
+          shortsDatas.map((item, i) => (
+            <LikeShortsCard key={i} shortsData={item}></LikeShortsCard>
+          ))}
+      </ShortsList>
+    );
+  else return <NoData>좋아요한 쇼츠가 없습니다.</NoData>;
 };
+const NoData = styled.div`
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+  font-size: 14px;
+  color: ${(props) => props.theme.colors.textGray};
+`;
 const ShortsList = styled.div`
   width: 100%;
   display: grid;

@@ -1,28 +1,26 @@
 import { ImArrowLeft2 } from 'react-icons/im';
-import { Outlet, useLocation, useNavigate } from 'react-router-dom';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
 import { userInfoState } from '../../Atom';
 import Container from '../../style/style';
-import { FiSettings } from 'react-icons/fi';
 import { RiPencilFill } from 'react-icons/ri';
 import { useEffect, useState } from 'react';
 import { fetchData } from '../../utils/api/api';
 import SettingPage from './SettingPage';
+import _ from 'lodash';
 const ProfileSettingPage = () => {
   const url = useLocation().pathname.split('/')[3];
-  const userId = useLocation().pathname.split('/')[2];
-  const [settingNow, setSettingNow] = useState(url);
   const [nameEdit, setNameEdit] = useState(false);
-  const [user, setUser] = useState(null) as any;
+  const [user, setUser] = useRecoilState(userInfoState);
   const [nickname, setNickname] = useState(null) as any;
   const [loading, setLoading] = useState(true);
+  const [msg, setMsg] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
     const syncFunc = async () => {
       await updateUserInfo();
-      setSettingNow(url);
       setNameEdit(false);
       setLoading(false);
     };
@@ -33,7 +31,7 @@ const ProfileSettingPage = () => {
     const URL = '/api/v1/member/nickname';
     try {
       const result = await fetchData.patch(URL, { nickname: nickname });
-      return console.log(result);
+      return result.data;
     } catch (err: any) {
       console.log(err);
     }
@@ -45,7 +43,7 @@ const ProfileSettingPage = () => {
       const result = await fetchData.get(URL);
       setUser(() => result.data);
       setNickname(() => result.data.memberNickname);
-      return console.log(result.data);
+      return result.data;
     } catch (err: any) {
       console.log(err);
     }
@@ -63,18 +61,20 @@ const ProfileSettingPage = () => {
     formData.append('profileImg', profileImg);
     try {
       const result = await fetchData.patch(URL, formData, option);
-      return console.log(result.data);
+      return result.data;
     } catch (err: any) {
       console.log(err);
     }
   };
 
-  const ChangeName = () => {
+  const changeName = () => {
     const syncFunc = async () => {
       await updateNickname();
       await updateUserInfo();
     };
-    syncFunc();
+    if (msg) {
+      syncFunc();
+    }
     setNameEdit(!nameEdit);
   };
 
@@ -84,6 +84,23 @@ const ProfileSettingPage = () => {
       await updateUserInfo();
     };
     syncFunc();
+  };
+
+  const nameValidate = async (e: string) => {
+    const URL = `/api/v1/member/nickname/${e}`;
+    setNickname(e);
+    try {
+      await fetchData.get(URL);
+      setMsg(true);
+    } catch (err: any) {
+      setMsg(false);
+    }
+  };
+
+  const onKeyPress = (e: any) => {
+    if (e.key === 'Enter') {
+      changeName();
+    }
   };
 
   const render = () => {
@@ -120,20 +137,30 @@ const ProfileSettingPage = () => {
           </PicBox>
           <NameBox>
             {nameEdit ? (
-              <textarea
+              <input
+                type="text"
+                maxLength={6}
                 onChange={(e) => {
-                  setNickname(e.target.value);
+                  nameValidate(e.target.value);
                 }}
-                defaultValue={user.memberNickname}></textarea>
+                onKeyPress={onKeyPress}
+                defaultValue={user.memberNickname}></input>
             ) : (
               <p>{user.memberNickname}</p>
             )}
             <RiPencilFill
               onClick={() => {
-                ChangeName();
+                changeName();
               }}
             />
           </NameBox>
+          {nameEdit ? (
+            msg ? (
+              <p className="validate">사용 가능한 닉네임입니다.</p>
+            ) : (
+              <p className="banned">사용 중인 닉네임 입니다.</p>
+            )
+          ) : null}
         </Profile>
         <SettingPage />
       </Container>
@@ -145,14 +172,25 @@ const ProfileSettingPage = () => {
 
 const Profile = styled.div`
   width: 100%;
-  height: 210px;
+  height: 220px;
   padding: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
   margin-bottom: 40px;
-  gap: 20px;
   z-index: 1;
+  .validate {
+    font-size: 10px;
+    padding-right: 14px;
+    padding-top: 5px;
+    color: #5ca535;
+  }
+  .banned {
+    font-size: 10px;
+    padding-right: 14px;
+    padding-top: 5px;
+    color: #d53958;
+  }
 `;
 
 const PicBox = styled.div`
@@ -199,7 +237,8 @@ const PicEdit = styled.div`
 `;
 
 const NameBox = styled.div`
-  padding: 5px;
+  width: 100%;
+  padding: 20px 0 4px;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -208,10 +247,11 @@ const NameBox = styled.div`
     font-size: 18px;
   }
 
-  textarea {
-    height: 40px;
+  input {
+    width: 40%;
+    height: 35px;
     padding: 5px;
-    font-size: 18px;
+    font-size: 16px;
     resize: none;
   }
 
