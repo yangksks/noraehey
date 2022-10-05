@@ -28,11 +28,11 @@ const UserInfo = () => {
         <p>{keyList[user.memberHighPitch]}</p>
       </InfoBoxLeft>
       <InfoBoxRight>
-        <p>
-          <span>{userName}</span> 님
+        <p className="user">
+          <span>{userName}</span> 님,
         </p>
-        <p>노래HEY와 함께</p>
-        <p>노래방 달려볼까요?</p>
+        <p className="text">NORAEHEY와 함께</p>
+        <p className="text">노래방 달려볼까요?</p>
         <HeaderButtons />
       </InfoBoxRight>
     </InfoBox>
@@ -72,6 +72,9 @@ const InfoBoxLeft = styled.div`
   }
   p {
     font-size: 16px;
+    color: white;
+    padding-top: 5px;
+    font-family: 'omni025';
   }
 `;
 const InfoBoxRight = styled.div`
@@ -82,8 +85,21 @@ const InfoBoxRight = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: end;
-  p {
-    font-size: 18px;
+
+  .user {
+    span {
+      font-size: 22px;
+    }
+    font-size: 20px;
+    font-family: 'omni045';
+    color: #ffd132;
+    padding-bottom: 8px;
+  }
+  .text {
+    font-size: 16px;
+    color: white;
+    padding: 2px;
+    font-family: 'omni025';
   }
 `;
 
