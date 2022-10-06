@@ -20,6 +20,7 @@
 # ✨기획
 
 ### [📚 WiKi](https://angry-catboat-48b.notion.site/NoraeHey-SSAFY-2-PJT-f6a53b12586a46da986af7e0dad5c6a3)
+### [🎬 UCC](https://www.youtube.com/watch?v=EtcfjVcGXNM)
 ### 🧱 ER Diagram
 
 ![erd](https://user-images.githubusercontent.com/50542030/194216139-89a9745b-8063-41bb-bdcb-b6c4f41e0cf2.PNG)
@@ -27,12 +28,12 @@
 # 🛠기술 스택
 
 ### Frontend
-| <img src="https://user-images.githubusercontent.com/56426044/194358102-bd8829bb-93a2-4d14-ae78-85956a29d6a2.png" alt="React" width="50px" height="50px" /> | <img src="https://img1.daumcdn.net/thumb/R800x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbIIBwO%2Fbtrc2Lw7HBs%2FP4hJVVvKkEGfDu9XRzkiq1%2Fimg.png" alt="Recoil" width="50px" height="50px" /> | <img src="https://user-images.githubusercontent.com/56426044/193986629-a56d1051-c4db-4335-8b59-1789fc784def.png" alt="TS" width="50px" height="50px" /> | <img src="https://user-images.githubusercontent.com/56426044/194360206-51c9e885-52e7-4674-9dd9-12593f478aed.png" alt="SC" height="50px"  /> |
+| <img src="https://user-images.githubusercontent.com/56426044/194358102-bd8829bb-93a2-4d14-ae78-85956a29d6a2.png" alt="React" width="50px" height="50px" /> | <img src="https://img1.daumcdn.net/thumb/R800x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbIIBwO%2Fbtrc2Lw7HBs%2FP4hJVVvKkEGfDu9XRzkiq1%2Fimg.png" alt="Recoil" width="50px" height="50px" /> | <img src="https://user-images.githubusercontent.com/56426044/193986629-a56d1051-c4db-4335-8b59-1789fc784def.png" alt="TS" width="50px" height="50px" /> | <img src="https://user-images.githubusercontent.com/56426044/194360206-51c9e885-52e7-4674-9dd9-12593f478aed.png" alt="SC" height="50px" /> |
 | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
 |                            React                             |                            Recoil                            |                          TypeScript                          |                       Styled-Component                       |
 
 ### Backend
-| <img src="https://images.velog.io/images/insanezindol/post/68026a3a-5e83-43f4-a3a2-d4b706f3ce07/image.png" alt="SpringBoot" width="50px" height="50px" /> | <img src="https://user-images.githubusercontent.com/56426044/193990356-a4c7b430-bbbe-4a52-8bd3-803b6414ec69.png" alt="Django" width="50px" height="50px" /> | <img src="https://user-images.githubusercontent.com/56426044/193990448-6e922ead-5be4-400a-a9a8-cefefed234da.png" alt="JPA" height="50px" /> |
+| <img src="https://images.velog.io/images/insanezindol/post/68026a3a-5e83-43f4-a3a2-d4b706f3ce07/image.png" alt="SpringBoot" height="50px" /> | <img src="https://user-images.githubusercontent.com/56426044/193990356-a4c7b430-bbbe-4a52-8bd3-803b6414ec69.png" alt="Django" width="50px" height="50px" /> | <img src="https://user-images.githubusercontent.com/56426044/193990448-6e922ead-5be4-400a-a9a8-cefefed234da.png" alt="JPA" width="50px" height="50px" /> |
 | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
 |                         Spring-Boot                          |                            Django                            |                             JPA                              |
 ### DB
