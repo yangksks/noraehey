@@ -32,6 +32,8 @@ public interface ShortsRepository extends JpaRepository<Shorts, Long> {
             "where song_id = :songId\n" +
             "order by cnt desc", nativeQuery = true)
     List<Shorts> findBySongIdOrderByLike(Long songId, Pageable pageable);
+
+    List<Shorts> findBySongSongIdOrderByShortsCreateTimeDesc(Long songId, Pageable pageable);
     List<Shorts> findAllByMemberMemberId(Long memberId, Pageable pageable);
 
     @Query(value = "select * from shorts order by rand() limit 30", nativeQuery = true)
