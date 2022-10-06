@@ -18,7 +18,6 @@ const HighNotePage = () => {
   const [started, setGetStarted] = useState(false);
   const [maxNote, setMaxNote] = useState('');
   const [pitchList, setPitchList] = useState(reset);
-  const navigate = useNavigate();
 
   useEffect(() => {
     const stop = () => {

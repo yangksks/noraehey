@@ -28,7 +28,6 @@ const ConvertAudio = (props: ConvertType) => {
     try {
       await ffmpeg.load();
       if (m4a) {
-        console.log(m4a);
         ffmpeg.FS(
           'writeFile',
           'test.m4a',
@@ -57,8 +56,9 @@ const ConvertAudio = (props: ConvertType) => {
       } else {
         setMessage('업로드에 실패했습니다.');
       }
-    } catch {
-      alert('iOS 기기는 편집기능이 제공되지 않습니다. 원본이 업로드됩니다');
+    } catch(err) {
+      console.log(err)
+      alert('ios 및 일부기기에서 편집이 제한됩니다. 원본을 업로드합니다.');
       props.getConvertAudio(m4a);
     }
   };

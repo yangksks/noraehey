@@ -10,12 +10,17 @@ import { useParams } from 'react-router';
 const ShortsDetailPage = () => {
   const { shortsId } = useParams();
   const [shortsData, setShortsData] = useState({});
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchData.get(`/api/v1/shorts/${shortsId}`).then((res) => {
-      setShortsData(res.data);
-    });
+    getShorts();
   }, []);
+
+  const getShorts = async () => {
+    const result = await fetchData.get(`/api/v1/shorts/${shortsId}`);
+    setShortsData(() => result.data);
+    setLoading(false);
+  };
 
   const setScreenSize = () => {
     let vh = window.innerHeight * 0.01;
@@ -24,13 +29,16 @@ const ShortsDetailPage = () => {
   setScreenSize();
   window.addEventListener('resize', () => setScreenSize());
 
-  return (
-    <Container>
-      <Shorts>
-        <ShortsModalCard shortsData={shortsData} />
-      </Shorts>
-    </Container>
-  );
+  const render = () => {
+    return (
+      <Container>
+        <Shorts>
+          <ShortsModalCard shortsData={shortsData} />
+        </Shorts>
+      </Container>
+    );
+  };
+  return loading ? null : render();
 };
 
 const Shorts = styled.div`
