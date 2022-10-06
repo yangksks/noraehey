@@ -4,6 +4,7 @@ import { Link, useLocation } from 'react-router-dom';
 import UserInfo from './UserInfo';
 import { useRecoilState } from 'recoil';
 import { userInfoState } from '../../Atom';
+import logo from '../../assets/images/logo.png';
 
 const Header = () => {
   const url = useLocation().pathname.split('/')[1];
@@ -23,11 +24,16 @@ const Header = () => {
           }}>
           <Link to="/">
             <Logo>
+              <img src={logo} alt="" />
               <p style={{ color: '#FFC34E' }}>NORAE</p>
               <p style={{ color: 'white' }}>HEY</p>
             </Logo>
           </Link>
-          <ProfileImg src={userInfo.memberProfileUrl} />
+          {userInfo.memberProfileUrl !== '' ? (
+            <ProfileImg src={userInfo.memberProfileUrl} />
+          ) : (
+            <DummyImg />
+          )}
         </TopBox>
         <UserInfo />
       </HeaderTop>
@@ -96,7 +102,7 @@ const BottomBox2 = styled.div`
 const Logo = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: start;
   align-items: center;
   padding-top: 5px;
   font-size: 20px;
@@ -105,6 +111,11 @@ const Logo = styled.div`
   &:active {
     scale: 0.95;
     opacity: 0.8;
+  }
+  img {
+    width: 10%;
+    margin-right: 10px;
+    margin-bottom: 2px;
   }
 `;
 
@@ -118,6 +129,11 @@ const ProfileImg = styled.img`
     scale: 0.95;
     opacity: 0.8;
   }
+`;
+
+const DummyImg = styled.div`
+  width: 40px;
+  height: 40px;
 `;
 
 export default Header;
