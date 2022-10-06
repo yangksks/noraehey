@@ -68,16 +68,33 @@ public class ShortsController {
 
     // 노래 별 쇼츠 조회 (인기순)
     @GetMapping("/song/{songId}")
-    public ResponseEntity<?> getShortsBySong(@PathVariable("songId") Long songId, @RequestParam("page") int page, @ApiIgnore Authentication authentication) {
+    public ResponseEntity<?> getShortsBySongPopular(@PathVariable("songId") Long songId, @RequestParam("page") int page, @ApiIgnore Authentication authentication) {
         Member member = jwtAuthenticationUtil.jwtTokenAuth(authentication);
 
         if (page < 0) return ResponseEntity.status(200).body(ShortsListRes.of(false, new ArrayList<>()));
 
         Song song = songService.getSongBySongId(songId);
-        List<Shorts> shortsList = shortsService.getShortsListBySongId(songId, page);
+        List<Shorts> shortsList = shortsService.getShortsListBySongIdPopular(songId, page);
         List<ShortsEntityRes> resList = shortsService.createShortsListBySong(shortsList, song, member);
         // 다음 page 여부 체크
-        List<Shorts> hasMoreList = shortsService.getShortsListBySongId(songId, page + 1);
+        List<Shorts> hasMoreList = shortsService.getShortsListBySongIdPopular(songId, page + 1);
+        boolean hasMore = hasMoreList.size() > 0 ? true : false;
+
+        return ResponseEntity.status(200).body(ShortsListRes.of(hasMore, resList));
+    }
+
+    // 노래 별 쇼츠 조회 (최신순)
+    @GetMapping("/song/recent/{songId}")
+    public ResponseEntity<?> getShortsBySongRecent(@PathVariable("songId") Long songId, @RequestParam("page") int page, @ApiIgnore Authentication authentication) {
+        Member member = jwtAuthenticationUtil.jwtTokenAuth(authentication);
+
+        if (page < 0) return ResponseEntity.status(200).body(ShortsListRes.of(false, new ArrayList<>()));
+
+        Song song = songService.getSongBySongId(songId);
+        List<Shorts> shortsList = shortsService.getShortsListBySongIdRecent(songId, page);
+        List<ShortsEntityRes> resList = shortsService.createShortsListBySong(shortsList, song, member);
+        // 다음 page 여부 체크
+        List<Shorts> hasMoreList = shortsService.getShortsListBySongIdRecent(songId, page + 1);
         boolean hasMore = hasMoreList.size() > 0 ? true : false;
 
         return ResponseEntity.status(200).body(ShortsListRes.of(hasMore, resList));
