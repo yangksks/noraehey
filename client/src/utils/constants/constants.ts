@@ -75,7 +75,7 @@ export const magazines = [
     magazineSongList: [
       {
         songHighPitch: '29',
-        songId: 327,
+        songId: 554,
         songImageUrl:
           'https://cdnimg.melon.co.kr/cm/album/images/026/46/282/2646282_500.jpg/melon/resize/282/quality/80/optimize',
         songKy: '59851',
@@ -85,7 +85,7 @@ export const magazines = [
       },
       {
         songHighPitch: '30',
-        songId: 58,
+        songId: 91,
         songImageUrl:
           'https://cdnimg.melon.co.kr/cm2/album/images/108/27/816/10827816_20211229143632_500.jpg?5212701ba136b287d5c446d6f504451f/melon/resize/282/quality/80/optimize',
         songKy: '28615',
@@ -95,7 +95,7 @@ export const magazines = [
       },
       {
         songHighPitch: '25',
-        songId: 370,
+        songId: 615,
         songImageUrl:
           'https://cdnimg.melon.co.kr/cm/album/images/100/47/890/10047890_500.jpg?fe3170fcb1ac397fc072be5877d5f1b9/melon/resize/282/quality/80/optimize',
         songKy: '49492',
@@ -105,7 +105,7 @@ export const magazines = [
       },
       {
         songHighPitch: '30',
-        songId: 584,
+        songId: 893,
         songImageUrl:
           'https://cdnimg.melon.co.kr/cm2/album/images/105/54/246/10554246_20210325161233_500.jpg?304eb9ed9c07a16ec6d6e000dc0e7d91/melon/resize/282/quality/80/optimize',
         songKy: '28409',
@@ -115,7 +115,7 @@ export const magazines = [
       },
       {
         songHighPitch: '32',
-        songId: 592,
+        songId: 1101,
         songImageUrl:
           'https://cdnimg.melon.co.kr/cm/album/images/100/56/666/10056666_500.jpg?6aeddbe69ee3e13388eb0d9b81adaca8/melon/resize/282/quality/80/optimize',
         songKy: '90133',
@@ -125,7 +125,7 @@ export const magazines = [
       },
       {
         songHighPitch: '27',
-        songId: 325,
+        songId: 508,
         songImageUrl:
           'https://cdnimg.melon.co.kr/cm/album/images/023/19/008/2319008_500.jpg?1d5950f924c443dce26fdfeb4b55471b/melon/resize/282/quality/80/optimize',
         songKy: '48823',
@@ -147,7 +147,7 @@ export const magazines = [
     magazineSongList: [
       {
         songHighPitch: '23',
-        songId: 967,
+        songId: 1439,
         songImageUrl:
           'https://cdnimg.melon.co.kr/cm2/album/images/110/11/565/11011565_20220801102637_500.jpg?1d674a44faffa0ebd34d86c182463171/melon/resize/282/quality/80/optimize',
         songKy: '24219',
@@ -157,7 +157,7 @@ export const magazines = [
       },
       {
         songHighPitch: '25',
-        songId: -1,
+        songId: 1511,
         songImageUrl:
           'https://cdnimg.melon.co.kr/cm2/album/images/110/11/565/11011565_20220801102637_500.jpg?1d674a44faffa0ebd34d86c182463171/melon/resize/282/quality/80/optimize',
         songKy: '28888',
@@ -167,7 +167,7 @@ export const magazines = [
       },
       {
         songHighPitch: '27',
-        songId: -1,
+        songId: 1623,
         songImageUrl:
           'https://cdnimg.melon.co.kr/cm2/album/images/110/11/565/11011565_20220801102637_500.jpg?1d674a44faffa0ebd34d86c182463171/melon/resize/282/quality/80/optimize',
         songKy: '28907',
@@ -189,7 +189,7 @@ export const magazines = [
     magazineSongList: [
       {
         songHighPitch: '25',
-        songId: -1,
+        songId: 1557,
         songImageUrl:
           'https://cdnimg.melon.co.kr/cm2/album/images/109/39/458/10939458_20220502123814_500.jpg?86d6e58174ad3b107f20ccfe00658b1f/melon/resize/282/quality/80/optimize',
         songKy: '28753',
@@ -199,7 +199,7 @@ export const magazines = [
       },
       {
         songHighPitch: '26',
-        songId: -1,
+        songId: 1474,
         songImageUrl:
           'https://cdnimg.melon.co.kr/cm2/album/images/109/39/458/10939458_20220502123814_500.jpg?86d6e58174ad3b107f20ccfe00658b1f/melon/resize/282/quality/80/optimize',
         songKy: '-',
@@ -231,7 +231,7 @@ export const magazines = [
       },
       {
         songHighPitch: '24',
-        songId: -1,
+        songId: 1716,
         songImageUrl:
           'https://cdnimg.melon.co.kr/cm2/album/images/108/90/384/10890384_20220314111504_500.jpg?4b9dba7aeba43a4e0042eedb6b9865c1/melon/resize/282/quality/80/optimize',
         songKy: '28677',
@@ -241,7 +241,7 @@ export const magazines = [
       },
       {
         songHighPitch: '24',
-        songId: -1,
+        songId: 455,
         songImageUrl:
           'https://cdnimg.melon.co.kr/cm2/album/images/104/70/992/10470992_20200803154248_500.jpg?c0a9f9461e3259c788c25136bdccfa1f/melon/resize/282/sharpen/0x1',
         songKy: '22059',
